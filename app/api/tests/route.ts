@@ -52,22 +52,28 @@ export async function POST(req: NextRequest) {
     await supabase.from('questions').delete().eq('batch_id', batch.id);
 
     // 6. Insert questions
-    const qRows = body.questions.map((q, i) => ({
-      batch_id: batch.id,
-      external_id: q.id,
-      type: q.type,
-      difficulty: q.difficulty,
-      question: q.question,
-      options: q.options ?? null,
-      answer: q.answer,
-      explanation: q.explanation ?? null,
-      keywords: q.keywords ?? null,
-      related: q.related ?? null,
-      memory_trick: q.memory_trick ?? null,
-      exam_trap: q.exam_trap ?? null,
-      sources: q.sources ?? null,
-      sort_order: i,
-    }));
+    const qRows = body.questions.map((q, i) => {
+      // Normalise `related`: new format is an object, old format was a string[]
+      // Store as-is (jsonb column accepts both); just ensure null if missing
+      const related = q.related ?? null;
+
+      return {
+        batch_id: batch.id,
+        external_id: q.id,
+        type: q.type,
+        difficulty: q.difficulty,
+        question: q.question,
+        options: q.options ?? null,
+        answer: q.answer,
+        explanation: q.explanation ?? null,
+        keywords: q.keywords ?? null,
+        related,
+        memory_trick: q.memory_trick ?? null,
+        exam_trap: q.exam_trap ?? null,
+        sources: q.sources ?? null,
+        sort_order: i,
+      };
+    });
 
     const { error: qErr } = await supabase.from('questions').insert(qRows);
     if (qErr) throw qErr;

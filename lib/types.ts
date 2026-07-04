@@ -84,19 +84,37 @@ export interface AttemptAnswer {
   question?: Question;
 }
 
-// ---- JSON paste schema (from Prompt 3 output) ----
+// ---- JSON paste/upload schema (from question_bank.json) ----
+export interface PastedQuestionRelated {
+  acts?: string[];
+  articles?: string[];
+  dates?: string[];
+  committees?: string[];
+  personalities?: string[];
+}
+
+export interface PastedQuestionExam {
+  name?: string;
+  year?: string | number;
+  stage?: string;
+}
+
 export interface PastedQuestion {
   id: string;
   difficulty: Difficulty;
   type: QuestionType;
+  question_category?: string;
+  exam?: PastedQuestionExam;
   question: string;
   options?: string[];
   answer: string;
   explanation?: string;
   keywords?: string[];
-  related?: string[];
+  /** Can be an object { acts, articles, ... } or a legacy string array */
+  related?: PastedQuestionRelated | string[];
   memory_trick?: string;
   exam_trap?: string;
+  why_important?: string;
   sources?: string[];
 }
 
@@ -104,7 +122,36 @@ export interface PastedTestJSON {
   chapter: string;
   subject: string;
   batch: number;
+  total_questions?: number;
   questions: PastedQuestion[];
+}
+
+// ---- Study Material (Mind-Map JSON) ----
+export interface MindMapRecord {
+  [key: string]: string;
+}
+
+export interface MindMapJSON {
+  title: string;
+  columns: string[];
+  records: MindMapRecord[];
+  references?: Record<string, string>;
+}
+
+export interface StudyMaterial {
+  id: string;
+  chapter_id: string;
+  material_type: 'mind_map' | 'notes' | 'timeline';
+  title: string;
+  content: MindMapJSON;
+  created_at: string;
+  chapter?: Chapter;
+}
+
+export interface PastedStudyMaterialJSON {
+  chapter: string;
+  subject: string;
+  materials: MindMapJSON[];
 }
 
 // ---- Grading ----

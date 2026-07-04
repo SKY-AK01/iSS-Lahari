@@ -78,6 +78,7 @@ export default function MentorNav({ name }: { name: string }) {
   const links = [
     { href: '/mentor', label: 'Dashboard' },
     { href: '/mentor/add-test', label: 'Add Test' },
+    { href: '/mentor/add-study', label: 'Add Study' },
     { href: '/mentor/results', label: 'Results' },
   ];
 

@@ -730,3 +730,19 @@ textarea.input { resize: vertical; min-height: 120px; font-size: 0.85rem; }
   .nav { padding: 0 1.25rem; height: 70px; }
   .card { padding: 1.5rem; }
 }
+
+/* ---- Mind Map / Study Material ---- */
+.mind-map-table-wrap { display: block; }
+.mind-map-cards      { display: none; }
+
+@media (max-width: 640px) {
+  .mind-map-table-wrap { display: none; }
+  .mind-map-cards      { display: block; }
+}
+
+/* Study browser two-column layout collapses on mobile */
+@media (max-width: 768px) {
+  .study-layout-grid {
+    grid-template-columns: 1fr !important;
+  }
+}

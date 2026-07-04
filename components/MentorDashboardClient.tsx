@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { FlaskConical, PenTool, RefreshCw, BookOpen, BookText, FileText, BarChart3, ClipboardList, Library, Search, ChevronRight } from 'lucide-react';
+import { FlaskConical, PenTool, RefreshCw, BookOpen, BookText, FileText, BarChart3, ClipboardList, Library, Search, ChevronRight, Map } from 'lucide-react';
 
 const PROMPT_1 = `You are a deep research assistant for competitive exam preparation.
 I want you to build a comprehensive knowledge base for the following chapter:
@@ -75,9 +75,11 @@ interface Props {
   subjects: any[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   recentAttempts: any[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  studyMaterials: any[];
 }
 
-export default function MentorDashboardClient({ subjects, recentAttempts }: Props) {
+export default function MentorDashboardClient({ subjects, recentAttempts, studyMaterials }: Props) {
   const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
   const [openSubjects, setOpenSubjects] = useState<Set<string>>(new Set());
   const [search, setSearch] = useState('');
@@ -124,6 +126,7 @@ export default function MentorDashboardClient({ subjects, recentAttempts }: Prop
           { label: 'Subjects', value: subjects.length, icon: <BookOpen size={24} /> },
           { label: 'Chapters', value: subjects.reduce((n: number, s: { chapters: unknown[] }) => n + s.chapters.length, 0), icon: <BookText size={24} /> },
           { label: 'Test Batches', value: totalBatches, icon: <FileText size={24} /> },
+          { label: 'Study Materials', value: studyMaterials.length, icon: <Map size={24} /> },
           { label: 'Recent Attempts', value: recentAttempts.length, icon: <BarChart3 size={24} /> },
         ].map((stat, i) => (
           <div key={i} className="card" style={{ textAlign: 'center', padding: '1.25rem' }}>
@@ -187,6 +190,52 @@ export default function MentorDashboardClient({ subjects, recentAttempts }: Prop
             </div>
           ))}
         </div>
+      </div>
+
+      {/* Study Materials Library */}
+      <div className="animate-up" style={{ marginBottom: '2.5rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.75rem' }}>
+          <h2 style={{ fontSize: '1.2rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <Map size={20} /> Study Materials
+          </h2>
+          <a href="/mentor/add-study" className="btn btn-primary btn-sm">+ Add Study Material</a>
+        </div>
+
+        {studyMaterials.length === 0 ? (
+          <div className="card" style={{ textAlign: 'center', padding: '2rem', opacity: 0.5 }}>
+            No study materials yet. Upload a mind-map or timeline!
+          </div>
+        ) : (
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
+            {studyMaterials.map((m: {
+              id: string;
+              title: string;
+              material_type: string;
+              created_at: string;
+              chapter: { name: string; subject: { name: string } };
+            }) => (
+              <div key={m.id} className="admit-card" style={{ flexBasis: '240px', flexGrow: 1, cursor: 'default' }}>
+                <div className="admit-card-header" style={{ background: 'var(--partial-bg)' }}>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', fontWeight: 700 }}>
+                    {m.chapter?.subject?.name}
+                  </span>
+                  <span className="batch-badge" style={{ background: 'var(--ink)' }}>
+                    {m.material_type === 'mind_map' ? 'MAP' : 'NOTE'}
+                  </span>
+                </div>
+                <div style={{ padding: '0.75rem 1rem' }}>
+                  <div style={{ fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.25rem', lineHeight: 1.3 }}>{m.title}</div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--cream-dim)', opacity: 0.6 }}>
+                    {m.chapter?.name}
+                  </div>
+                  <div style={{ fontSize: '0.72rem', fontFamily: 'var(--font-mono)', color: 'var(--cream-dim)', opacity: 0.5, marginTop: '0.4rem' }}>
+                    {new Date(m.created_at).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: '2-digit' })}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Test Library */}

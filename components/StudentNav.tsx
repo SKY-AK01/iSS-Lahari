@@ -16,6 +16,7 @@ export default function StudentNav({ name, isMentor }: { name: string; isMentor:
 
   const links = [
     { href: '/student', label: 'Tests' },
+    { href: '/student/study', label: 'Study' },
     { href: '/student/history', label: 'My History' },
   ];
 
