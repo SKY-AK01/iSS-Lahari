@@ -130,9 +130,10 @@ export default function PracticeClient({ batch, questions, attemptId }: Props) {
   }
 
   return (
-    <div className="container" style={{ paddingTop: '2rem', paddingBottom: '4rem', maxWidth: '720px' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-        <div style={{ fontSize: '0.9rem', color: 'var(--cream-dim)' }}>
+    <div className="container" style={{ paddingTop: '1.5rem', paddingBottom: '4rem' }}>
+      {/* Breadcrumb + progress */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '0.5rem' }}>
+        <div style={{ fontSize: '0.82rem', color: 'var(--cream-dim)', fontWeight: 500 }}>
           {batch.chapter.subject.name} › {batch.chapter.name}
         </div>
         <div className="batch-badge">
@@ -144,17 +145,17 @@ export default function PracticeClient({ batch, questions, attemptId }: Props) {
         <div className={`study-card-inner ${isFlipped ? 'flipped' : ''}`}>
           
           {/* FRONT (Question) */}
-          <div className="study-card-face card" style={{ padding: '2rem' }}>
-            <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1.5rem' }}>
+          <div className="study-card-face card" style={{ padding: '1.75rem' }}>
+            <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1.25rem', alignItems: 'center' }}>
               <span className={`pill pill-${currentQ.difficulty}`}>{currentQ.difficulty}</span>
-              <span style={{ fontSize: '0.75rem', padding: '2px 8px', borderRadius: '4px', background: 'var(--bg-3)' }}>
-                {currentQ.type.toUpperCase()}
+              <span style={{ fontSize: '0.72rem', fontFamily: 'var(--font-heading)', fontWeight: 900, padding: '3px 8px', background: '#000', color: '#FFF', textTransform: 'uppercase' }}>
+                {currentQ.type}
               </span>
             </div>
 
-            <h2 style={{ fontSize: '1.25rem', marginBottom: '2rem', lineHeight: 1.5 }}>
+            <p className="question-text" style={{ marginBottom: '1.75rem' }}>
               {currentQ.question}
-            </h2>
+            </p>
 
             {currentQ.type === 'mcq' && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
@@ -192,13 +193,20 @@ export default function PracticeClient({ batch, questions, attemptId }: Props) {
           </div>
 
           {/* BACK (Study Card) */}
-          <div className="study-card-face study-card-back card-paper">
+          <div className="study-card-face study-card-back card-paper" style={{ padding: '1.75rem' }}>
             <div style={{ marginBottom: '1.5rem' }}>
-              <div style={{ fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700, color: verdict === 'correct' ? 'var(--sage)' : verdict === 'partial' ? '#b89f5f' : 'var(--clay)', marginBottom: '0.5rem' }}>
+              <div style={{
+                fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 900,
+                fontFamily: 'var(--font-heading)',
+                color: verdict === 'correct' ? '#000' : verdict === 'partial' ? '#000' : '#FFF',
+                background: verdict === 'correct' ? 'var(--sage)' : verdict === 'partial' ? 'var(--partial-bg)' : 'var(--ruby)',
+                display: 'inline-block', padding: '4px 10px', marginBottom: '1rem',
+                border: 'var(--border-thick)',
+              }}>
                 {verdict}
               </div>
-              <h2 style={{ fontSize: '1.2rem', marginBottom: '0.5rem' }}>Answer:</h2>
-              <p style={{ fontSize: '1.1rem', fontWeight: 600 }}>{currentQ.answer}</p>
+              <div style={{ fontSize: '0.75rem', fontFamily: 'var(--font-heading)', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.4rem', opacity: 0.5 }}>Correct Answer</div>
+              <p style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--ink)', lineHeight: 1.5, textTransform: 'none' }}>{currentQ.answer}</p>
             </div>
 
             {aiFeedback && (
@@ -209,17 +217,17 @@ export default function PracticeClient({ batch, questions, attemptId }: Props) {
 
             {currentQ.explanation && (
               <div style={{ marginBottom: '1.5rem' }}>
-                <h4 style={{ fontSize: '0.95rem', marginBottom: '0.4rem', color: 'var(--ruby)' }}>Explanation</h4>
-                <p style={{ fontSize: '0.95rem' }}>{currentQ.explanation}</p>
+                <div style={{ fontSize: '0.72rem', fontFamily: 'var(--font-heading)', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--ruby)', marginBottom: '0.4rem' }}>Explanation</div>
+                <p style={{ fontSize: '0.92rem', lineHeight: 1.6, textTransform: 'none', fontWeight: 400 }}>{currentQ.explanation}</p>
               </div>
             )}
 
             <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginBottom: '1.5rem' }}>
               {currentQ.keywords && currentQ.keywords.length > 0 && (
-                <div style={{ flex: 1, minWidth: '200px' }}>
-                  <h4 style={{ fontSize: '0.85rem', marginBottom: '0.4rem', color: 'rgba(20,20,20,0.6)' }}>Keywords</h4>
+                <div style={{ flex: 1, minWidth: '180px' }}>
+                  <div style={{ fontSize: '0.72rem', fontFamily: 'var(--font-heading)', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.4rem', opacity: 0.5 }}>Keywords</div>
                   <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
-                    {currentQ.keywords.map((k, i) => <span key={i} style={{ fontSize: '0.8rem', background: 'rgba(20,20,20,0.08)', padding: '2px 8px', borderRadius: '4px' }}>{k}</span>)}
+                    {currentQ.keywords.map((k, i) => <span key={i} style={{ fontSize: '0.78rem', background: '#000', color: '#FFF', padding: '2px 8px', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>{k}</span>)}
                   </div>
                 </div>
               )}

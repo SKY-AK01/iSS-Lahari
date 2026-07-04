@@ -73,16 +73,31 @@ body {
 /* ---- Typography ---- */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
-  font-weight: 900; /* Maximum bold */
+  font-weight: 900;
   line-height: 1;
   color: var(--ink);
   text-transform: uppercase;
-  letter-spacing: -0.04em; 
+  letter-spacing: -0.04em;
 }
 
 h1 { font-size: clamp(3.5rem, 8vw, 6rem); letter-spacing: -0.06em; }
 h2 { font-size: clamp(2rem, 5vw, 4rem); letter-spacing: -0.05em; }
 h3 { font-size: clamp(1.4rem, 3vw, 2.2rem); letter-spacing: -0.03em; }
+
+/* Question text — readable prose inside exam/practice cards */
+.question-text {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  font-weight: 500;
+  line-height: 1.65;
+  color: var(--ink);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+@media (max-width: 768px) {
+  .question-text { font-size: 1rem; line-height: 1.6; }
+}
 h4 { font-size: 1.25rem; letter-spacing: -0.02em; }
 
 p { color: var(--cream-dim); letter-spacing: -0.01em; font-weight: 500; }

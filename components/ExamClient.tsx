@@ -133,7 +133,7 @@ export default function ExamClient({ batch, questions, attemptId, durationMinute
 
   if (showReview) {
     return (
-      <div className="container" style={{ paddingTop: '2rem', paddingBottom: '4rem', maxWidth: '720px' }}>
+      <div className="container" style={{ paddingTop: '2rem', paddingBottom: '4rem' }}>
         <h2 style={{ marginBottom: '1.5rem' }}>Review Answers</h2>
         
         <div className="q-palette" style={{ marginBottom: '2rem' }}>
@@ -184,25 +184,25 @@ export default function ExamClient({ batch, questions, attemptId, durationMinute
         </div>
       </div>
 
-      <div className="container flex-col" style={{ flex: 1, paddingTop: '2rem', paddingBottom: '2rem', maxWidth: '720px' }}>
-        <div className="card" style={{ padding: '2rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.9rem', color: 'var(--cream-dim)' }}>
-              Question {currentIndex + 1} of {questions.length}
+      <div className="container flex-col" style={{ flex: 1, paddingTop: '1.5rem', paddingBottom: '2rem' }}>
+        <div className="card" style={{ padding: '1.75rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', gap: '0.75rem', flexWrap: 'wrap' }}>
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: 'var(--cream-dim)' }}>
+              Q {currentIndex + 1} / {questions.length}
             </span>
-            <button 
-              className="btn btn-ghost btn-sm" 
+            <button
+              className="btn btn-ghost btn-sm"
               onClick={toggleFlag}
-              style={{ color: flagged.has(currentQ.id) ? 'var(--partial)' : '', display: 'flex', alignItems: 'center', gap: '0.4rem' }}
+              style={{ color: flagged.has(currentQ.id) ? 'var(--ruby)' : '', display: 'flex', alignItems: 'center', gap: '0.4rem' }}
             >
               <Flag size={14} fill={flagged.has(currentQ.id) ? 'currentColor' : 'none'} />
-              {flagged.has(currentQ.id) ? 'Flagged' : 'Flag for review'}
+              {flagged.has(currentQ.id) ? 'Flagged' : 'Flag'}
             </button>
           </div>
 
-          <h2 style={{ fontSize: '1.25rem', marginBottom: '2rem', lineHeight: 1.5 }}>
+          <p className="question-text" style={{ marginBottom: '1.75rem' }}>
             {currentQ.question}
-          </h2>
+          </p>
 
           <div style={{ flex: 1 }}>
             {currentQ.type === 'mcq' && (

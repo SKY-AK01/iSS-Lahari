@@ -79,9 +79,9 @@ export default function StudentResultsClient({ attempt }: Props) {
                   <span className={`pill pill-${q.difficulty}`}>{q.difficulty}</span>
                 </div>
                 
-                <h3 style={{ fontSize: '1.1rem', marginBottom: '1.25rem', lineHeight: 1.5 }}>
+                <p className="question-text" style={{ marginBottom: '1.25rem', fontSize: '1rem' }}>
                   {q.question}
-                </h3>
+                </p>
 
                 <div className={vClass} style={{ marginBottom: '1.5rem' }}>
                   <div style={{ fontSize: '0.8rem', textTransform: 'uppercase', fontWeight: 700, opacity: 0.8, marginBottom: '0.5rem' }}>
@@ -111,8 +111,8 @@ export default function StudentResultsClient({ attempt }: Props) {
 
                 {q.explanation && (
                   <div style={{ marginBottom: '1.5rem' }}>
-                    <h4 style={{ fontSize: '0.9rem', color: 'var(--ruby)', marginBottom: '0.25rem' }}>Explanation</h4>
-                    <p style={{ fontSize: '0.9rem', color: 'var(--cream-dim)' }}>{q.explanation}</p>
+                    <div style={{ fontSize: '0.72rem', fontFamily: 'var(--font-heading)', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--ruby)', marginBottom: '0.35rem' }}>Explanation</div>
+                    <p style={{ fontSize: '0.9rem', color: 'var(--cream-dim)', lineHeight: 1.6, textTransform: 'none', fontWeight: 400 }}>{q.explanation}</p>
                   </div>
                 )}
                 
