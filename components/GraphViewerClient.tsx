@@ -76,17 +76,6 @@ export default function GraphViewerClient({ material }: Props) {
         nodeRelSize={6}
         linkColor={() => 'rgba(0,0,0,0.15)'}
         linkWidth={1}
-        nodeCanvasObjectMode={() => 'after'}
-        nodeCanvasObject={(node: any, ctx, globalScale) => {
-          const label = node.shortName || node.name;
-          const fontSize = node.group === 0 ? 14/globalScale : 10/globalScale;
-          ctx.font = `${node.group === 0 ? 'bold ' : ''}${fontSize}px Inter, sans-serif`;
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          ctx.fillStyle = node.group === 0 ? '#000' : 'var(--ink)';
-          const yOffset = node.val + 8/globalScale;
-          ctx.fillText(label, node.x, node.y + yOffset);
-        }}
       />
     </div>
   );

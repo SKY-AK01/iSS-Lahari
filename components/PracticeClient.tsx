@@ -17,6 +17,7 @@ export default function PracticeClient({ batch, questions, attemptId }: Props) {
   const [studentAnswer, setStudentAnswer] = useState('');
   const [loading, setLoading] = useState(false);
   const [answers, setAnswers] = useState<Record<string, any>>({});
+  const [loadingExplanation, setLoadingExplanation] = useState(false);
   const router = useRouter();
 
   const currentQ = questions[currentIndex];
@@ -102,6 +103,36 @@ export default function PracticeClient({ batch, questions, attemptId }: Props) {
       // Fallback
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function handleExplainMore() {
+    if (loadingExplanation || currentAns?.aiDetailedExplanation) return;
+    setLoadingExplanation(true);
+    try {
+      const res = await fetch('/api/explain', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          question: currentQ.question,
+          answer: currentQ.answer,
+          explanation: currentQ.explanation,
+        }),
+      });
+      const data = await res.json();
+      if (data.explanation) {
+        setAnswers(prev => ({
+          ...prev,
+          [currentQ.id]: {
+            ...prev[currentQ.id],
+            aiDetailedExplanation: data.explanation
+          }
+        }));
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoadingExplanation(false);
     }
   }
 
@@ -302,6 +333,24 @@ export default function PracticeClient({ batch, questions, attemptId }: Props) {
                   </div>
                 )}
               </div>
+            )}
+
+            {currentAns?.aiDetailedExplanation && (
+              <div style={{ padding: '1rem', background: 'var(--sage-bg)', border: 'var(--border-thick)', marginBottom: '1.5rem', fontSize: '0.92rem', lineHeight: 1.6 }}>
+                <div style={{ fontSize: '0.72rem', fontFamily: 'var(--font-heading)', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.6rem', color: '#000' }}>✨ AI Detailed Explanation</div>
+                <div style={{ whiteSpace: 'pre-wrap' }}>{currentAns.aiDetailedExplanation}</div>
+              </div>
+            )}
+
+            {!currentAns?.aiDetailedExplanation && (
+              <button 
+                className="btn btn-ghost w-full" 
+                onClick={handleExplainMore} 
+                disabled={loadingExplanation}
+                style={{ justifyContent: 'center', marginBottom: '1.5rem', borderStyle: 'dashed' }}
+              >
+                {loadingExplanation ? 'Generating Explanation...' : 'Explain More with AI ✨'}
+              </button>
             )}
 
             <button className="btn btn-primary w-full" onClick={handleNext} style={{ justifyContent: 'center' }}>

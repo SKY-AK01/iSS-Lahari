@@ -771,6 +771,11 @@ textarea.input { resize: vertical; min-height: 120px; font-size: 0.85rem; }
   display: flex;
 }
 
+@media (max-width: 768px) {
+  .nav-desktop { display: none; }
+  .nav-hamburger { display: flex; }
+}
+
 .nav-drawer {
   position: fixed;
   top: 80px;
