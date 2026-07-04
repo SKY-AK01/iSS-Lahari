@@ -180,7 +180,7 @@ export default function ModeSelector({ batch }: Props) {
                 onChange={e => setDuration(Number(e.target.value))}
               />
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.75rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))', gap: '0.75rem' }}>
               <div className="form-group">
                 <label className="form-label" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}><Check size={14} /> Correct</label>
                 <input id="marking-correct" type="number" className="input" step={0.5} min={0} value={markingCorrect} onChange={e => setMarkingCorrect(Number(e.target.value))} />

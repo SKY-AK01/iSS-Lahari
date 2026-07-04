@@ -114,7 +114,7 @@ export default function StudyBrowserClient({ materials }: Props) {
           No study materials available yet. Check back soon!
         </div>
       ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: selected ? '280px 1fr' : '1fr', gap: '1.5rem', alignItems: 'start' }}>
+        <div className="study-layout-grid" style={{ display: 'grid', gridTemplateColumns: selected ? '280px 1fr' : '1fr', gap: '1.5rem', alignItems: 'start' }}>
 
           {/* Sidebar / Browser */}
           <div>
@@ -240,7 +240,7 @@ export default function StudyBrowserClient({ materials }: Props) {
                   className="btn btn-ghost btn-sm"
                   onClick={() => { setSelected(null); setLoadedContent(null); }}
                 >
-                  ✕ Close
+                  Close
                 </button>
               </div>
 

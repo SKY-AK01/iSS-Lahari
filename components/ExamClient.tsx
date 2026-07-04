@@ -167,19 +167,19 @@ export default function ExamClient({ batch, questions, attemptId, durationMinute
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       {/* Top Bar with Timer */}
-      <div style={{ background: 'var(--bg-2)', padding: '1rem 1.5rem', borderBottom: '1px solid var(--bg-4)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <div style={{ fontSize: '0.9rem', color: 'var(--cream-dim)' }}>
+      <div style={{ background: 'var(--bg-2)', padding: '0.75rem 1rem', borderBottom: 'var(--border-thick)', display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+        <div style={{ fontSize: '0.8rem', color: 'var(--cream-dim)', flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
           {batch.chapter.subject.name} › {batch.chapter.name}
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <div className="timer-bar-wrap" style={{ width: '120px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexShrink: 0 }}>
+          <div className="timer-bar-wrap" style={{ width: '80px' }}>
             <div className={`timer-bar-fill ${isCritical ? 'critical' : isWarning ? 'warning' : ''}`} style={{ width: `${timerPercent}%` }} />
           </div>
-          <div className={`timer-display ${isCritical ? 'critical' : isWarning ? 'warning' : ''}`}>
+          <div className={`timer-display ${isCritical ? 'critical' : isWarning ? 'warning' : ''}`} style={{ minWidth: '52px', textAlign: 'right' }}>
             {formatTime(timeLeft)}
           </div>
-          <button className="btn btn-primary btn-sm" onClick={() => setShowReview(true)}>
-            Review & Submit
+          <button className="btn btn-primary btn-sm" onClick={() => setShowReview(true)} style={{ whiteSpace: 'nowrap' }}>
+            Submit
           </button>
         </div>
       </div>

@@ -1,8 +1,9 @@
 'use client';
 
+import { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
-import { ClipboardCheck } from 'lucide-react';
+import { ClipboardCheck, Menu, X } from 'lucide-react';
 
 const PROMPT_1 = `You are a deep research assistant for competitive exam preparation.
 I want you to build a comprehensive knowledge base for the following chapter:
@@ -69,10 +70,17 @@ export default function MentorNav({ name }: { name: string }) {
   const pathname = usePathname();
   const router = useRouter();
   const supabase = createClient();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   async function handleLogout() {
+    setMenuOpen(false);
     await supabase.auth.signOut();
     router.push('/login');
+  }
+
+  function navigate(href: string) {
+    setMenuOpen(false);
+    router.push(href);
   }
 
   const links = [
@@ -83,42 +91,75 @@ export default function MentorNav({ name }: { name: string }) {
   ];
 
   return (
-    <nav className="nav">
-      <div className="nav-logo">
-        <ClipboardCheck size={24} color="var(--ruby)" />
-        <span>Lahari<span style={{ color: 'var(--ruby)' }}>.</span></span>
-        <span style={{
-          marginLeft: '0.75rem',
-          fontSize: '0.7rem',
-          fontFamily: 'var(--font-heading)',
-          padding: '3px 8px',
-          background: '#000',
-          color: '#FFF',
-          fontWeight: 900,
-          letterSpacing: '0.05em',
-        }}>MENTOR</span>
-      </div>
+    <>
+      <nav className="nav">
+        {/* Logo */}
+        <div className="nav-logo" style={{ cursor: 'pointer' }} onClick={() => router.push('/mentor')}>
+          <ClipboardCheck size={22} color="var(--ruby)" />
+          <span>Lahari<span style={{ color: 'var(--ruby)' }}>.</span></span>
+          <span style={{
+            marginLeft: '0.5rem',
+            fontSize: '0.65rem',
+            fontFamily: 'var(--font-heading)',
+            padding: '3px 6px',
+            background: '#000',
+            color: '#FFF',
+            fontWeight: 900,
+            letterSpacing: '0.05em',
+          }}>MENTOR</span>
+        </div>
 
-      <div className="nav-links">
-        {links.map(l => (
-          <button
-            key={l.href}
-            id={`nav-${l.label.toLowerCase().replace(' ', '-')}`}
-            className={`nav-link ${pathname === l.href ? 'active' : ''}`}
-            onClick={() => router.push(l.href)}
-          >
-            {l.label}
+        {/* Desktop links */}
+        <div className="nav-links nav-desktop">
+          {links.map(l => (
+            <button
+              key={l.href}
+              id={`nav-${l.label.toLowerCase().replace(' ', '-')}`}
+              className={`nav-link ${pathname === l.href ? 'active' : ''}`}
+              onClick={() => router.push(l.href)}
+            >
+              {l.label}
+            </button>
+          ))}
+          <div style={{ width: '3px', height: '20px', background: '#000' }} />
+          <span style={{ fontSize: '0.8rem', color: 'var(--cream-dim)', fontFamily: 'var(--font-heading)', fontWeight: 700, textTransform: 'uppercase' }}>
+            {name}
+          </span>
+          <button id="nav-logout" className="btn btn-ghost btn-sm" onClick={handleLogout}>
+            Sign out
           </button>
-        ))}
-        <div style={{ width: '3px', height: '20px', background: '#000', margin: '0 0.25rem' }} />
-        <span style={{ fontSize: '0.85rem', color: 'var(--cream-dim)', fontFamily: 'var(--font-heading)', fontWeight: 700, textTransform: 'uppercase', padding: '0 0.5rem' }}>
-          {name}
-        </span>
-        <button id="nav-logout" className="btn btn-ghost btn-sm" onClick={handleLogout}>
-          Sign out
+        </div>
+
+        {/* Mobile hamburger */}
+        <button
+          className="nav-hamburger"
+          onClick={() => setMenuOpen(o => !o)}
+          aria-label="Toggle menu"
+        >
+          {menuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
-      </div>
-    </nav>
+      </nav>
+
+      {/* Mobile drawer */}
+      {menuOpen && (
+        <div className="nav-drawer">
+          <div className="nav-drawer-user">{name}</div>
+          {links.map(l => (
+            <button
+              key={l.href}
+              className={`nav-drawer-link ${pathname === l.href ? 'active' : ''}`}
+              onClick={() => navigate(l.href)}
+            >
+              {l.label}
+            </button>
+          ))}
+          <div className="nav-drawer-divider" />
+          <button className="nav-drawer-link" onClick={handleLogout}>
+            Sign Out
+          </button>
+        </div>
+      )}
+    </>
   );
 }
 
