@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Question, Verdict } from '@/lib/types';
 import { Brain, AlertTriangle } from 'lucide-react';
@@ -15,32 +15,53 @@ interface Props {
 export default function PracticeClient({ batch, questions, attemptId }: Props) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [studentAnswer, setStudentAnswer] = useState('');
-  const [isFlipped, setIsFlipped] = useState(false);
-  const [verdict, setVerdict] = useState<Verdict | null>(null);
-  const [aiFeedback, setAiFeedback] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [answers, setAnswers] = useState<any[]>([]);
+  const [answers, setAnswers] = useState<Record<string, any>>({});
   const router = useRouter();
 
   const currentQ = questions[currentIndex];
   const isFinished = currentIndex >= questions.length;
 
-  async function handleMCQSubmit(option: string) {
-    setStudentAnswer(option);
-    const isCorrect = option === currentQ.answer;
-    const v: Verdict = isCorrect ? 'correct' : 'incorrect';
-    setVerdict(v);
-    
-    // Save locally
-    setAnswers(prev => [...prev, {
-      questionId: currentQ.id,
-      studentAnswer: option,
-      verdict: v,
-      aiFeedback: null,
-      marksAwarded: isCorrect ? 1 : 0
-    }]);
+  const currentAns = currentQ ? answers[currentQ.id] : null;
+  const isFlipped = !!currentAns && currentAns.verdict !== 'unanswered';
+  const verdict = currentAns?.verdict || null;
+  const aiFeedback = currentAns?.aiFeedback || null;
 
-    setIsFlipped(true);
+  useEffect(() => {
+    if (currentQ) {
+      setStudentAnswer(answers[currentQ.id]?.studentAnswer || '');
+    }
+  }, [currentIndex, currentQ, answers]);
+
+  async function handleMCQSubmit(option: string, index: number) {
+    if (isFlipped) return; // Prevent changing answer once flipped
+    setStudentAnswer(option);
+    
+    const optLetter = String.fromCharCode(65 + index).toLowerCase();
+    const ans = currentQ.answer.toLowerCase().trim();
+    const optText = option.toLowerCase().trim();
+    const stripPrefix = (s: string) => s.replace(/^(\([a-d]\)|[a-d]\)|[a-d]\.)\s*/, '').trim();
+    
+    const isCorrect = 
+      optText === ans ||
+      stripPrefix(optText) === stripPrefix(ans) ||
+      ans === optLetter ||
+      ans === `(${optLetter})` ||
+      ans === `${optLetter}.` ||
+      ans === `${optLetter})`;
+
+    const v: Verdict = isCorrect ? 'correct' : 'incorrect';
+    
+    setAnswers(prev => ({
+      ...prev,
+      [currentQ.id]: {
+        questionId: currentQ.id,
+        studentAnswer: option,
+        verdict: v,
+        aiFeedback: null,
+        marksAwarded: isCorrect ? 1 : 0
+      }
+    }));
   }
 
   async function handleShortAnswerSubmit() {
@@ -66,18 +87,16 @@ export default function PracticeClient({ batch, questions, attemptId }: Props) {
         v = 'incorrect'; // Can be improved
       }
 
-      setVerdict(v);
-      setAiFeedback(data.feedback);
-
-      setAnswers(prev => [...prev, {
-        questionId: currentQ.id,
-        studentAnswer,
-        verdict: v,
-        aiFeedback: data.feedback,
-        marksAwarded: v === 'correct' ? 1 : v === 'partial' ? 0.5 : 0
-      }]);
-
-      setIsFlipped(true);
+      setAnswers(prev => ({
+        ...prev,
+        [currentQ.id]: {
+          questionId: currentQ.id,
+          studentAnswer,
+          verdict: v,
+          aiFeedback: data.feedback,
+          marksAwarded: v === 'correct' ? 1 : v === 'partial' ? 0.5 : 0
+        }
+      }));
     } catch (e) {
       console.error(e);
       // Fallback
@@ -87,23 +106,22 @@ export default function PracticeClient({ batch, questions, attemptId }: Props) {
   }
 
   function handleNext() {
-    setStudentAnswer('');
-    setIsFlipped(false);
-    setVerdict(null);
-    setAiFeedback(null);
     setCurrentIndex(prev => prev + 1);
   }
 
   function handleSkip() {
-    // Record as unanswered, move on without flipping the card
-    setAnswers(prev => [...prev, {
-      questionId: currentQ.id,
-      studentAnswer: '',
-      verdict: 'unanswered',
-      aiFeedback: null,
-      marksAwarded: 0,
-    }]);
-    setStudentAnswer('');
+    if (!answers[currentQ.id]) {
+      setAnswers(prev => ({
+        ...prev,
+        [currentQ.id]: {
+          questionId: currentQ.id,
+          studentAnswer: '',
+          verdict: 'unanswered',
+          aiFeedback: null,
+          marksAwarded: 0,
+        }
+      }));
+    }
     setCurrentIndex(prev => prev + 1);
   }
 
@@ -111,7 +129,8 @@ export default function PracticeClient({ batch, questions, attemptId }: Props) {
     setLoading(true);
     // calculate score
     let correctCount = 0;
-    answers.forEach(a => {
+    const answersArray = Object.values(answers);
+    answersArray.forEach(a => {
       if (a.verdict === 'correct') correctCount += 1;
       else if (a.verdict === 'partial') correctCount += 0.5;
     });
@@ -122,7 +141,7 @@ export default function PracticeClient({ batch, questions, attemptId }: Props) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         attemptId,
-        answers,
+        answers: answersArray,
         score: correctCount,
         percentage,
       }),
@@ -146,12 +165,17 @@ export default function PracticeClient({ batch, questions, attemptId }: Props) {
   return (
     <div className="container" style={{ paddingTop: '1.5rem', paddingBottom: '4rem' }}>
       {/* Breadcrumb + progress */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '0.5rem' }}>
-        <div style={{ fontSize: '0.82rem', color: 'var(--cream-dim)', fontWeight: 500 }}>
-          {batch.chapter.subject.name} › {batch.chapter.name}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '1.25rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem' }}>
+          <div style={{ fontSize: '0.82rem', color: 'var(--cream-dim)', fontWeight: 500 }}>
+            {batch.chapter.subject.name} › {batch.chapter.name}
+          </div>
+          <div className="batch-badge">
+            {currentIndex + 1} / {questions.length}
+          </div>
         </div>
-        <div className="batch-badge">
-          {currentIndex + 1} / {questions.length}
+        <div style={{ width: '100%', height: '6px', background: 'var(--bg-3)', borderRadius: '3px', overflow: 'hidden' }}>
+          <div style={{ width: `${((currentIndex + 1) / questions.length) * 100}%`, height: '100%', background: 'var(--ruby)', transition: 'width 200ms ease-out' }} />
         </div>
       </div>
 
@@ -175,7 +199,7 @@ export default function PracticeClient({ batch, questions, attemptId }: Props) {
                   <div
                     key={i}
                     className="omr-option"
-                    onClick={() => handleMCQSubmit(opt)}
+                    onClick={() => handleMCQSubmit(opt, i)}
                   >
                     <div className="omr-bubble"><span>{String.fromCharCode(65 + i)}</span></div>
                     <span className="omr-option-text">{opt}</span>
@@ -285,6 +309,30 @@ export default function PracticeClient({ batch, questions, attemptId }: Props) {
             </button>
           </div>
         </div>
+      </div>
+
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '1.5rem', gap: '1rem', flexWrap: 'wrap' }}>
+        <button 
+          className="btn btn-ghost" 
+          onClick={() => setCurrentIndex(c => c - 1)} 
+          disabled={currentIndex === 0}
+        >
+          ← Previous
+        </button>
+
+        {currentIndex === questions.length - 1 ? (
+          <button className="btn btn-primary" onClick={handleFinish} disabled={loading}>
+             {loading ? 'Saving...' : 'Finish Practice'}
+          </button>
+        ) : (
+          <button 
+            className="btn btn-ghost" 
+            onClick={() => setCurrentIndex(c => c + 1)} 
+            disabled={currentIndex === questions.length - 1}
+          >
+            Next Question →
+          </button>
+        )}
       </div>
     </div>
   );

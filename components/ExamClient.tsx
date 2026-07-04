@@ -68,7 +68,22 @@ export default function ExamClient({ batch, questions, attemptId, durationMinute
       if (!ans) return { questionId: q.id, studentAnswer: ans, verdict: 'unanswered', aiFeedback: null, marksAwarded: 0 };
       
       if (q.type === 'mcq') {
-        const isCorrect = ans === q.answer;
+        const index = q.options?.indexOf(ans) ?? -1;
+        const optLetter = index >= 0 ? String.fromCharCode(65 + index).toLowerCase() : '';
+        const ansLower = q.answer.toLowerCase().trim();
+        const optText = ans.toLowerCase().trim();
+        const stripPrefix = (s: string) => s.replace(/^(\([a-d]\)|[a-d]\)|[a-d]\.)\s*/, '').trim();
+        
+        const isCorrect = 
+          optText === ansLower ||
+          stripPrefix(optText) === stripPrefix(ansLower) ||
+          (optLetter && (
+            ansLower === optLetter ||
+            ansLower === `(${optLetter})` ||
+            ansLower === `${optLetter}.` ||
+            ansLower === `${optLetter})`
+          ));
+
         // The server route /api/attempts/submit will recalculate marks properly if we don't, 
         // but let's just let the server trust us for now or we could move grading fully to server.
         return {
