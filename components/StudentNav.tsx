@@ -23,7 +23,7 @@ export default function StudentNav({ name, isMentor }: { name: string; isMentor:
   }
 
   const links = [
-    { href: '/student', label: 'Learn' },
+    { href: '/student', label: 'Dashboard' },
     { href: '/student/history', label: 'History' },
   ];
 
