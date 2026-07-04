@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { FileText, Map, ChevronRight } from 'lucide-react';
+import { FileText, Map, ChevronRight, Trash2 } from 'lucide-react';
 import { PastedTestJSON, MindMapJSON } from '@/lib/types';
 
 type Step = 'subject' | 'chapter' | 'type' | 'upload';
@@ -195,6 +195,22 @@ export default function AddContentPage() {
     }
   }
 
+  // ── Delete Chapter ───────────────────────────────────────────────
+  async function handleDeleteChapter(id: string, name: string) {
+    if (!confirm(`Are you sure you want to delete the chapter "${name}" and all its contents?`)) return;
+    try {
+      const res = await fetch(`/api/delete?type=chapter&id=${id}`, { method: 'DELETE' });
+      if (!res.ok) throw new Error('Failed to delete chapter');
+      
+      // Refresh data
+      const fetchRes = await fetch('/api/subjects');
+      const data = await fetchRes.json();
+      setSubjectOptions(Array.isArray(data) ? data : []);
+    } catch (e) {
+      alert(e instanceof Error ? e.message : 'Delete failed');
+    }
+  }
+
   // ── Render ───────────────────────────────────────────────────────
   return (
     <div className="container" style={{ paddingTop: '2rem', paddingBottom: '4rem', maxWidth: '720px' }}>
@@ -272,14 +288,26 @@ export default function AddContentPage() {
           {chaptersForSubject.length > 0 && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', marginBottom: '1.25rem' }}>
               {chaptersForSubject.map(c => (
-                <button
-                  key={c.id}
-                  className="btn btn-ghost w-full"
-                  style={{ justifyContent: 'space-between', textAlign: 'left', fontWeight: 700 }}
-                  onClick={() => { setChapter(c.name); setStep('type'); }}
-                >
-                  {c.name}
-                </button>
+                <div key={c.id} style={{ display: 'flex', gap: '0.4rem' }}>
+                  <button
+                    className="btn btn-ghost"
+                    style={{ flex: 1, justifyContent: 'flex-start', textAlign: 'left', fontWeight: 700 }}
+                    onClick={() => { setChapter(c.name); setStep('type'); }}
+                  >
+                    {c.name}
+                  </button>
+                  <button
+                    className="btn btn-ghost"
+                    style={{ padding: '0 0.75rem', color: 'var(--ruby)' }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDeleteChapter(c.id, c.name);
+                    }}
+                    title="Delete Chapter"
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                </div>
               ))}
             </div>
           )}
