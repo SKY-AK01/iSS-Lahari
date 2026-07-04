@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, useState, useCallback, useRef } from 'react';
 import ForceGraph2D from 'react-force-graph-2d';
 import { MindMapJSON } from '@/lib/types';
 
@@ -8,19 +8,42 @@ interface Props {
   material: MindMapJSON;
 }
 
+// Level palette: root=black, col1=orange-red, col2=teal-blue, col3=olive, col4=purple, deeper=grey
+const LEVEL_COLORS = ['#111111', '#E53E3E', '#2B6CB0', '#2F855A', '#6B46C1', '#718096'];
+const LEVEL_BG     = ['#FFDE00', '#FED7D7', '#BEE3F8', '#C6F6D5', '#E9D8FD', '#E2E8F0'];
+
+function wrapText(ctx: CanvasRenderingContext2D, text: string, maxWidth: number): string[] {
+  const words = text.split(' ');
+  const lines: string[] = [];
+  let line = '';
+  for (const word of words) {
+    const test = line ? `${line} ${word}` : word;
+    if (ctx.measureText(test).width > maxWidth && line) {
+      lines.push(line);
+      line = word;
+    } else {
+      line = test;
+    }
+  }
+  if (line) lines.push(line);
+  return lines.slice(0, 3); // max 3 lines
+}
+
 export default function GraphViewerClient({ material }: Props) {
+  const [selectedNode, setSelectedNode] = useState<any>(null);
+  const fgRef = useRef<any>(null);
+
   const graphData = useMemo(() => {
     const nodesMap = new Map<string, any>();
     const linksMap = new Map<string, any>();
 
-    // Root node
     const rootId = '__root__';
     nodesMap.set(rootId, {
       id: rootId,
       name: material.title,
-      val: 20,
+      label: material.title,
+      val: 28,
       group: 0,
-      color: '#000000'
     });
 
     material.records.forEach((record) => {
@@ -29,29 +52,25 @@ export default function GraphViewerClient({ material }: Props) {
       material.columns.forEach((col, colIdx) => {
         const cellValue = record[col];
         if (!cellValue || cellValue.trim() === '' || cellValue === '—') return;
-        
-        // Strip HTML if any, for the label
+
         const plainText = cellValue.replace(/<[^>]+>/g, '').trim();
-        const shortName = plainText.length > 50 ? plainText.substring(0, 50) + '...' : plainText;
-        
         const nodeId = `col${colIdx}_${plainText}`;
-        
+        const nodeVal = colIdx === 0 ? 14 : colIdx === 1 ? 8 : 5;
+
         if (!nodesMap.has(nodeId)) {
           nodesMap.set(nodeId, {
             id: nodeId,
-            name: plainText, // full text for tooltip
-            shortName,
-            val: 5,
+            name: plainText,
+            label: plainText.length > 30 ? plainText.substring(0, 28) + '…' : plainText,
+            val: nodeVal,
             group: colIdx + 1,
+            column: col,
           });
         }
 
         const linkId = `${prevNodeId}->${nodeId}`;
         if (!linksMap.has(linkId)) {
-          linksMap.set(linkId, {
-            source: prevNodeId,
-            target: nodeId,
-          });
+          linksMap.set(linkId, { source: prevNodeId, target: nodeId, level: colIdx });
         }
 
         prevNodeId = nodeId;
@@ -60,23 +79,154 @@ export default function GraphViewerClient({ material }: Props) {
 
     return {
       nodes: Array.from(nodesMap.values()),
-      links: Array.from(linksMap.values())
+      links: Array.from(linksMap.values()),
     };
   }, [material]);
 
-  // Color palette for different column levels
-  const colors = ['#000000', 'var(--sage)', 'var(--ruby)', 'var(--sky)', 'var(--ink)', '#666666'];
+  const paintNode = useCallback((node: any, ctx: CanvasRenderingContext2D, globalScale: number) => {
+    const isRoot = node.group === 0;
+    const r = Math.sqrt(node.val) * 3;
+    const x = node.x ?? 0;
+    const y = node.y ?? 0;
+
+    const color = LEVEL_COLORS[node.group % LEVEL_COLORS.length];
+    const bg    = LEVEL_BG[node.group % LEVEL_BG.length];
+
+    // Draw circle
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, 2 * Math.PI);
+    ctx.fillStyle = color;
+    ctx.fill();
+    if (isRoot) {
+      ctx.strokeStyle = '#FFF';
+      ctx.lineWidth = 2 / globalScale;
+      ctx.stroke();
+    }
+
+    // Always draw label (adapts to zoom)
+    const minScale = isRoot ? 0.1 : 0.3;
+    if (globalScale >= minScale) {
+      const fontSize = isRoot
+        ? Math.min(16, 14 / globalScale)
+        : Math.min(13, 11 / globalScale);
+
+      ctx.font = `${isRoot ? 'bold ' : ''}${fontSize}px Inter, sans-serif`;
+      const label = node.label || node.name;
+      const maxTextWidth = isRoot ? 120 / globalScale : 90 / globalScale;
+
+      // Background pill behind text
+      const lines = wrapText(ctx, label, maxTextWidth);
+      const lineH = fontSize * 1.3;
+      const boxH = lines.length * lineH;
+      const boxW = Math.max(...lines.map(l => ctx.measureText(l).width)) + 8 / globalScale;
+      const boxY = y + r + 4 / globalScale;
+
+      ctx.fillStyle = bg;
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 1.2 / globalScale;
+      ctx.beginPath();
+      const bx = x - boxW / 2;
+      const br = 3 / globalScale;
+      ctx.roundRect(bx, boxY, boxW, boxH + 4 / globalScale, br);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = color;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+      lines.forEach((line, i) => {
+        ctx.fillText(line, x, boxY + 2 / globalScale + i * lineH);
+      });
+    }
+  }, []);
+
+  const handleNodeClick = useCallback((node: any) => {
+    setSelectedNode(node);
+    // Zoom to node
+    if (fgRef.current) {
+      fgRef.current.centerAt(node.x, node.y, 500);
+      fgRef.current.zoom(3, 500);
+    }
+  }, []);
 
   return (
-    <div style={{ width: '100%', height: '100vh', background: '#F4F4F0' }}>
+    <div style={{ width: '100vw', height: '100vh', position: 'relative', background: '#F4F4F0', overflow: 'hidden' }}>
+      {/* Header */}
+      <div style={{
+        position: 'absolute', top: 0, left: 0, right: 0, zIndex: 10,
+        padding: '0.75rem 1.5rem',
+        background: 'rgba(244,244,240,0.9)',
+        backdropFilter: 'blur(8px)',
+        borderBottom: '2px solid #000',
+        display: 'flex', alignItems: 'center', gap: '1rem',
+      }}>
+        <div style={{ fontFamily: 'Inter, sans-serif', fontWeight: 900, fontSize: '1rem', letterSpacing: '-0.03em', textTransform: 'uppercase' }}>
+          {material.title}
+        </div>
+        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+          {material.columns.map((col, i) => (
+            <span key={col} style={{
+              fontSize: '0.65rem', fontWeight: 700, padding: '2px 8px',
+              background: LEVEL_COLORS[(i + 1) % LEVEL_COLORS.length],
+              color: '#FFF', fontFamily: 'Inter, sans-serif',
+              borderRadius: '2px', textTransform: 'uppercase', letterSpacing: '0.04em',
+            }}>{col}</span>
+          ))}
+        </div>
+        <div style={{ marginLeft: 'auto', fontSize: '0.7rem', color: '#666', fontFamily: 'Inter, sans-serif' }}>
+          Click a node to see full text
+        </div>
+      </div>
+
       <ForceGraph2D
+        ref={fgRef}
         graphData={graphData}
-        nodeLabel="name"
-        nodeColor={(node: any) => colors[node.group % colors.length]}
-        nodeRelSize={6}
-        linkColor={() => 'rgba(0,0,0,0.15)'}
-        linkWidth={1}
+        nodeLabel=""
+        nodeCanvasObject={paintNode}
+        nodeCanvasObjectMode={() => 'replace'}
+        linkColor={(link: any) => `rgba(0,0,0,${link.level === 0 ? 0.35 : 0.15})`}
+        linkWidth={(link: any) => link.level === 0 ? 1.5 : 1}
+        onNodeClick={handleNodeClick}
+        backgroundColor="#F4F4F0"
+        d3AlphaDecay={0.02}
+        d3VelocityDecay={0.3}
+        cooldownTicks={200}
       />
+
+      {/* Side panel on click */}
+      {selectedNode && (
+        <div style={{
+          position: 'absolute', top: 60, right: 0, width: '300px', bottom: 0,
+          background: '#FFF', borderLeft: '3px solid #000',
+          padding: '1.5rem', overflowY: 'auto', zIndex: 20,
+        }}>
+          <button
+            onClick={() => setSelectedNode(null)}
+            style={{
+              position: 'absolute', top: '0.75rem', right: '0.75rem',
+              background: '#000', color: '#FFF', border: 'none',
+              cursor: 'pointer', fontWeight: 900, fontSize: '1rem',
+              width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}
+          >×</button>
+
+          <div style={{
+            display: 'inline-block', padding: '2px 8px', marginBottom: '0.75rem',
+            background: LEVEL_COLORS[selectedNode.group % LEVEL_COLORS.length],
+            color: '#FFF', fontSize: '0.65rem', fontWeight: 700,
+            fontFamily: 'Inter, sans-serif', textTransform: 'uppercase', letterSpacing: '0.05em',
+          }}>
+            {selectedNode.group === 0 ? 'ROOT' : (selectedNode.column || `Level ${selectedNode.group}`)}
+          </div>
+
+          <p style={{
+            fontFamily: 'Inter, sans-serif', fontSize: '0.95rem', fontWeight: 600,
+            color: '#111', lineHeight: 1.6, textTransform: 'none',
+          }}>
+            {selectedNode.name}
+          </p>
+        </div>
+      )}
     </div>
   );
 }

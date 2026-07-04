@@ -205,182 +205,201 @@ export default function PracticeClient({ batch, questions, attemptId }: Props) {
             {currentIndex + 1} / {questions.length}
           </div>
         </div>
-        <div style={{ width: '100%', height: '6px', background: 'var(--bg-3)', borderRadius: '3px', overflow: 'hidden' }}>
+        <div style={{ width: '100%', height: '6px', background: 'var(--bg-3)', border: 'var(--border-thin)', overflow: 'hidden' }}>
           <div style={{ width: `${((currentIndex + 1) / questions.length) * 100}%`, height: '100%', background: 'var(--ruby)', transition: 'width 200ms ease-out' }} />
         </div>
       </div>
 
-      <div className="study-card-wrap">
-        <div className={`study-card-inner ${isFlipped ? 'flipped' : ''}`}>
-          
-          {/* FRONT (Question) */}
-          <div className="study-card-face card" style={{ padding: '1.75rem' }}>
-            <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1.25rem', alignItems: 'center' }}>
-              <span className={`pill pill-${currentQ.difficulty}`}>{currentQ.difficulty}</span>
-              <span style={{ fontSize: '0.72rem', fontFamily: 'var(--font-heading)', fontWeight: 900, padding: '3px 8px', background: '#000', color: '#FFF', textTransform: 'uppercase' }}>
-                {currentQ.type}
-              </span>
-            </div>
+      {/* Question Card (always visible) */}
+      <div className="card" style={{ padding: '1.75rem', marginBottom: '1.25rem' }}>
+        <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1.25rem', alignItems: 'center' }}>
+          <span className={`pill pill-${currentQ.difficulty}`}>{currentQ.difficulty}</span>
+          <span style={{ fontSize: '0.72rem', fontFamily: 'var(--font-heading)', fontWeight: 900, padding: '3px 8px', background: '#000', color: '#FFF', textTransform: 'uppercase' }}>
+            {currentQ.type}
+          </span>
+        </div>
 
-            <QuestionText text={currentQ.question} style={{ marginBottom: '1.75rem' }} />
+        <QuestionText text={currentQ.question} style={{ marginBottom: '1.75rem' }} />
 
-            {currentQ.type === 'mcq' && (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                {currentQ.options?.map((opt, i) => (
-                  <div
-                    key={i}
-                    className="omr-option"
-                    onClick={() => handleMCQSubmit(opt, i)}
-                  >
-                    <div className="omr-bubble"><span>{String.fromCharCode(65 + i)}</span></div>
-                    <span className="omr-option-text">{opt}</span>
-                  </div>
-                ))}
-                <button
-                  className="btn btn-ghost w-full"
-                  onClick={handleSkip}
-                  style={{ justifyContent: 'center', marginTop: '0.25rem', opacity: 0.6, fontSize: '0.88rem' }}
-                >
-                  Skip this question
-                </button>
+        {currentQ.type === 'mcq' && !isFlipped && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+            {currentQ.options?.map((opt, i) => (
+              <div
+                key={i}
+                className="omr-option"
+                onClick={() => handleMCQSubmit(opt, i)}
+              >
+                <div className="omr-bubble"><span>{String.fromCharCode(65 + i)}</span></div>
+                <span className="omr-option-text">{opt}</span>
               </div>
-            )}
+            ))}
+            <button
+              className="btn btn-ghost w-full"
+              onClick={handleSkip}
+              style={{ justifyContent: 'center', marginTop: '0.25rem', opacity: 0.6, fontSize: '0.88rem' }}
+            >
+              Skip this question
+            </button>
+          </div>
+        )}
 
-            {currentQ.type === 'short' && (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <textarea
-                  className="input"
-                  placeholder="Type your answer here..."
-                  value={studentAnswer}
-                  onChange={e => setStudentAnswer(e.target.value)}
-                  style={{ minHeight: '120px' }}
-                />
-                <div style={{ display: 'flex', gap: '0.75rem' }}>
-                  <button
-                    className="btn btn-primary"
-                    onClick={handleShortAnswerSubmit}
-                    disabled={loading || !studentAnswer.trim()}
-                    style={{ flex: 1, justifyContent: 'center' }}
-                  >
-                    {loading ? 'Checking...' : 'Submit Answer'}
-                  </button>
-                  <button
-                    className="btn btn-ghost"
-                    onClick={handleSkip}
-                    disabled={loading}
-                    style={{ opacity: 0.6 }}
-                  >
-                    Skip
-                  </button>
+        {currentQ.type === 'mcq' && isFlipped && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+            {currentQ.options?.map((opt, i) => {
+              const isSelected = currentAns?.studentAnswer === opt;
+              const isCorrectOpt = (() => {
+                const optLetter = String.fromCharCode(65 + i).toLowerCase();
+                const ans = currentQ.answer.toLowerCase().trim();
+                const optText = opt.toLowerCase().trim();
+                const strip = (s: string) => s.replace(/^(\([a-d]\)|[a-d]\)|[a-d]\.)\s*/, '').trim();
+                return optText === ans || strip(optText) === strip(ans) || ans === optLetter || ans === `(${optLetter})` || ans === `${optLetter}.` || ans === `${optLetter})`;
+              })();
+              return (
+                <div key={i} className={`omr-option ${isCorrectOpt ? 'correct' : isSelected && !isCorrectOpt ? 'incorrect' : ''}`} style={{ cursor: 'default', pointerEvents: 'none' }}>
+                  <div className="omr-bubble"><span>{String.fromCharCode(65 + i)}</span></div>
+                  <span className="omr-option-text">{opt}</span>
                 </div>
-              </div>
-            )}
+              );
+            })}
+          </div>
+        )}
+
+        {currentQ.type === 'short' && !isFlipped && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <textarea
+              className="input"
+              placeholder="Type your answer here..."
+              value={studentAnswer}
+              onChange={e => setStudentAnswer(e.target.value)}
+              style={{ minHeight: '120px' }}
+            />
+            <div style={{ display: 'flex', gap: '0.75rem' }}>
+              <button
+                className="btn btn-primary"
+                onClick={handleShortAnswerSubmit}
+                disabled={loading || !studentAnswer.trim()}
+                style={{ flex: 1, justifyContent: 'center' }}
+              >
+                {loading ? 'Checking...' : 'Submit Answer'}
+              </button>
+              <button className="btn btn-ghost" onClick={handleSkip} disabled={loading} style={{ opacity: 0.6 }}>
+                Skip
+              </button>
+            </div>
+          </div>
+        )}
+
+        {currentQ.type === 'short' && isFlipped && (
+          <div style={{ padding: '0.75rem 1rem', background: 'var(--sage-bg)', border: 'var(--border-thick)', fontSize: '0.9rem' }}>
+            <strong>Your answer:</strong> {currentAns?.studentAnswer}
+          </div>
+        )}
+      </div>
+
+      {/* Result Panel — only shown after answer */}
+      {isFlipped && (
+        <div className="card-paper animate-in" style={{ padding: '1.75rem', marginBottom: '1.25rem' }}>
+          {/* Verdict badge */}
+          <div style={{
+            fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 900,
+            fontFamily: 'var(--font-heading)',
+            color: verdict === 'correct' ? '#000' : verdict === 'partial' ? '#000' : '#FFF',
+            background: verdict === 'correct' ? 'var(--sage)' : verdict === 'partial' ? 'var(--partial-bg)' : 'var(--ruby)',
+            display: 'inline-block', padding: '4px 10px', marginBottom: '1rem',
+            border: 'var(--border-thick)',
+          }}>
+            {verdict}
           </div>
 
-          {/* BACK (Study Card) */}
-          <div className="study-card-face study-card-back card-paper" style={{ padding: '1.75rem' }}>
-            <div style={{ marginBottom: '1.5rem' }}>
-              <div style={{
-                fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 900,
-                fontFamily: 'var(--font-heading)',
-                color: verdict === 'correct' ? '#000' : verdict === 'partial' ? '#000' : '#FFF',
-                background: verdict === 'correct' ? 'var(--sage)' : verdict === 'partial' ? 'var(--partial-bg)' : 'var(--ruby)',
-                display: 'inline-block', padding: '4px 10px', marginBottom: '1rem',
-                border: 'var(--border-thick)',
-              }}>
-                {verdict}
-              </div>
-              <div style={{ fontSize: '0.75rem', fontFamily: 'var(--font-heading)', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.4rem', opacity: 0.5 }}>Correct Answer</div>
-              <p style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--ink)', lineHeight: 1.5, textTransform: 'none' }}>{currentQ.answer}</p>
+          <div style={{ marginBottom: '1.5rem' }}>
+            <div style={{ fontSize: '0.75rem', fontFamily: 'var(--font-heading)', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.4rem', opacity: 0.5 }}>Correct Answer</div>
+            <p style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--ink)', lineHeight: 1.5, textTransform: 'none' }}>{currentQ.answer}</p>
+          </div>
+
+          {aiFeedback && (
+            <div style={{ padding: '1rem', background: 'rgba(0,0,0,0.05)', border: 'var(--border-thin)', marginBottom: '1.5rem', fontSize: '0.9rem' }}>
+              <strong>AI Feedback:</strong> {aiFeedback}
             </div>
+          )}
 
-            {aiFeedback && (
-              <div style={{ padding: '1rem', background: 'rgba(0,0,0,0.05)', borderRadius: '8px', marginBottom: '1.5rem', fontSize: '0.9rem' }}>
-                <strong>AI Feedback:</strong> {aiFeedback}
+          {currentQ.explanation && (
+            <div style={{ marginBottom: '1.5rem' }}>
+              <div style={{ fontSize: '0.72rem', fontFamily: 'var(--font-heading)', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--ruby)', marginBottom: '0.4rem' }}>Explanation</div>
+              <p style={{ fontSize: '0.92rem', lineHeight: 1.6, textTransform: 'none', fontWeight: 400 }}>{currentQ.explanation}</p>
+            </div>
+          )}
+
+          {currentQ.keywords && currentQ.keywords.length > 0 && (
+            <div style={{ marginBottom: '1.5rem' }}>
+              <div style={{ fontSize: '0.72rem', fontFamily: 'var(--font-heading)', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.4rem', opacity: 0.5 }}>Keywords</div>
+              <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
+                {currentQ.keywords.map((k, i) => <span key={i} style={{ fontSize: '0.78rem', background: '#000', color: '#FFF', padding: '2px 8px', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>{k}</span>)}
               </div>
-            )}
+            </div>
+          )}
 
-            {currentQ.explanation && (
-              <div style={{ marginBottom: '1.5rem' }}>
-                <div style={{ fontSize: '0.72rem', fontFamily: 'var(--font-heading)', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--ruby)', marginBottom: '0.4rem' }}>Explanation</div>
-                <p style={{ fontSize: '0.92rem', lineHeight: 1.6, textTransform: 'none', fontWeight: 400 }}>{currentQ.explanation}</p>
-              </div>
-            )}
-
-            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginBottom: '1.5rem' }}>
-              {currentQ.keywords && currentQ.keywords.length > 0 && (
-                <div style={{ flex: 1, minWidth: '180px' }}>
-                  <div style={{ fontSize: '0.72rem', fontFamily: 'var(--font-heading)', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.4rem', opacity: 0.5 }}>Keywords</div>
-                  <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
-                    {currentQ.keywords.map((k, i) => <span key={i} style={{ fontSize: '0.78rem', background: '#000', color: '#FFF', padding: '2px 8px', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>{k}</span>)}
-                  </div>
+          {(currentQ.memory_trick || currentQ.exam_trap) && (
+            <div style={{ display: 'flex', gap: '1rem', flexDirection: 'column', marginBottom: '1.5rem' }}>
+              {currentQ.memory_trick && (
+                <div style={{ background: 'var(--sage-bg)', borderLeft: '4px solid #000', padding: '0.75rem 1rem', display: 'flex', alignItems: 'flex-start', gap: '0.5rem' }}>
+                  <Brain size={18} style={{ flexShrink: 0, marginTop: '2px' }} />
+                  <div><strong>Trick:</strong> {currentQ.memory_trick}</div>
+                </div>
+              )}
+              {currentQ.exam_trap && (
+                <div style={{ background: 'var(--clay-bg)', borderLeft: '4px solid var(--ruby)', padding: '0.75rem 1rem', display: 'flex', alignItems: 'flex-start', gap: '0.5rem' }}>
+                  <AlertTriangle size={18} style={{ flexShrink: 0, marginTop: '2px' }} />
+                  <div><strong>Trap:</strong> {currentQ.exam_trap}</div>
                 </div>
               )}
             </div>
+          )}
 
-            {(currentQ.memory_trick || currentQ.exam_trap) && (
-              <div style={{ display: 'flex', gap: '1rem', flexDirection: 'column', marginBottom: '2rem' }}>
-                {currentQ.memory_trick && (
-                  <div style={{ background: 'var(--sage-bg)', borderLeft: '3px solid var(--sage)', padding: '0.75rem 1rem', borderRadius: '4px', display: 'flex', alignItems: 'flex-start', gap: '0.5rem' }}>
-                    <Brain size={18} style={{ flexShrink: 0, marginTop: '2px' }} />
-                    <div><strong>Trick:</strong> {currentQ.memory_trick}</div>
-                  </div>
-                )}
-                {currentQ.exam_trap && (
-                  <div style={{ background: 'var(--clay-bg)', borderLeft: '3px solid var(--clay)', padding: '0.75rem 1rem', borderRadius: '4px', display: 'flex', alignItems: 'flex-start', gap: '0.5rem' }}>
-                    <AlertTriangle size={18} style={{ flexShrink: 0, marginTop: '2px' }} />
-                    <div><strong>Trap:</strong> {currentQ.exam_trap}</div>
-                  </div>
-                )}
+          {/* AI Detailed Explanation */}
+          {currentAns?.aiDetailedExplanation && (
+            <div style={{ padding: '1.25rem', background: 'var(--sage-bg)', border: 'var(--border-thick)', marginBottom: '1.5rem', fontSize: '0.92rem', lineHeight: 1.7 }}>
+              <div style={{ fontSize: '0.72rem', fontFamily: 'var(--font-heading)', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.75rem', color: '#000', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                ✨ AI Detailed Explanation
               </div>
-            )}
+              <div style={{ whiteSpace: 'pre-wrap', color: 'var(--ink)' }}>{currentAns.aiDetailedExplanation}</div>
+            </div>
+          )}
 
-            {currentAns?.aiDetailedExplanation && (
-              <div style={{ padding: '1rem', background: 'var(--sage-bg)', border: 'var(--border-thick)', marginBottom: '1.5rem', fontSize: '0.92rem', lineHeight: 1.6 }}>
-                <div style={{ fontSize: '0.72rem', fontFamily: 'var(--font-heading)', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.6rem', color: '#000' }}>✨ AI Detailed Explanation</div>
-                <div style={{ whiteSpace: 'pre-wrap' }}>{currentAns.aiDetailedExplanation}</div>
-              </div>
-            )}
-
-            {!currentAns?.aiDetailedExplanation && (
-              <button 
-                className="btn btn-ghost w-full" 
-                onClick={handleExplainMore} 
-                disabled={loadingExplanation}
-                style={{ justifyContent: 'center', marginBottom: '1.5rem', borderStyle: 'dashed' }}
-              >
-                {loadingExplanation ? 'Generating Explanation...' : 'Explain More with AI ✨'}
-              </button>
-            )}
-
-            <button className="btn btn-primary w-full" onClick={handleNext} style={{ justifyContent: 'center' }}>
-              Next Question →
+          {!currentAns?.aiDetailedExplanation && (
+            <button
+              className="btn btn-ghost w-full"
+              onClick={handleExplainMore}
+              disabled={loadingExplanation}
+              style={{ justifyContent: 'center', marginBottom: '1.5rem', borderStyle: 'dashed' }}
+            >
+              {loadingExplanation ? (
+                <><span className="spinner" style={{ width: 16, height: 16, borderWidth: 2 }} /> Generating...</>
+              ) : 'Explain More with AI ✨'}
             </button>
-          </div>
+          )}
         </div>
-      </div>
+      )}
 
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '1.5rem', gap: '1rem', flexWrap: 'wrap' }}>
-        <button 
-          className="btn btn-ghost" 
-          onClick={() => setCurrentIndex(c => c - 1)} 
+      {/* Navigation */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1rem', flexWrap: 'wrap' }}>
+        <button
+          className="btn btn-ghost"
+          onClick={() => setCurrentIndex(c => c - 1)}
           disabled={currentIndex === 0}
         >
           ← Previous
         </button>
 
-        {currentIndex === questions.length - 1 ? (
-          <button className="btn btn-primary" onClick={handleFinish} disabled={loading}>
-             {loading ? 'Saving...' : 'Finish Practice'}
-          </button>
-        ) : (
-          <button 
-            className="btn btn-ghost" 
-            onClick={() => setCurrentIndex(c => c + 1)} 
-            disabled={currentIndex === questions.length - 1}
-          >
-            Next Question →
-          </button>
+        {isFlipped && (
+          currentIndex === questions.length - 1 ? (
+            <button className="btn btn-primary" onClick={handleFinish} disabled={loading}>
+              {loading ? 'Saving...' : 'Finish Practice'}
+            </button>
+          ) : (
+            <button className="btn btn-primary" onClick={handleNext}>
+              Next Question →
+            </button>
+          )
         )}
       </div>
     </div>
