@@ -12,7 +12,7 @@ export default async function StudentPage() {
     .eq('id', user!.id)
     .single();
 
-  // Subjects with chapter count, test batch count, study material count
+  // Subjects with chapter / batch / material counts
   const { data: rawSubjects } = await supabase
     .from('subjects')
     .select(`
@@ -25,19 +25,20 @@ export default async function StudentPage() {
     `)
     .order('name');
 
-  const subjects = (rawSubjects ?? []).map(s => ({
-    id: s.id,
-    name: s.name,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const subjects = (rawSubjects ?? []).map((s: any) => ({
+    id: String(s.id),
+    name: String(s.name),
     chapter_count: s.chapters?.length ?? 0,
-    material_count: s.chapters?.reduce(
-      (n: number, c: { study_materials: { id: string }[] }) => n + (c.study_materials?.length ?? 0), 0
-    ) ?? 0,
-    batch_count: s.chapters?.reduce(
-      (n: number, c: { test_batches: { id: string }[] }) => n + (c.test_batches?.length ?? 0), 0
-    ) ?? 0,
+    material_count: (s.chapters ?? []).reduce(
+      (n: number, c: { study_materials?: { id: string }[] }) => n + (c.study_materials?.length ?? 0), 0
+    ),
+    batch_count: (s.chapters ?? []).reduce(
+      (n: number, c: { test_batches?: { id: string }[] }) => n + (c.test_batches?.length ?? 0), 0
+    ),
   }));
 
-  // Student attempt stats
+  // Student attempt stats (simple query — no joins)
   const { data: allAttempts } = await supabase
     .from('attempts')
     .select('id, percentage')
@@ -51,11 +52,9 @@ export default async function StudentPage() {
   const avg_score = percentages.length > 0
     ? percentages.reduce((a, b) => a + b, 0) / percentages.length
     : null;
-  const best_score = percentages.length > 0
-    ? Math.max(...percentages)
-    : null;
+  const best_score = percentages.length > 0 ? Math.max(...percentages) : null;
 
-  // Recent 3 attempts
+  // Recent 3 attempts — flatten Supabase array relations manually
   const { data: recentRaw } = await supabase
     .from('attempts')
     .select(`
@@ -73,27 +72,21 @@ export default async function StudentPage() {
     .order('submitted_at', { ascending: false })
     .limit(3);
 
-  const recentAttempts = (recentRaw ?? []).map((a: {
-    id: string;
-    mode: string;
-    percentage: number | null;
-    submitted_at: string;
-    batch: {
-      batch_number: number;
-      chapter: {
-        name: string;
-        subject: { name: string };
-      };
-    } | null;
-  }) => ({
-    id: a.id,
-    subject_name: a.batch?.chapter?.subject?.name ?? '—',
-    chapter_name: a.batch?.chapter?.name ?? '—',
-    batch_number: a.batch?.batch_number ?? 0,
-    mode: a.mode,
-    percentage: a.percentage,
-    submitted_at: a.submitted_at,
-  }));
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const recentAttempts = (recentRaw ?? []).map((a: any) => {
+    const batch   = Array.isArray(a.batch)           ? a.batch[0]           : a.batch;
+    const chapter = Array.isArray(batch?.chapter)    ? batch.chapter[0]    : batch?.chapter;
+    const subject = Array.isArray(chapter?.subject)  ? chapter.subject[0]  : chapter?.subject;
+    return {
+      id:           String(a.id),
+      subject_name: String(subject?.name   ?? '—'),
+      chapter_name: String(chapter?.name   ?? '—'),
+      batch_number: Number(batch?.batch_number ?? 0),
+      mode:         String(a.mode),
+      percentage:   a.percentage ?? null,
+      submitted_at: String(a.submitted_at),
+    };
+  });
 
   return (
     <StudentDashboard
