@@ -19,8 +19,7 @@ export default async function TestModePage({ params }: { params: Promise<{ batch
       .select('id, mode, score, max_score, percentage, started_at, submitted_at')
       .eq('batch_id', batchId)
       .eq('student_id', user!.id)
-      .not('submitted_at', 'is', null)
-      .order('submitted_at', { ascending: false }),
+      .order('started_at', { ascending: false }),
   ]);
 
   if (!batch) notFound();

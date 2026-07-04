@@ -1,6 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 
+const MODELS = ['gemini-2.5-flash-lite', 'gemini-2.5-flash'];
+
+const KEYS = [
+  process.env.GEMINI_API_KEY1,
+  process.env.GEMINI_API_KEY2,
+  process.env.GEMINI_API_KEY3,
+].filter(Boolean) as string[];
+
 export async function POST(req: NextRequest) {
   const supabase = await createClient();
 
@@ -31,16 +39,9 @@ Instructions:
 
 Do not use markdown headers (e.g., no # or ##). Use simple paragraphs, bullet points, and bold text for emphasis.`;
 
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) {
-    return NextResponse.json({
-      explanation: `The correct answer is: ${answer}.\n\n${explanation || 'No additional explanation available.'}`
-    });
-  }
-
-  try {
+  async function callGemini(model: string, apiKey: string): Promise<string> {
     const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${apiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -50,38 +51,28 @@ Do not use markdown headers (e.g., no # or ##). Use simple paragraphs, bullet po
         }),
       }
     );
-
-    if (!res.ok) {
-      const errText = await res.text();
-      console.error('Gemini API error:', res.status, errText);
-      // Return fallback instead of 500
-      return NextResponse.json({
-        explanation: explanation
-          ? `${explanation}`
-          : `The correct answer is: ${answer}.`,
-        fallback: true,
-      });
-    }
-
+    if (!res.ok) throw new Error(`Gemini API error: ${res.status}`);
     const data = await res.json();
-    const text: string = data.candidates?.[0]?.content?.parts?.[0]?.text ?? '';
-
-    if (!text) {
-      return NextResponse.json({
-        explanation: explanation || `The correct answer is: ${answer}.`,
-        fallback: true,
-      });
-    }
-
-    return NextResponse.json({ explanation: text });
-  } catch (error: any) {
-    console.error('Explain API Error:', error?.message);
-    // Always return 200 with fallback content — never let the UI show an error
-    return NextResponse.json({
-      explanation: explanation
-        ? `${explanation}`
-        : `The correct answer is: ${answer}.`,
-      fallback: true,
-    });
+    return data.candidates?.[0]?.content?.parts?.[0]?.text ?? '';
   }
+
+  // Try each model, then for each model try all keys — mirrors the test script
+  for (const model of MODELS) {
+    for (const key of KEYS) {
+      try {
+        const text = await callGemini(model, key);
+        if (text) return NextResponse.json({ explanation: text });
+      } catch {
+        // try next key / model
+      }
+    }
+  }
+
+  // All models and keys failed — return graceful fallback
+  return NextResponse.json({
+    explanation: explanation
+      ? `${explanation}`
+      : `The correct answer is: ${answer}.`,
+    fallback: true,
+  });
 }

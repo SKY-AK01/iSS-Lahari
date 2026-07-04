@@ -359,10 +359,17 @@ export default function PracticeClient({ batch, questions, attemptId, existingAn
           className="btn btn-ghost w-full"
           onClick={handleExplainMore}
           disabled={loadingExplanation}
-          style={{ justifyContent: 'center', marginBottom: '0', borderStyle: 'dashed', gap: '0.5rem' }}
+          style={{ 
+            justifyContent: 'center', 
+            marginBottom: '0', 
+            borderStyle: 'dashed', 
+            gap: '0.5rem',
+            minHeight: '64px',
+            padding: '1rem'
+          }}
         >
           {loadingExplanation
-            ? <><span className="spinner" style={{ width: 14, height: 14, borderWidth: 2 }} /> Generating AI explanation…</>
+            ? <><span className="spinner" style={{ width: 14, height: 14, borderWidth: 2 }} /> GENERATING AI EXPLANATION…</>
             : <><Sparkles size={14} /> Explain More with AI</>}
         </button>
       )}
@@ -390,7 +397,7 @@ export default function PracticeClient({ batch, questions, attemptId, existingAn
           className={`study-card-inner ${isFlipped ? 'flipped' : ''}`}
           style={{ 
             height: innerHeight ? `${innerHeight}px` : undefined,
-            transition: 'transform 600ms cubic-bezier(0.16,1,0.3,1), height 300ms ease',
+            transition: 'transform 600ms cubic-bezier(0.16,1,0.3,1)',
             transformStyle: 'preserve-3d',
             transform: isFlipped ? 'rotateY(180deg)' : 'none',
             position: 'relative'

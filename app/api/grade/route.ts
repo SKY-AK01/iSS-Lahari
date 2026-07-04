@@ -2,6 +2,14 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { GradeRequest, GradeResponse } from '@/lib/types';
 
+const MODELS = ['gemini-2.5-flash-lite', 'gemini-2.5-flash'];
+
+const KEYS = [
+  process.env.GEMINI_API_KEY1,
+  process.env.GEMINI_API_KEY2,
+  process.env.GEMINI_API_KEY3,
+].filter(Boolean) as string[];
+
 export async function POST(req: NextRequest) {
   const supabase = await createClient();
 
@@ -26,9 +34,9 @@ Rules:
 Respond ONLY with valid JSON in this exact format:
 {"verdict": "correct" | "partial" | "incorrect", "feedback": "one brief sentence of feedback"}`;
 
-  async function callGemini(): Promise<GradeResponse> {
+  async function callGemini(model: string, apiKey: string): Promise<GradeResponse> {
     const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${process.env.GEMINI_API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -41,27 +49,26 @@ Respond ONLY with valid JSON in this exact format:
     if (!res.ok) throw new Error(`Gemini API error: ${res.status}`);
     const data = await res.json();
     const text: string = data.candidates?.[0]?.content?.parts?.[0]?.text ?? '';
-    // Strip markdown code fences if present
     const clean = text.replace(/```json|```/g, '').trim();
     return JSON.parse(clean) as GradeResponse;
   }
 
-  try {
-    // Try once, retry once on failure
-    let result: GradeResponse;
-    try {
-      result = await callGemini();
-    } catch {
-      result = await callGemini();
+  // Try each model, then for each model try all keys — mirrors the test script
+  for (const model of MODELS) {
+    for (const key of KEYS) {
+      try {
+        const result = await callGemini(model, key);
+        return NextResponse.json(result);
+      } catch {
+        // try next key / model
+      }
     }
-
-    return NextResponse.json(result);
-  } catch {
-    // Fallback: return self-mark instruction
-    const fallback: GradeResponse = {
-      verdict: 'incorrect', // placeholder — student will override
-      feedback: 'Auto-grading unavailable. Please compare your answer to the correct answer and mark yourself.',
-    };
-    return NextResponse.json({ ...fallback, selfMark: true });
   }
+
+  // All models and keys failed — return graceful fallback
+  const fallback: GradeResponse = {
+    verdict: 'incorrect',
+    feedback: 'Auto-grading unavailable. Please compare your answer to the correct answer and mark yourself.',
+  };
+  return NextResponse.json({ ...fallback, selfMark: true });
 }
