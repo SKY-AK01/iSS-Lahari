@@ -94,6 +94,19 @@ export default function PracticeClient({ batch, questions, attemptId }: Props) {
     setCurrentIndex(prev => prev + 1);
   }
 
+  function handleSkip() {
+    // Record as unanswered, move on without flipping the card
+    setAnswers(prev => [...prev, {
+      questionId: currentQ.id,
+      studentAnswer: '',
+      verdict: 'unanswered',
+      aiFeedback: null,
+      marksAwarded: 0,
+    }]);
+    setStudentAnswer('');
+    setCurrentIndex(prev => prev + 1);
+  }
+
   async function handleFinish() {
     setLoading(true);
     // calculate score
@@ -168,6 +181,13 @@ export default function PracticeClient({ batch, questions, attemptId }: Props) {
                     <span className="omr-option-text">{opt}</span>
                   </div>
                 ))}
+                <button
+                  className="btn btn-ghost w-full"
+                  onClick={handleSkip}
+                  style={{ justifyContent: 'center', marginTop: '0.25rem', opacity: 0.6, fontSize: '0.88rem' }}
+                >
+                  Skip this question
+                </button>
               </div>
             )}
 
@@ -180,13 +200,24 @@ export default function PracticeClient({ batch, questions, attemptId }: Props) {
                   onChange={e => setStudentAnswer(e.target.value)}
                   style={{ minHeight: '120px' }}
                 />
-                <button
-                  className="btn btn-primary"
-                  onClick={handleShortAnswerSubmit}
-                  disabled={loading || !studentAnswer.trim()}
-                >
-                  {loading ? 'Checking...' : 'Submit Answer'}
-                </button>
+                <div style={{ display: 'flex', gap: '0.75rem' }}>
+                  <button
+                    className="btn btn-primary"
+                    onClick={handleShortAnswerSubmit}
+                    disabled={loading || !studentAnswer.trim()}
+                    style={{ flex: 1, justifyContent: 'center' }}
+                  >
+                    {loading ? 'Checking...' : 'Submit Answer'}
+                  </button>
+                  <button
+                    className="btn btn-ghost"
+                    onClick={handleSkip}
+                    disabled={loading}
+                    style={{ opacity: 0.6 }}
+                  >
+                    Skip
+                  </button>
+                </div>
               </div>
             )}
           </div>

@@ -230,16 +230,29 @@ export default function ExamClient({ batch, questions, attemptId, durationMinute
             )}
           </div>
           
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '2rem' }}>
-            <button 
-              className="btn btn-ghost" 
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '2rem', gap: '0.5rem', flexWrap: 'wrap' }}>
+            <button
+              className="btn btn-ghost"
               onClick={() => setCurrentIndex(i => Math.max(0, i - 1))}
               disabled={currentIndex === 0}
             >
-              ← Previous
+              ← Prev
             </button>
-            <button 
-              className="btn btn-ghost" 
+
+            {/* Skip — only shown when current question has no answer yet */}
+            {!answers[currentQ.id] && (
+              <button
+                className="btn btn-ghost"
+                onClick={() => setCurrentIndex(i => Math.min(questions.length - 1, i + 1))}
+                disabled={currentIndex === questions.length - 1}
+                style={{ opacity: 0.6, fontSize: '0.88rem' }}
+              >
+                Skip
+              </button>
+            )}
+
+            <button
+              className="btn btn-ghost"
               onClick={() => setCurrentIndex(i => Math.min(questions.length - 1, i + 1))}
               disabled={currentIndex === questions.length - 1}
             >
