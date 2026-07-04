@@ -47,8 +47,11 @@ export default async function SubjectRoute({ params }: PageProps) {
       .eq('student_id', user!.id)
       .not('submitted_at', 'is', null);
 
-    (attemptsRaw ?? []).forEach((a: { batch: { chapter_id: string } | null }) => {
-      const cid = a.batch?.chapter_id;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (attemptsRaw ?? []).forEach((a: any) => {
+      // Supabase returns joins as arrays — flatten
+      const batch = Array.isArray(a.batch) ? a.batch[0] : a.batch;
+      const cid = batch?.chapter_id;
       if (cid && chapterIds.includes(cid)) {
         attemptCountByChapter[cid] = (attemptCountByChapter[cid] ?? 0) + 1;
       }

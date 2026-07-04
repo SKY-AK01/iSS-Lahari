@@ -76,7 +76,10 @@ export default async function ChapterRoute({ params }: PageProps) {
     attempts: attemptsByBatch[b.id] ?? [],
   }));
 
-  const subjectData = chapter.subject as { id: string; name: string } | null;
+  // Flatten subject — Supabase returns foreign key joins as arrays
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const subjectRaw = chapter.subject as unknown as any;
+  const subjectData = Array.isArray(subjectRaw) ? subjectRaw[0] : subjectRaw;
 
   return (
     <ChapterPage
