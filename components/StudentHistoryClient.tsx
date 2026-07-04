@@ -16,7 +16,7 @@ interface Attempt {
     id: string;
     batch_number: number;
     chapter: { name: string; subject: { name: string } };
-  };
+  } | null;
 }
 
 interface Props {
