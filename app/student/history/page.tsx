@@ -28,23 +28,25 @@ export default async function StudentHistoryPage() {
     const chapter = Array.isArray(batch?.chapter) ? batch.chapter[0] : batch?.chapter;
     const subject = Array.isArray(chapter?.subject) ? chapter.subject[0] : chapter?.subject;
     return {
-      id: a.id,
-      mode: a.mode,
-      score: a.score,
-      max_score: a.max_score,
-      percentage: a.percentage,
-      started_at: a.started_at,
-      submitted_at: a.submitted_at,
-      batch: batch ? {
-        id: batch.id,
-        batch_number: batch.batch_number,
-        chapter: chapter ? {
-          name: chapter.name,
-          subject: subject ? { name: subject.name } : { name: '' },
-        } : { name: '', subject: { name: '' } },
-      } : null,
+      id: String(a.id),
+      mode: String(a.mode),
+      score: a.score ?? null,
+      max_score: a.max_score ?? null,
+      percentage: a.percentage ?? null,
+      started_at: String(a.started_at ?? ''),
+      submitted_at: a.submitted_at ? String(a.submitted_at) : null,
+      batch: batch
+        ? {
+            id: String(batch.id ?? ''),
+            batch_number: Number(batch.batch_number ?? 0),
+            chapter: {
+              name: String(chapter?.name ?? ''),
+              subject: { name: String(subject?.name ?? '') },
+            },
+          }
+        : null,
     };
   });
 
-  return <StudentHistoryClient attempts={attempts} />;
+  return <StudentHistoryClient attempts={attempts as Parameters<typeof StudentHistoryClient>[0]['attempts']} />;
 }
