@@ -1,0 +1,296 @@
+{
+  "title": "mind-map",
+  "columns": [
+    "Year",
+    "Act or Agreement Name",
+    "Governor-General or Key Figure",
+    "Main Provisions and Changes",
+    "Constitutional Significance",
+    "Source"
+  ],
+  "records": [
+    {
+      "Year": "1773",
+      "Act or Agreement Name": "Regulating Act 1773",
+      "Governor-General or Key Figure": "Lord Warren Hastings",
+      "Main Provisions and Changes": "• Designated the Governor of Bengal as the 'Governor-General of Bengal' and created an Executive Council of four members to assist him. <br> • Established the Supreme Court at Fort William (Calcutta) in 1774 with a Chief Justice and three judges. <br> • Subordinated the Governors of Bombay and Madras to the Governor-General of Bengal. <br> • Prohibited Company servants from engaging in private trade or accepting bribes/gifts. <br> • Required the Court of Directors to report on revenue, civil, and military affairs to the British Treasury.",
+      "Constitutional Significance": "It was the first step by the British Government to regulate East India Company affairs and laid the foundations for central administration and parliamentary control in India.",
+      "Source": "[1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24]"
+    },
+    {
+      "Year": "1781",
+      "Act or Agreement Name": "Act of Settlement 1781 (Amending Act)",
+      "Governor-General or Key Figure": "Warren Hastings",
+      "Main Provisions and Changes": "• Exempted the Governor-General and Executive Council from Supreme Court jurisdiction for official acts. <br> • Excluded revenue matters and collection from judicial oversight. <br> • Recognized Sadar Diwani Adalat as a court of record; appeals from provincial courts were directed to the Governor-General-in-Council. <br> • Mandated the application of personal laws (Hindu/Mohammedan) in cases.",
+      "Constitutional Significance": "Represented the first attempt to separate the executive from the judiciary by defining specific jurisdictional areas and asserting executive supremacy in revenue matters.",
+      "Source": "[2], [3], [4], [5], [7], [10], [14]"
+    },
+    {
+      "Year": "1784",
+      "Act or Agreement Name": "Pitt's India Act of 1784",
+      "Governor-General or Key Figure": "William Pitt the Younger",
+      "Main Provisions and Changes": "• Distinguished between the commercial and political functions of the Company. <br> • Established a six-member Board of Control to supervise political affairs while the Court of Directors managed commercial affairs. <br> • Termed Company territories as 'British possessions in India' for the first time. <br> • Reduced the number of Executive Councillors to three.",
+      "Constitutional Significance": "Introduced the system of 'dual government' (commercial vs. political) which lasted until 1858 and established supreme British Government control over Indian administration.",
+      "Source": "[1], [2], [3], [4], [5], [6], [7], [11], [12], [14], [15], [16], [18], [19], [21], [22], [23], [24]"
+    },
+    {
+      "Year": "1786",
+      "Act or Agreement Name": "Act of 1786",
+      "Governor-General or Key Figure": "Lord Cornwallis",
+      "Main Provisions and Changes": "• Granted the Governor-General the power to override his council in special cases. <br> • Governor-General to also act as Commander-in-Chief.",
+      "Constitutional Significance": "Centralised authority by concentrating military and executive powers in the office of the Governor-General.",
+      "Source": "[2], [7]"
+    },
+    {
+      "Year": "1793",
+      "Act or Agreement Name": "Charter Act of 1793",
+      "Governor-General or Key Figure": "Lord Cornwallis; John Shore",
+      "Main Provisions and Changes": "• Extended the East India Company's trade monopoly for another 20 years. <br> • Extended overriding powers to future Governor-Generals and Governors. <br> • Formally separated revenue administration from judicial functions.",
+      "Constitutional Significance": "Established written laws and regulations as the foundation of government, replacing personal rule with a regular code of internal regulations.",
+      "Source": "[5], [7], [14]"
+    },
+    {
+      "Year": "1813",
+      "Act or Agreement Name": "Charter Act of 1813",
+      "Governor-General or Key Figure": "Lord Minto I; Lord Hastings",
+      "Main Provisions and Changes": "• Abolished the Company's trade monopoly in India (except for tea and trade with China). <br> • Explicitly asserted the sovereignty of the British Crown over Indian territories. <br> • Allocated Rs. 1,00,000 annually for the promotion of education and science. <br> • Permitted Christian missionaries to enter the country.",
+      "Constitutional Significance": "Marked the beginning of the end of the Company’s commercial character and initiated formal state responsibility for education and social promotion.",
+      "Source": "[2], [3], [4], [5], [6], [7], [11], [12], [14], [15], [16], [18], [19]"
+    },
+    {
+      "Year": "1833",
+      "Act or Agreement Name": "Charter Act of 1833",
+      "Governor-General or Key Figure": "Lord William Bentinck; Lord Macaulay",
+      "Main Provisions and Changes": "• Redesignated the Governor-General of Bengal as the 'Governor-General of India' with full civil and military powers. <br> • Deprived the Governors of Bombay and Madras of their legislative powers. <br> • Ended the Company’s activities as a commercial body, making it a purely administrative body. <br> • Established the first Law Commission under Lord Macaulay to codify Indian laws.",
+      "Constitutional Significance": "Represented the final step towards administrative and legislative centralisation in British India, creating a uniform legislative framework.",
+      "Source": "[1], [2], [3], [4], [5], [6], [7], [11], [12], [14], [15], [16], [18], [19], [21], [22], [23], [24]"
+    },
+    {
+      "Year": "1853",
+      "Act or Agreement Name": "Charter Act of 1853",
+      "Governor-General or Key Figure": "Lord Dalhousie; Lord Macaulay",
+      "Main Provisions and Changes": "• Separated the legislative and executive functions of the Governor-General's Council. <br> • Created the Indian Legislative Council (Mini-Parliament) with six new members. <br> • Introduced a system of open competition for the selection and recruitment of civil servants. <br> • Introduced local representation in the Central Legislative Council.",
+      "Constitutional Significance": "Marked the beginning of a modern parliamentary system in India and the first formal step toward the separation of powers.",
+      "Source": "[1], [2], [3], [4], [5], [6], [7], [11], [12], [15], [16], [18], [19], [23], [24]"
+    },
+    {
+      "Year": "1858",
+      "Act or Agreement Name": "Government of India Act of 1858",
+      "Governor-General or Key Figure": "Lord Canning (First Viceroy); Queen Victoria",
+      "Main Provisions and Changes": "• Transferred power from the East India Company to the British Crown. <br> • Created the office of Secretary of State for India, assisted by a 15-member Council. <br> • Redesignated the Governor-General as the Viceroy of India. <br> • Abolished the Board of Control and Court of Directors, ending the system of 'dual government'.",
+      "Constitutional Significance": "Established absolute imperial control and direct responsibility of the British Crown for Indian governance (the British Raj).",
+      "Source": "[1], [2], [3], [4], [5], [25], [6], [7], [11], [12], [15], [16], [18], [19], [21], [22], [23], [24]"
+    },
+    {
+      "Year": "1861",
+      "Act or Agreement Name": "Indian Councils Act of 1861",
+      "Governor-General or Key Figure": "Lord Canning",
+      "Main Provisions and Changes": "• Introduced representative institutions by nominating Indians as non-official members to the Legislative Council. <br> • Restored legislative powers to the Bombay and Madras Presidencies (initiating decentralisation). <br> • Recognized the 'Portfolio System' (cabinet-style executive). <br> • Empowered the Viceroy to issue ordinances during emergencies.",
+      "Constitutional Significance": "Initiated the process of legislative decentralisation and provided the foundation for representative governance in India.",
+      "Source": "[1], [2], [3], [4], [5], [6], [7], [11], [12], [18], [19], [23], [24]"
+    },
+    {
+      "Year": "1878",
+      "Act or Agreement Name": "Vernacular Press Act",
+      "Governor-General or Key Figure": "Lord Lytton",
+      "Main Provisions and Changes": "• Aimed to curtail the freedom of the Indian-language (vernacular) press.",
+      "Constitutional Significance": "Significant for the history of civil liberties and the struggle for press freedom under British rule.",
+      "Source": "[26]"
+    },
+    {
+      "Year": "1892",
+      "Act or Agreement Name": "Indian Councils Act of 1892",
+      "Governor-General or Key Figure": "Lord Lansdowne",
+      "Main Provisions and Changes": "• Increased the number of non-official members in central and provincial councils. <br> • Introduced the principle of elections in an indirect manner via local body recommendations. <br> • Empowered Legislative Councils to discuss the budget and address questions to the executive.",
+      "Constitutional Significance": "Expanded the functions and representative nature of the legislatures, introducing the first limited elective element in governance.",
+      "Source": "[1], [2], [3], [4], [5], [6], [7], [11], [12], [18], [19]"
+    },
+    {
+      "Year": "1909",
+      "Act or Agreement Name": "Indian Councils Act of 1909 (Morley-Minto Reforms)",
+      "Governor-General or Key Figure": "Lord Minto; John Morley; Satyendra Prasad Sinha",
+      "Main Provisions and Changes": "• Introduced 'separate electorates' for Muslims, legally recognising communal representation. <br> • Increased the size of legislative councils (Central Council from 16 to 60 members). <br> • Allowed Satyendra Prasad Sinha to become the first Indian to join the Viceroy’s Executive Council. <br> • Formally accepted the principle of election for council seats.",
+      "Constitutional Significance": "Institutionalised communalism ('Divide and Rule') in the electoral system and expanded Indian participation in administration.",
+      "Source": "[1], [2], [3], [4], [5], [6], [7], [8], [11], [12], [15], [16], [17], [18], [19], [21], [22], [23], [24]"
+    },
+    {
+      "Year": "1917",
+      "Act or Agreement Name": "Women's India Association",
+      "Governor-General or Key Figure": "Annie Besant; Ammu Swaminathan",
+      "Main Provisions and Changes": "• Co-founded to tackle social and economic issues faced by women workers.",
+      "Constitutional Significance": "Initiated formal collective advocacy for women's rights and social equality within the pre-constitutional framework.",
+      "Source": "[27]"
+    },
+    {
+      "Year": "1919",
+      "Act or Agreement Name": "Government of India Act of 1919 (Montagu-Chelmsford Reforms)",
+      "Governor-General or Key Figure": "Lord Chelmsford; Edwin Montagu",
+      "Main Provisions and Changes": "• Introduced 'Dyarchy' in the provinces (dividing subjects into transferred and reserved). <br> • Established a bicameral legislature at the centre (Council of State and Legislative Assembly). <br> • Introduced direct elections with limited franchise and extended separate electorates to Sikhs, Christians, and Europeans. <br> • Separated provincial and central budgets and established a Public Service Commission.",
+      "Constitutional Significance": "Introduced the concept of responsible government at the provincial level and expanded the foundation for parliamentary democracy.",
+      "Source": "[1], [2], [3], [4], [5], [25], [6], [7], [8], [11], [12], [15], [16], [17], [18], [19], [21], [22], [23], [24], [28]"
+    },
+    {
+      "Year": "1930",
+      "Act or Agreement Name": "Civil Disobedience Movement",
+      "Governor-General or Key Figure": "Mahatma Gandhi",
+      "Main Provisions and Changes": "• Large-scale non-violent protest against British salt laws and tax policies with mass participation of women.",
+      "Constitutional Significance": "Increased the pressure for total independence and broader franchise, highlighting the need for inclusive constitutional drafting.",
+      "Source": "[27]"
+    },
+    {
+      "Year": "1932",
+      "Act or Agreement Name": "Poona Pact 1932",
+      "Governor-General or Key Figure": "Mahatma Gandhi; B.R. Ambedkar",
+      "Main Provisions and Changes": "• Abandoned separate electorates for 'Depressed Classes' in favour of reserved seats within the Hindu joint electorate. <br> • Reserved 148 seats in provincial legislatures and 18% of seats in the Central Legislature for Depressed Classes. <br> • Called for non-discrimination in public services and educational grants for the community.",
+      "Constitutional Significance": "Preserved Hindu social unity while securing guaranteed political representation for Scheduled Castes, directly influencing the 1935 Act and modern reservation policies.",
+      "Source": "[1], [2], [3], [4], [8], [9], [11], [29], [13], [15], [17], [21], [22], [23], [24], [30]"
+    },
+    {
+      "Year": "1934",
+      "Act or Agreement Name": "Demand for a Constituent Assembly",
+      "Governor-General or Key Figure": "M.N. Roy",
+      "Main Provisions and Changes": "• The first official demand for a Constituent Assembly for India was put forward.",
+      "Constitutional Significance": "Initiated the formal political demand for a representative body to draft an indigenous constitution for India.",
+      "Source": "[31]"
+    },
+    {
+      "Year": "1935",
+      "Act or Agreement Name": "Government of India Act of 1935",
+      "Governor-General or Key Figure": "Lord Willingdon",
+      "Main Provisions and Changes": "• Proposed an All-India Federation of provinces and princely states (never implemented). <br> • Abolished provincial dyarchy and introduced 'Provincial Autonomy'. <br> • Introduced dyarchy at the federal centre and divided powers into three lists (Federal, Provincial, Concurrent). <br> • Established the Federal Court (1937), the Reserve Bank of India (RBI), and Public Service Commissions.",
+      "Constitutional Significance": "Served as the primary structural blueprint for the 1950 Constitution, introducing the federal principle and division of powers.",
+      "Source": "[1], [2], [3], [4], [31], [5], [25], [6], [7], [8], [9], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [28]"
+    },
+    {
+      "Year": "1940",
+      "Act or Agreement Name": "August Offer",
+      "Governor-General or Key Figure": "Lord Linlithgow",
+      "Main Provisions and Changes": "• Proposed Dominion status, expansion of the Viceroy's executive council, and the setting up of a constituent assembly after the war.",
+      "Constitutional Significance": "Represented the first time the British Government formally accepted the principle that Indians should frame their own constitution.",
+      "Source": "[31], [32], [26]"
+    },
+    {
+      "Year": "1942",
+      "Act or Agreement Name": "Cripps Mission",
+      "Governor-General or Key Figure": "Sir Stafford Cripps",
+      "Main Provisions and Changes": "• Proposed Dominion status and a Constituent Assembly after World War II. • Right for any province to remain outside the Union (secession).",
+      "Constitutional Significance": "First formal recognition by the British of India's right to frame its own constitution, though the proposal was rejected by major parties.",
+      "Source": "[32], [8], [26], [9]"
+    },
+    {
+      "Year": "1945",
+      "Act or Agreement Name": "Wavell Plan",
+      "Governor-General or Key Figure": "Lord Wavell",
+      "Main Provisions and Changes": "• Proposed a national interim executive council with equal representation for Congress and the Muslim League.",
+      "Constitutional Significance": "Represented an attempt to resolve political deadlocks and move towards an interim Indian-led government.",
+      "Source": "[26]"
+    },
+    {
+      "Year": "1946",
+      "Act or Agreement Name": "Cabinet Mission Plan",
+      "Governor-General or Key Figure": "Pethick-Lawrence; Stafford Cripps; A.V. Alexander",
+      "Main Provisions and Changes": "• Recommended a scheme for a single Constituent Assembly (389 members) elected by provincial assemblies. • Proposed a three-tier structure (Union, Groups, and Provinces) and an interim government. • Rejected the demand for a separate Pakistan.",
+      "Constitutional Significance": "Directly led to the formation of the Constituent Assembly that drafted the current Indian Constitution.",
+      "Source": "[31], [6], [32], [26], [9], [13], [17], [33], [20]"
+    },
+    {
+      "Year": "1946",
+      "Act or Agreement Name": "Formation of the Constituent Assembly",
+      "Governor-General or Key Figure": "Sachidananda Sinha; Rajendra Prasad",
+      "Main Provisions and Changes": "• Assembly of 299 members (after partition) convened. <br> • 6 Dec: Formal establishment; 9 Dec: First meeting (Sinha as temporary chair); 11 Dec: Election of Rajendra Prasad as permanent President.",
+      "Constitutional Significance": "The formal body responsible for creating the sovereign legal framework of independent India.",
+      "Source": "[31], [27]"
+    },
+    {
+      "Year": "1946",
+      "Act or Agreement Name": "Objectives Resolution",
+      "Governor-General or Key Figure": "Jawaharlal Nehru",
+      "Main Provisions and Changes": "• Defined the ideals of an Independent Sovereign Republic where power is derived from the people. • Promised social, economic, and political justice and equality.",
+      "Constitutional Significance": "Provided the philosophical foundation for the Constitution and the legal framework for its Preamble.",
+      "Source": "[31], [13], [17], [30]"
+    },
+    {
+      "Year": "1946",
+      "Act or Agreement Name": "Charter of Women's Rights",
+      "Governor-General or Key Figure": "Hansa Jivraj Mehta",
+      "Main Provisions and Changes": "• Proposed by the All India Women's Conference to ensure gender equality.",
+      "Constitutional Significance": "Influenced the advocacy for social, economic, and political justice without reserved quotas for women in the draft Constitution.",
+      "Source": "[27]"
+    },
+    {
+      "Year": "1947",
+      "Act or Agreement Name": "Mountbatten Plan (3 June Plan)",
+      "Governor-General or Key Figure": "Lord Louis Mountbatten",
+      "Main Provisions and Changes": "• Proposed the partition of British India into two independent dominions: India and Pakistan. • Allowed princely states to choose which dominion to join.",
+      "Constitutional Significance": "The definitive agreement that led to the legal partition and the immediate transfer of power.",
+      "Source": "[9]"
+    },
+    {
+      "Year": "1947",
+      "Act or Agreement Name": "Appointment of Drafting Committee",
+      "Governor-General or Key Figure": "B.R. Ambedkar",
+      "Main Provisions and Changes": "• 29 August: Committee formed with Dr. Ambedkar as Chairman to prepare the final text of the Constitution.",
+      "Constitutional Significance": "Tasked with synthesizing global principles and distinct Indian requirements into a final legal framework.",
+      "Source": "[31]"
+    },
+    {
+      "Year": "1947",
+      "Act or Agreement Name": "Indian Independence Act of 1947",
+      "Governor-General or Key Figure": "Lord Mountbatten; Clement Attlee",
+      "Main Provisions and Changes": "• Created two independent dominions: India and Pakistan, and abolished the office of Viceroy and Secretary of State. <br> • Abolished the British Crown’s sovereignty and suzerainty over princely states. <br> • Empowered Constituent Assemblies to act as fully sovereign bodies with both legislative and constituent functions.",
+      "Constitutional Significance": "Formally ended British rule in India and transferred absolute sovereignty to the people through their Constituent Assemblies.",
+      "Source": "[1], [2], [3], [4], [5], [6], [32], [7], [8], [9], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [30]"
+    },
+    {
+      "Year": "1949",
+      "Act or Agreement Name": "Adoption of the Constitution",
+      "Governor-General or Key Figure": "Not in source",
+      "Main Provisions and Changes": "• 26 November: Final text adopted; immediate effect given to provisions on citizenship, elections, and provisional parliament.",
+      "Constitutional Significance": "Marked the completion of the drafting process and formal acceptance of the supreme law of the land.",
+      "Source": "[31]"
+    },
+    {
+      "Year": "1950",
+      "Act or Agreement Name": "Enforcement of the Constitution",
+      "Governor-General or Key Figure": "Not in source",
+      "Main Provisions and Changes": "• 26 January: The entire Constitution came into force, making India a Republic.",
+      "Constitutional Significance": "Marked the final transition of India into a fully sovereign democratic republic.",
+      "Source": "[31]"
+    }
+  ],
+  "references": {
+    "[1]": "Constitutional Development in India",
+    "[2]": "Previous Year UPSC Polity Questions with Solutions | 2013-24 - Vishnu IAS Academy",
+    "[3]": "The Historical Evolution of the Indian Constitutional Framework: From Colonial Hegemony to Democratic Sovereignty",
+    "[4]": "Historical Background of the Indian Constitution: A Comprehensive Master Knowledge Base and Exam Analysis Database",
+    "[5]": "Historical Background to the Constitution - Indian Polity Notes - Edukemy",
+    "[6]": "Making of Constitution 100 MCQs for UPSC Prelims 2027: Important Indian Polity Questions",
+    "[7]": "List of Acts Passed by the British in India: Major Acts, Features, Significance, and UPSC PYQs - Physics Wallah",
+    "[8]": "Indian Polity & Governance - IAS, UPSC Prelims Questions Papers - IASbaba",
+    "[9]": "Indian Independence Act 1947: Background, Features & Significance - PadhAI.ai",
+    "[10]": "The Act of Settlement 1781 - UPSC - LotusArise",
+    "[11]": "Historical Background of Indian Constitution - BYJU'S",
+    "[12]": "Historical Background of Indian Constitution - BYJU'S",
+    "[13]": "Making of Indian Constitution SSC CGL Questions | PDF - Scribd",
+    "[14]": "Notes on Historical Background of the Indian Constitution - Unacademy",
+    "[15]": "Historical Background of the Indian Constitution for UPSC: Complete Topic-wise Notes",
+    "[16]": "Historical Background of the Indian Constitution for UPSC: Complete Topic-wise Notes",
+    "[17]": "Sources of the Indian Constitution - The Prayas India",
+    "[18]": "Historical Background of Indian Constitution - Rayacademy IAS",
+    "[19]": "Historical Background of the Constitution of India [NCERT Notes] - Template 3",
+    "[20]": "Constituent Assembly - Digital Sansad",
+    "[21]": "Historical Background & Making Of The Constitution PYQ | UPSC CSE, CAPF, CDSE, NDA",
+    "[22]": "Government of India Act 1935, Significance, UPSC Notes - Vajiram & Ravi",
+    "[23]": "Sources of Indian Constitution, UPSC Notes - Vajiram & Ravi",
+    "[24]": "3_Evolution of Constitution - Vision IAS",
+    "[25]": "Government of India Act, 1935 - INSIGHTS IAS",
+    "[26]": "Arrange the following in chronological order: 1. Cabinet Mission 2. Cripps Mission 3. Wavell Plan 4. August Offer 5. Royal Indian Navy Mutiny Which of the following is the correct order - Testbook",
+    "[27]": "Women in the making of Indian Constitution | Current Affairs - Shankar IAS Parliament",
+    "[28]": "Sources Of The Indian Constitution - PWOnlyIAS",
+    "[29]": "Poona Pact 1932 (B.R Ambedkar and M.K Gandhi) Archives ...",
+    "[30]": "Making of the Indian Constitution: PSIR Optional PYQs - LotusArise",
+    "[31]": "Objective Question with Answer for Making of the Constitution - Download Free PDF",
+    "[32]": "Making of the Constitution - InclusiveIAS",
+    "[33]": "Constituent Assembly of India - Digital Sansad"
+  }
+}

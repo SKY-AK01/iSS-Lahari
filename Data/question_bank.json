@@ -1,0 +1,5033 @@
+{
+  "chapter": "Historical Background of the Indian Constitution",
+  "subject": "Indian Polity",
+  "batch": 1,
+  "total_questions": 125,
+  "questions": [
+    {
+      "id": "PYQ-001",
+      "difficulty": "easy",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "SSC CGL",
+        "year": 2018,
+        "stage": ""
+      },
+      "question": "Who became the first Governor-General of India under the provisions of the Charter Act of 1833?",
+      "options": [
+        "Warren Hastings",
+        "Lord William Bentinck",
+        "Lord Dalhousie",
+        "Lord Canning"
+      ],
+      "answer": "(b) Lord William Bentinck",
+      "explanation": "The Charter Act of 1833 redesignated the Governor-General of Bengal as the Governor-General of India. Lord William Bentinck was the first to hold this title. Option (a) is incorrect as Hastings was the first GG of Bengal. Option (d) is incorrect as Canning was the first Viceroy.",
+      "keywords": [
+        "Centralization",
+        "Saint Helena Act"
+      ],
+      "related": {
+        "acts": [
+          "Charter Act 1833"
+        ],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": [
+          "Lord William Bentinck"
+        ]
+      },
+      "memory_trick": "Bentinck for Bharat (India); Hastings for Hugli (Bengal).",
+      "exam_trap": "Candidates often confuse the 1773 designation (GG of Bengal) with the 1833 designation (GG of India).",
+      "why_important": "",
+      "sources": [
+        "Historical Background of Indian Constitution - BYJU'S",
+        "The Historical Evolution (Markdown)"
+      ]
+    },
+    {
+      "id": "PYQ-002",
+      "difficulty": "easy",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": "",
+        "stage": "Prelims"
+      },
+      "question": "Which was the first parliamentary step taken by the British Government to recognize the political and administrative functions of the East India Company?",
+      "options": [
+        "Pitt's India Act, 1784",
+        "Charter Act, 1813",
+        "Regulating Act, 1773",
+        "Government of India Act, 1858"
+      ],
+      "answer": "(c) Regulating Act, 1773",
+      "explanation": "The Regulating Act of 1773 was the inaugural attempt by the British Parliament to regulate and supervise the affairs of the East India Company. It laid the foundation for a centralized administration.",
+      "keywords": [
+        "Foundation of central administration"
+      ],
+      "related": {
+        "acts": [
+          "Regulating Act 1773"
+        ],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": [
+          "Warren Hastings"
+        ]
+      },
+      "memory_trick": "",
+      "exam_trap": "Thinking Pitt's India Act (1784) was the first because it established the Board of Control.",
+      "why_important": "",
+      "sources": [
+        "Historical Background of the Indian Constitution: A Comprehensive Master Knowledge Base",
+        "Vision IAS"
+      ]
+    },
+    {
+      "id": "PYQ-003",
+      "difficulty": "easy",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": 2015,
+        "stage": "Prelims"
+      },
+      "question": "The Directive Principles of State Policy in the Indian Constitution were borrowed from which country?",
+      "options": [
+        "UK",
+        "USA",
+        "Ireland",
+        "Canada"
+      ],
+      "answer": "(c) Ireland",
+      "explanation": "The framers borrowed DPSP from the Irish Constitution of 1937. The UK provided the parliamentary model (Option a), the USA provided Fundamental Rights (Option b), and Canada provided the federal scheme with a strong centre (Option d).",
+      "keywords": [
+        "Instrument of Instructions"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [
+          "Part IV of Indian Constitution"
+        ],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "Ireland = Instructions (Directive Principles).",
+      "exam_trap": "Confusing the \"Instrument of Instructions\" (1935 Act) as the exclusive source.",
+      "why_important": "",
+      "sources": [
+        "Sources of Indian Constitution - Vajiram & Ravi",
+        "Testbook"
+      ]
+    },
+    {
+      "id": "PYQ-004",
+      "difficulty": "easy",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "SSC CGL",
+        "year": "",
+        "stage": ""
+      },
+      "question": "On which date was the Drafting Committee of the Constituent Assembly appointed?",
+      "options": [
+        "15 August 1947",
+        "29 August 1947",
+        "26 November 1949",
+        "9 December 1946"
+      ],
+      "answer": "(b) 29 August 1947",
+      "explanation": "The Drafting Committee was set up on 29 August 1947 under the chairmanship of Dr. B.R. Ambedkar. Option (d) is the date of the first meeting of the Assembly.",
+      "keywords": [
+        "Drafting Committee",
+        "Chairman"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [
+          "August 29, 1947"
+        ],
+        "committees": [
+          "Drafting Committee"
+        ],
+        "personalities": [
+          "Dr. B.R. Ambedkar"
+        ]
+      },
+      "memory_trick": "",
+      "exam_trap": "Mixing up the date of formation (Aug 29) with the date of adoption of the final draft (Nov 26).",
+      "why_important": "",
+      "sources": [
+        "Constituent Assembly - Digital Sansad",
+        "InclusiveIAS"
+      ]
+    },
+    {
+      "id": "PYQ-005",
+      "difficulty": "easy",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": 2021,
+        "stage": "Prelims"
+      },
+      "question": "What was the exact constitutional status of India on 26th January, 1950?",
+      "options": [
+        "A Democratic Republic",
+        "A Sovereign Democratic Republic",
+        "A Sovereign Secular Democratic Republic",
+        "A Sovereign Socialist Secular Democratic Republic"
+      ],
+      "answer": "(b) A Sovereign Democratic Republic",
+      "explanation": "At the time of commencement in 1950, the Preamble declared India a \"Sovereign Democratic Republic\". The words \"Socialist\" and \"Secular\" (Options c and d) were added by the 42nd Amendment in 1976.",
+      "keywords": [
+        "Commencement",
+        "42nd Amendment"
+      ],
+      "related": {
+        "acts": [
+          "42nd CAA 1976"
+        ],
+        "articles": [],
+        "dates": [
+          "26 January 1950"
+        ],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Choosing the modern version of the Preamble, forgetting the original 1950 status.",
+      "why_important": "",
+      "sources": [
+        "Historical Background & Making Of The Constitution PYQ | Marks UPSC",
+        "Edukemy"
+      ]
+    },
+    {
+      "id": "PYQ-006",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": "2012/18",
+        "stage": "Prelims"
+      },
+      "question": "The distribution of powers between the Centre and the States in the Indian Constitution is based on the scheme provided in the:",
+      "options": [
+        "Morley-Minto Reforms, 1909",
+        "Montagu-Chelmsford Act, 1919",
+        "Government of India Act, 1935",
+        "Indian Independence Act, 1947"
+      ],
+      "answer": "(c) Government of India Act, 1935",
+      "explanation": "The 1935 Act divided powers between the Centre and units into three lists: Federal, Provincial, and Concurrent. This scheme formed the basis of Schedule VII of the current Constitution.",
+      "keywords": [
+        "Federal List",
+        "Provincial List",
+        "Concurrent List"
+      ],
+      "related": {
+        "acts": [
+          "Government of India Act 1935"
+        ],
+        "articles": [
+          "Schedule VII"
+        ],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Confusing the 1919 Act's division of \"Reserved\" and \"Transferred\" subjects with the 1935 Act's \"Federal\" and \"Provincial\" lists.",
+      "why_important": "",
+      "sources": [
+        "Government of India Act, 1935 - INSIGHTS IAS",
+        "Vishnu IAS Academy"
+      ]
+    },
+    {
+      "id": "PYQ-007",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "State PSC",
+        "year": "",
+        "stage": ""
+      },
+      "question": "The system of \"Dyarchy\" was abolished in the provinces and replaced by \"Provincial Autonomy\" by which of the following Acts?",
+      "options": [
+        "Indian Councils Act, 1909",
+        "Government of India Act, 1919",
+        "Government of India Act, 1935",
+        "Indian Independence Act, 1947"
+      ],
+      "answer": "(c) Government of India Act, 1935",
+      "explanation": "The 1935 Act abolished dyarchy in the provinces (which was introduced in 1919) and introduced \"Provincial Autonomy,\" making provinces autonomous units of administration.",
+      "keywords": [
+        "Responsible government",
+        "Provincial Autonomy"
+      ],
+      "related": {
+        "acts": [
+          "Government of India Act 1935"
+        ],
+        "articles": [],
+        "dates": [
+          "1937 implementation"
+        ],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Thinking dyarchy was introduced in 1935; it was actually introduced in provinces in 1919 and proposed for the Centre in 1935.",
+      "why_important": "",
+      "sources": [
+        "Historical Background of Indian Constitution - BYJU'S",
+        "Edukemy"
+      ]
+    },
+    {
+      "id": "PYQ-008",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": 2013,
+        "stage": "Prelims"
+      },
+      "question": "With reference to Indian history, the members of the Constituent Assembly from the provinces were:",
+      "options": [
+        "Directly elected by the people of those provinces",
+        "Nominated by the Indian National Congress and the Muslim League",
+        "Elected by the Provincial Legislative Assemblies",
+        "Selected by the government for their expertise in constitutional matters"
+      ],
+      "answer": "(c) Elected by the Provincial Legislative Assemblies",
+      "explanation": "Members were chosen by indirect election by the members of the Provincial Legislative Assemblies. This used the system of proportional representation with a single transferable vote.",
+      "keywords": [
+        "Indirect election",
+        "Proportional representation"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [
+          "Cabinet Mission Plan 1946"
+        ],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Assuming the Assembly was based on \"Universal Adult Franchise,\" whereas it was based on the restricted franchise of the 1935 Act.",
+      "why_important": "",
+      "sources": [
+        "Constituent Assembly of India - Digital Sansad",
+        "Vishnu IAS Academy"
+      ],
+      "related_extra": null
+    },
+    {
+      "id": "PYQ-009",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": 2019,
+        "stage": "Prelims"
+      },
+      "question": "Which of the following provisions was/were introduced by the Charter Act of 1813?\n1. It ended the trade monopoly of the East India Company in India except for trade in tea and trade with China.\n2. It asserted the sovereignty of the British Crown over the Indian territories held by the Company.\n3. It mandated an annual grant of Rs. 1 Lakh for education.\nSelect the correct answer:",
+      "options": [
+        "1 and 2 only",
+        "2 and 3 only",
+        "1 and 3 only",
+        "1, 2 and 3"
+      ],
+      "answer": "(d) 1, 2 and 3",
+      "explanation": "The 1813 Act ended the EIC's monopoly (except tea/China), explicitly asserted Crown sovereignty, and provided Rs. 1 Lakh for education.",
+      "keywords": [
+        "Sovereignty",
+        "Education grant"
+      ],
+      "related": {
+        "acts": [
+          "Charter Act 1813"
+        ],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": [
+          "Christian missionaries"
+        ]
+      },
+      "memory_trick": "",
+      "exam_trap": "Misbelieving the EIC monopoly was completely abolished in 1813; that happened only in 1833.",
+      "why_important": "",
+      "sources": [
+        "Historical Evolution (Markdown)",
+        "BYJU'S"
+      ]
+    },
+    {
+      "id": "PYQ-010",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": "",
+        "stage": "Prelims"
+      },
+      "question": "Which Act provided statutory recognition to the \"Portfolio System\" introduced by Lord Canning?",
+      "options": [
+        "Government of India Act, 1858",
+        "Indian Councils Act, 1861",
+        "Indian Councils Act, 1892",
+        "Charter Act, 1853"
+      ],
+      "answer": "(b) Indian Councils Act, 1861",
+      "explanation": "The 1861 Act gave statutory recognition to the portfolio system (introduced in 1859), allowing members of the Council to issue orders for specific departments.",
+      "keywords": [
+        "Portfolio system",
+        "Representative institutions"
+      ],
+      "related": {
+        "acts": [
+          "Indian Councils Act 1861"
+        ],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": [
+          "Lord Canning"
+        ]
+      },
+      "memory_trick": "",
+      "exam_trap": "Associating the system with the 1858 Act because Canning was Viceroy then, but the legal/statutory shift came in 1861.",
+      "why_important": "",
+      "sources": [
+        "List of Acts Passed by the British in India - Physics Wallah",
+        "Edukemy"
+      ]
+    },
+    {
+      "id": "PYQ-011",
+      "difficulty": "hard",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": 2022,
+        "stage": "Prelims"
+      },
+      "question": "Under the Government of India Act, 1919, the functions of the Provincial Government were divided into \"Reserved\" and \"Transferred\" subjects. Which of the following were treated as \"Reserved\" subjects?\n1. Administration of Justice\n2. Local Self-Government\n3. Land Revenue\n4. Police\nSelect the correct answer:",
+      "options": [
+        "1, 2 and 3 only",
+        "2, 3 and 4 only",
+        "1, 3 and 4 only",
+        "1, 2 and 4 only"
+      ],
+      "answer": "(c) 1, 3 and 4 only",
+      "explanation": "Key portfolios like Land Revenue, Police, and Justice were Reserved (administered by Governor/Council). Social sectors like Local Self-Government and Education were Transferred (administered by ministers).",
+      "keywords": [
+        "Dyarchy",
+        "Division of subjects"
+      ],
+      "related": {
+        "acts": [
+          "Montagu-Chelmsford Reforms 1919"
+        ],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "Reserved = Rules & Revenue (Police/Justice/Tax).",
+      "exam_trap": "Misclassifying \"Local Self-Government\" as Reserved; it was the primary Transferred subject to show \"representative\" progress.",
+      "why_important": "",
+      "sources": [
+        "Historical Background & Making Of The Constitution PYQ | Marks UPSC",
+        "Vision IAS"
+      ]
+    },
+    {
+      "id": "PYQ-012",
+      "difficulty": "hard",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "CDS",
+        "year": "",
+        "stage": ""
+      },
+      "question": "The Charter Act of 1853 introduced local representation in the Indian (Central) Legislative Council. Of the six new legislative members, four were appointed by the local (provincial) governments of:",
+      "options": [
+        "Bengal, Bombay, Madras, and Punjab",
+        "Bengal, Bombay, Madras, and Agra",
+        "Bengal, Bombay, Madras, and the United Provinces",
+        "Bengal, Bihar, Madras, and Agra"
+      ],
+      "answer": "(b) Bengal, Bombay, Madras, and Agra",
+      "explanation": "The 1853 Act expanded the Council and required four out of six legislative members to be nominated by the governments of Madras, Bombay, Bengal, and Agra.",
+      "keywords": [
+        "Legislative Councillors",
+        "Mini-parliament"
+      ],
+      "related": {
+        "acts": [
+          "Charter Act 1853"
+        ],
+        "articles": [],
+        "dates": [],
+        "committees": [
+          "Macaulay Committee"
+        ],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Mixing \"Agra\" with \"United Provinces\" (the later name) or including Punjab due to its historical importance.",
+      "why_important": "",
+      "sources": [
+        "Historical Evolution (Markdown)",
+        "Rayacademy IAS"
+      ]
+    },
+    {
+      "id": "PYQ-013",
+      "difficulty": "hard",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": "",
+        "stage": "Prelims"
+      },
+      "question": "Upon the commencement of the Constitution of India in 1950, which of the following Acts was EXPRESSLY REPEALED under Article 395?\n1. Government of India Act, 1935\n2. Indian Independence Act, 1947\n3. Abolition of Privy Council Jurisdiction Act, 1949\nSelect the correct answer:",
+      "options": [
+        "1 and 2 only",
+        "1 and 3 only",
+        "2 and 3 only",
+        "1, 2 and 3"
+      ],
+      "answer": "(a) 1 and 2 only",
+      "explanation": "Article 395 repealed the Indian Independence Act 1947 and the Government of India Act 1935. However, the Abolition of Privy Council Jurisdiction Act, 1949 was retained.",
+      "keywords": [
+        "Repeal",
+        "Article 395"
+      ],
+      "related": {
+        "acts": [
+          "Indian Independence Act 1947"
+        ],
+        "articles": [
+          "Article 395"
+        ],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Thinking all British-era laws were repealed at once; the 1949 Act was kept for transitional continuity.",
+      "why_important": "",
+      "sources": [
+        "Indian Independence Act 1947 - PadhAI.ai",
+        "InclusiveIAS"
+      ]
+    },
+    {
+      "id": "PYQ-014",
+      "difficulty": "hard",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": 2018,
+        "stage": "Prelims"
+      },
+      "question": "In the federal scheme proposed by the Government of India Act of 1935, Residuary Powers of legislation were vested in:",
+      "options": [
+        "The Federal Legislature",
+        "The Provincial Legislatures",
+        "The Viceroy / Governor-General",
+        "Both Federal and Provincial legislatures concurrently"
+      ],
+      "answer": "(c) The Viceroy / Governor-General",
+      "explanation": "Unlike the modern Constitution where residuary powers lie with Parliament, the 1935 Act vested them in the personal discretion of the Viceroy/Governor-General.",
+      "keywords": [
+        "Residuary Powers",
+        "Personal discretion"
+      ],
+      "related": {
+        "acts": [
+          "Government of India Act 1935"
+        ],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": [
+          "Lord Linlithgow"
+        ]
+      },
+      "memory_trick": "",
+      "exam_trap": "Choosing \"Federal Legislature\" by applying modern 1950 Constitutional logic.",
+      "why_important": "",
+      "sources": [
+        "Previous Year UPSC Polity Questions - Vishnu IAS Academy",
+        "INSIGHTS IAS"
+      ]
+    },
+    {
+      "id": "PYQ-015",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": 2016,
+        "stage": "Prelims"
+      },
+      "question": "The Regulating Act of 1773 was flawed because it led to immediate clashes between:",
+      "options": [
+        "The Court of Directors and the Board of Control",
+        "The Governor-General and his Executive Council",
+        "The Supreme Court and the Governor-General-in-Council",
+        "The Governor-General and the Provincial Governors"
+      ],
+      "answer": "(c) The Supreme Court and the Governor-General-in-Council",
+      "explanation": "The 1773 Act established a Supreme Court but failed to clearly define its jurisdiction, leading to severe clashes with the Executive Council over revenue and official acts. This was corrected by the Act of Settlement 1781.",
+      "keywords": [
+        "Jurisdictional conflict",
+        "Sadar Diwani Adalat"
+      ],
+      "related": {
+        "acts": [
+          "Regulating Act 1773",
+          "Act of Settlement 1781"
+        ],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Choosing (a); the Board of Control didn't exist until 1784 (Pitt's India Act).",
+      "why_important": "",
+      "sources": [
+        "Historical Background of Indian Constitution - BYJU'S",
+        "The Act of Settlement 1781 - LotusArise"
+      ]
+    },
+    {
+      "id": "PYQ-016",
+      "difficulty": "hard",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": 2021,
+        "stage": "Prelims"
+      },
+      "question": "Consider the following statements regarding the representation of women in colonial legislatures:\n1. The 1919 Montagu-Chelmsford Reforms granted voting rights to all women.\n2. The 1935 Government of India Act provided reserved seats for women.\nWhich of the statements is/are correct?",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": "(b) 2 only",
+      "explanation": "Statement 1 is incorrect because the 1919 Act extended voting rights only to a limited percentage of the population (about 3%), not all women. The 1935 Act did, however, provide separate electorates and reserved seats for women.",
+      "keywords": [
+        "Limited franchise",
+        "Separate electorates"
+      ],
+      "related": {
+        "acts": [
+          "GoI Act 1919",
+          "GoI Act 1935"
+        ],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Believing the 1919 Act provided universal female suffrage; it was highly restricted based on property and education.",
+      "why_important": "",
+      "sources": [
+        "Historical Background of the Indian Constitution - Marks UPSC",
+        "INSIGHTS IAS"
+      ]
+    },
+    {
+      "id": "PYQ-017",
+      "difficulty": "easy",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": 2014,
+        "stage": "Prelims"
+      },
+      "question": "The Radcliffe Committee was appointed to:",
+      "options": [
+        "solve the problem of minorities in India",
+        "give effect to the Independence Bill",
+        "delimit the boundaries between India and Pakistan",
+        "enquire into the riots in East Bengal"
+      ],
+      "answer": "(c) delimit the boundaries between India and Pakistan",
+      "explanation": "Sir Cyril Radcliffe headed the Boundary Commission created by the 1947 Independence Act to demarcate the borders of India and Pakistan.",
+      "keywords": [
+        "Boundary Commission",
+        "Radcliffe Line"
+      ],
+      "related": {
+        "acts": [
+          "Indian Independence Act 1947"
+        ],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": [
+          "Sir Cyril Radcliffe"
+        ]
+      },
+      "memory_trick": "",
+      "exam_trap": "Thinking the commission was for minority safeguards, which was a separate political debate.",
+      "why_important": "",
+      "sources": [
+        "Indian Independence Act 1947 - PadhAI.ai",
+        "Historical Evolution (Markdown)"
+      ]
+    },
+    {
+      "id": "PYQ-018",
+      "difficulty": "easy",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": 2013,
+        "stage": "Prelims"
+      },
+      "question": "\"Economic Justice\" as one of the objectives of the Indian Constitution has been provided in:",
+      "options": [
+        "the Preamble and Fundamental Rights",
+        "the Preamble and the Directive Principles of State Policy",
+        "the Fundamental Rights and the Directive Principles of State Policy",
+        "the Preamble, FR and DPSP"
+      ],
+      "answer": "(b) the Preamble and the Directive Principles of State Policy",
+      "explanation": "The Preamble explicitly mentions \"Justice, social, economic and political\". Article 38 of the DPSP further directs the state to secure a social order for the promotion of economic justice. Fundamental Rights (Part III) focus primarily on political and civic justice.",
+      "keywords": [
+        "Distributive Justice"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [
+          "Article 38"
+        ],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Including Fundamental Rights; while they promote equality, the specific mandate for Economic justice is structural to Preamble and DPSP.",
+      "why_important": "",
+      "sources": [
+        "Indian Polity & Governance - IASbaba",
+        "Vision IAS"
+      ]
+    },
+    {
+      "id": "PYQ-019",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": "2014/20",
+        "stage": "Prelims"
+      },
+      "question": "A \"Constitutional Government\" by definition is a:",
+      "options": [
+        "Representative government of a nation with a federal structure",
+        "Government whose Head enjoys nominal powers",
+        "Government whose Head enjoys real powers",
+        "Government limited by the terms of the Constitution"
+      ],
+      "answer": "(d) Government limited by the terms of the Constitution",
+      "explanation": "Constitutionalism implies \"Limited Government\". Even if a government is representative or federal, it is only \"constitutional\" if its authority is restricted by the supreme law to protect individual liberties.",
+      "keywords": [
+        "Limited government",
+        "Individual liberty"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Selecting \"Representative government\" (Option a); a government can be representative but autocratic if not constitutional.",
+      "why_important": "",
+      "sources": [
+        "Previous Year UPSC Polity Questions - Vishnu IAS Academy",
+        "IASbaba"
+      ]
+    },
+    {
+      "id": "PYQ-020",
+      "difficulty": "easy",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": 2014,
+        "stage": "Prelims"
+      },
+      "question": "Which Schedule of the Indian Constitution contains provisions regarding anti-defection?",
+      "options": [
+        "Second Schedule",
+        "Fifth Schedule",
+        "Eighth Schedule",
+        "Tenth Schedule"
+      ],
+      "answer": "(d) Tenth Schedule",
+      "explanation": "The Tenth Schedule was added by the 52nd Amendment Act in 1985 to provide for the disqualification of members on grounds of defection.",
+      "keywords": [
+        "52nd Amendment",
+        "Disqualification"
+      ],
+      "related": {
+        "acts": [
+          "52nd CAA 1985"
+        ],
+        "articles": [
+          "Tenth Schedule"
+        ],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "Ten = Termination for Treachery (Defection).",
+      "exam_trap": "Confusing it with the Eighth Schedule (Languages) or Ninth Schedule (Land Reforms).",
+      "why_important": "",
+      "sources": [
+        "Indian Polity & Governance - IASbaba",
+        "Vishnu IAS Academy"
+      ]
+    },
+    {
+      "id": "PYQ-021",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": 2011,
+        "stage": "Prelims"
+      },
+      "question": "In India, if a religious sect is given the status of a \"National Minority,\" what special advantages is it entitled to?\n1. It can establish and administer exclusive educational institutions.\n2. The President automatically nominates a representative to Lok Sabha.\n3. It can derive benefits from the Prime Minister's 15-Point Programme.\nSelect the correct answer:",
+      "options": [
+        "1 only",
+        "2 and 3 only",
+        "1 and 3 only",
+        "1, 2 and 3"
+      ],
+      "answer": "(c) 1 and 3 only",
+      "explanation": "Under Articles 29 and 30, minorities can establish educational institutions (1). They also benefit from welfare schemes like the PM's 15-Point Programme (3). There is no automatic nomination to the Lok Sabha for minorities (2).",
+      "keywords": [
+        "Cultural and Educational Rights",
+        "PM's 15-Point Programme"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [
+          "Article 30"
+        ],
+        "dates": [],
+        "committees": [
+          "National Commission for Minorities"
+        ],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Thinking minority status grants political seats; political representation in India is general/joint, not communal (post-1950).",
+      "why_important": "",
+      "sources": [
+        "Indian Polity & Governance - IASbaba",
+        "Vision IAS"
+      ]
+    },
+    {
+      "id": "PYQ-022",
+      "difficulty": "hard",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": 2011,
+        "stage": "Prelims"
+      },
+      "question": "Under the Constitution of India, which one of the following is NOT a Fundamental Duty?",
+      "options": [
+        "To vote in public elections",
+        "To develop the scientific temper",
+        "To safeguard public property",
+        "To abide by the Constitution and respect its ideals"
+      ],
+      "answer": "(a) To vote in public elections",
+      "explanation": "While \"To develop scientific temper\" (Option b), \"safeguard public property\" (Option c), and \"abide by the Constitution\" (Option d) are all listed in Article 51A, voting in public elections is a legal/statutory right, not a listed Fundamental Duty.",
+      "keywords": [
+        "Article 51A",
+        "Part IVA"
+      ],
+      "related": {
+        "acts": [
+          "42nd Amendment"
+        ],
+        "articles": [
+          "Article 51A"
+        ],
+        "dates": [],
+        "committees": [
+          "Swaran Singh Committee"
+        ],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Candidates often assume that \"voting\" is a duty because it is a civic responsibility, but it is not a Constitutional Fundamental Duty.",
+      "why_important": "",
+      "sources": [
+        "Indian Polity & Governance - IASbaba",
+        "Edukemy"
+      ]
+    },
+    {
+      "id": "PYQ-023",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": 2012,
+        "stage": "Prelims"
+      },
+      "question": "Which of the following is/are among the Fundamental Duties laid down in the Constitution?\n1. To preserve the rich heritage of our composite culture\n2. To protect the weaker sections from social injustice\n3. To develop the scientific temper and spirit of inquiry\n4. To strive towards excellence in all spheres\nSelect the correct answer:",
+      "options": [
+        "1 and 2 only",
+        "2 only",
+        "1, 3 and 4 only",
+        "1, 2, 3 and 4"
+      ],
+      "answer": "(c) 1, 3 and 4 only",
+      "explanation": "Duties 1, 3, and 4 are explicitly listed in Article 51A. Protecting weaker sections from social injustice (2) is a Directive Principle under Article 46, not a Fundamental Duty.",
+      "keywords": [
+        "Composite culture",
+        "Scientific temper"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [
+          "Article 51A",
+          "Article 46"
+        ],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Including \"protection from social injustice\" as a duty; it is actually a state instruction (DPSP).",
+      "why_important": "",
+      "sources": [
+        "Indian Polity & Governance - IASbaba",
+        "BYJU'S"
+      ]
+    },
+    {
+      "id": "PYQ-024",
+      "difficulty": "hard",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": 2013,
+        "stage": "Prelims"
+      },
+      "question": "According to the Constitution of India, which of the following are fundamental for the governance of the country?",
+      "options": [
+        "Fundamental Rights",
+        "Fundamental Duties",
+        "Directive Principles of State Policy",
+        "Fundamental Rights and Fundamental Duties"
+      ],
+      "answer": "(c) Directive Principles of State Policy",
+      "explanation": "Article 37 explicitly states that while DPSP are not enforceable by courts, they are \"fundamental in the governance of the country\" and the state must apply them in making laws.",
+      "keywords": [
+        "Article 37",
+        "Governance"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [
+          "Article 37"
+        ],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Choosing \"Fundamental Rights\" (Option a) because of the word \"Fundamental\"; however, Article 37 reserves this specific \"governance\" phrasing for DPSP.",
+      "why_important": "",
+      "sources": [
+        "Indian Polity & Governance - IASbaba",
+        "Edukemy"
+      ]
+    },
+    {
+      "id": "PYQ-025",
+      "difficulty": "hard",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": 2014,
+        "stage": "Prelims"
+      },
+      "question": "In the Constitution of India, promotion of international peace and security is included in the:",
+      "options": [
+        "Preamble",
+        "Directive Principles of State Policy",
+        "Fundamental Duties",
+        "Ninth Schedule"
+      ],
+      "answer": "(b) Directive Principles of State Policy",
+      "explanation": "Article 51 under Part IV (DPSP) mandates that the state shall endeavour to promote international peace and security and foster respect for international law.",
+      "keywords": [
+        "Article 51",
+        "Global welfare"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [
+          "Article 51"
+        ],
+        "dates": [],
+        "committees": [],
+        "personalities": [
+          "Nehru's foreign policy influence"
+        ]
+      },
+      "memory_trick": "",
+      "exam_trap": "Thinking it is a Fundamental Duty because of the word \"responsibility\"; duties focus on national unity, while DPSP covers international promotion.",
+      "why_important": "",
+      "sources": [
+        "Indian Polity & Governance - IASbaba",
+        "Unacademy"
+      ]
+    },
+    {
+      "id": "PYQ-026",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": 2013,
+        "stage": "Prelims"
+      },
+      "question": "Consider the following statements regarding the amendment of the Constitution of India:\n1. An amendment to the Constitution of India can be initiated by an introduction of a bill in the Lok Sabha only.\n2. If such an amendment seeks to make changes in the federal character of the Constitution, the amendment also requires to be ratified by the legislature of all the States of India.\nWhich of the statements given above is/are correct?",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": "(d) Neither 1 nor 2",
+      "explanation": "Statement 1 is incorrect because a constitutional amendment bill can be initiated in either House of Parliament (Lok Sabha or Rajya Sabha). Statement 2 is incorrect because federal amendments require ratification by at least half of the state legislatures, not all of them.",
+      "keywords": [
+        "Article 368",
+        "Ratification",
+        "Constituent power"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [
+          "Article 368"
+        ],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Candidates often confuse the requirement of \"half of the states\" with \"all the states.\"",
+      "why_important": "",
+      "sources": [
+        "Indian Polity & Governance - IASbaba",
+        "Salient Features of the Constitution"
+      ]
+    },
+    {
+      "id": "PYQ-027",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": 2012,
+        "stage": "Prelims"
+      },
+      "question": "The Prime Minister of India, at the time of his/her appointment:",
+      "options": [
+        "need not necessarily be a member of one of the Houses of the Parliament but must become a member of one of the Houses within six months.",
+        "need not necessarily be a member of one of the Houses of the Parliament but must become a member of the Lok Sabha within six months.",
+        "must be a member of one of the Houses of the Parliament.",
+        "must be a member of the Lok Sabha."
+      ],
+      "answer": "(a)",
+      "explanation": "A person who is not a member of either House can be appointed as PM but must secure a seat in either the Lok Sabha or the Rajya Sabha within six months. Failure to do so results in cessation of the ministership.",
+      "keywords": [
+        "Six-month grace period",
+        "Westminster model"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [
+          "Article 75"
+        ],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Mistakenly believing the PM must be from the Lok Sabha (popular house), whereas they can also be from the Rajya Sabha.",
+      "why_important": "",
+      "sources": [
+        "Indian Polity & Governance - IASbaba",
+        "Constitutional Development in India"
+      ]
+    },
+    {
+      "id": "PYQ-028",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": 2013,
+        "stage": "Prelims"
+      },
+      "question": "Consider the following statements:\n1. The Council of Ministers in the Centre shall be collectively responsible to the Parliament.\n2. The Union Ministers shall hold the office during the pleasure of the President of India.\n3. The Prime Minister shall communicate to the President about the proposals for legislation.\nWhich of the statements given above is/are correct?",
+      "options": [
+        "1 only",
+        "2 and 3 only",
+        "1 and 3 only",
+        "1, 2 and 3"
+      ],
+      "answer": "(b) 2 and 3 only",
+      "explanation": "Statement 1 is incorrect because the Council of Ministers is collectively responsible specifically to the Lok Sabha, not the entire Parliament. Statements 2 (pleasure of the President) and 3 (duty of PM to inform President) are correct constitutional provisions.",
+      "keywords": [
+        "Collective Responsibility",
+        "Individual Responsibility"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [
+          "Article 75",
+          "Article 78"
+        ],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Thinking \"Parliament\" is the same as \"Lok Sabha\" in the context of collective responsibility.",
+      "why_important": "",
+      "sources": [
+        "Indian Polity & Governance - IASbaba",
+        "Constitutional Development in India"
+      ]
+    },
+    {
+      "id": "PYQ-029",
+      "difficulty": "hard",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": 2014,
+        "stage": "Prelims"
+      },
+      "question": "Consider the following statements:\n1. The President shall make rules for the more convenient transaction of the business of the Government of India, and for the allocation among Ministers of the said business.\n2. All executive actions of the Government of India shall be expressed to be taken in the name of the Prime Minister.\nWhich of the statements given above is/are correct?",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": "(a) 1 only",
+      "explanation": "Statement 1 is a correct provision under Article 77. Statement 2 is incorrect because all executive actions are taken in the name of the President, who is the formal head of state, not the PM.",
+      "keywords": [
+        "De jure head",
+        "Allocation of business rules"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [
+          "Article 77"
+        ],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Candidates often think actions are in the PM's name because the PM is the real executive head.",
+      "why_important": "",
+      "sources": [
+        "Indian Polity & Governance - IASbaba",
+        "Constitutional Development in India"
+      ]
+    },
+    {
+      "id": "PYQ-030",
+      "difficulty": "hard",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": 2011,
+        "stage": "Prelims"
+      },
+      "question": "What is the difference between \"vote-on-account\" and \"interim budget\"?\n1. The provision of a \"vote-on-account\" is used by a regular Government, while an \"interim budget\" is a provision used by a caretaker Government.\n2. A \"vote-on-account\" only deals with the expenditure in the Government's budget, while an \"interim budget\" includes both expenditure and receipts.\nWhich of the statements given above is/are correct?",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": "(b) 2 only",
+      "explanation": "Statement 1 is incorrect because both can be used by regular governments, especially in election years. Statement 2 is correct: \"vote-on-account\" is a grant in advance for expenditure only, whereas an \"interim budget\" is a full set of accounts including receipts and expenditure.",
+      "keywords": [
+        "Consolidated Fund of India",
+        "Appropriation Bill"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [
+          "Article 116"
+        ],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Assuming \"vote-on-account\" is exclusive to caretaker regimes.",
+      "why_important": "",
+      "sources": [
+        "Indian Polity & Governance - IASbaba"
+      ]
+    },
+    {
+      "id": "PYQ-031",
+      "difficulty": "easy",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": 2014,
+        "stage": "Prelims"
+      },
+      "question": "Which one of the following is the largest Committee of the Parliament?",
+      "options": [
+        "The Committee on Public Accounts",
+        "The Committee on Estimates",
+        "The Committee on Public Undertakings",
+        "The Committee on Petitions"
+      ],
+      "answer": "(b) The Committee on Estimates",
+      "explanation": "The Estimates Committee has 30 members, all of whom are from the Lok Sabha. The Public Accounts and Public Undertakings committees have only 22 members each (15 LS, 7 RS).",
+      "keywords": [
+        "Continuous Economy Committee"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [],
+        "committees": [
+          "Estimates Committee"
+        ],
+        "personalities": []
+      },
+      "memory_trick": "Estimates = Enormous (largest).",
+      "exam_trap": "Confusing it with the Public Accounts Committee, which is often more famous in news.",
+      "why_important": "",
+      "sources": [
+        "Indian Polity & Governance - IASbaba"
+      ]
+    },
+    {
+      "id": "PYQ-032",
+      "difficulty": "hard",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": 2014,
+        "stage": "Prelims"
+      },
+      "question": "Consider the following statements regarding a No-Confidence Motion in India:\n1. There is no mention of a No-Confidence Motion in the Constitution of India.\n2. A Motion of No-Confidence can be introduced in the Lok Sabha only.\nWhich of the statements given above is/are correct?",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": "(c) Both 1 and 2",
+      "explanation": "The Constitution does not explicitly mention the \"No-Confidence Motion\"; it only states the COM is collectively responsible to the Lok Sabha. The motion is part of the Rules of Procedure of the Lok Sabha (Rule 198) and can only be moved there because that is where the government's responsibility lies.",
+      "keywords": [
+        "Collective Responsibility",
+        "Rule 198"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [
+          "Article 75"
+        ],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Thinking the motion must be in the Constitution since it is so fundamental to democracy.",
+      "why_important": "",
+      "sources": [
+        "Indian Polity & Governance - IASbaba",
+        "Constitutional Development in India"
+      ]
+    },
+    {
+      "id": "PYQ-033",
+      "difficulty": "hard",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": 2024,
+        "stage": "Prelims"
+      },
+      "question": "With reference to the Government of India Act, 1935, consider the following statements:\n1. It provided for the establishment of an All India Federation based on the union of the British Indian Provinces and Princely States.\n2. Defence and Foreign Affairs were kept under the control of the federal legislature.\nWhich of the statements given above is/are correct?",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": "(a) 1 only",
+      "explanation": "Statement 1 is correct: the 1935 Act proposed an All-India Federation. Statement 2 is incorrect: under the \"dyarchy at the centre\" proposed by the Act, subjects like Defence and External Affairs were \"Reserved\" subjects administered by the Governor-General in his discretion, not by the federal legislature.",
+      "keywords": [
+        "All-India Federation",
+        "Reserved Subjects"
+      ],
+      "related": {
+        "acts": [
+          "GoI Act 1935"
+        ],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Forgetting that \"dyarchy at the centre\" meant key portfolios were kept away from the legislature.",
+      "why_important": "",
+      "sources": [
+        "Previous Year UPSC Polity Questions - Vishnu IAS Academy",
+        "Evolution of the Framework"
+      ]
+    },
+    {
+      "id": "PYQ-034",
+      "difficulty": "easy",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": 2024,
+        "stage": "Prelims"
+      },
+      "question": "Who was the Provisional President of the Constituent Assembly before Dr. Rajendra Prasad took over?",
+      "options": [
+        "C. Rajagopalachari",
+        "Dr. B.R. Ambedkar",
+        "T.T. Krishnamachari",
+        "Dr. Sachidananda Sinha"
+      ],
+      "answer": "(d) Dr. Sachidananda Sinha",
+      "explanation": "Dr. Sachidananda Sinha, being the oldest member, was elected as the temporary/provisional President on December 9, 1946, following the French practice. Dr. Rajendra Prasad was elected permanent President on December 11, 1946.",
+      "keywords": [
+        "Temporary Chairman",
+        "French practice"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [
+          "9 Dec 1946"
+        ],
+        "committees": [],
+        "personalities": [
+          "Dr. Sachidananda Sinha"
+        ]
+      },
+      "memory_trick": "",
+      "exam_trap": "Confusing the temporary president with the vice-presidents (HC Mukherjee and VT Krishnamachari).",
+      "why_important": "",
+      "sources": [
+        "Previous Year UPSC Polity Questions - Vishnu IAS Academy",
+        "Making of the Constitution - InclusiveIAS"
+      ]
+    },
+    {
+      "id": "PYQ-035",
+      "difficulty": "hard",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": 2023,
+        "stage": "Prelims"
+      },
+      "question": "In essence, what does 'Due Process of Law' mean?",
+      "options": [
+        "The principle of natural justice",
+        "The procedure established by law",
+        "Fair application of law",
+        "Equality before law"
+      ],
+      "answer": "(c) Fair application of law",
+      "explanation": "'Due Process of Law' (American origin) implies that a law must not only be passed by proper procedure but must also be fair, just, and reasonable. India primarily uses \"Procedure Established by Law\" (Japanese origin) but the Supreme Court has interpreted Article 21 to include \"Due Process\" since the Maneka Gandhi case.",
+      "keywords": [
+        "Substantive fairness",
+        "Maneka Gandhi case"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [
+          "Article 21"
+        ],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Selecting (b); \"Procedure established by law\" is the literal text of Article 21, but \"Due Process\" is the essence of its modern fair application.",
+      "why_important": "",
+      "sources": [
+        "Previous Year UPSC Polity Questions - Vishnu IAS Academy",
+        "Master Knowledge Base"
+      ]
+    },
+    {
+      "id": "PYQ-036",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": 2023,
+        "stage": "Prelims"
+      },
+      "question": "The chief purpose of a country's Constitution is to:",
+      "options": [
+        "determine the objective for the making of necessary laws.",
+        "enable the creation of political offices and a government.",
+        "define and limit the powers of government.",
+        "secure social justice, social equality and social security."
+      ],
+      "answer": "(c)",
+      "explanation": "While a constitution does (a), (b), and (d), its fundamental \"chief purpose\" in political theory is Constitutionalism, which means establishing a limited government to prevent arbitrary rule and protect citizen rights.",
+      "keywords": [
+        "Limited Government",
+        "Constitutionalism"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Choosing (d); social justice is an objective of the Indian Constitution, but the structural purpose of any constitution is limiting power.",
+      "why_important": "",
+      "sources": [
+        "Previous Year UPSC Polity Questions - Vishnu IAS Academy"
+      ]
+    },
+    {
+      "id": "PYQ-037",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": 2022,
+        "stage": "Prelims"
+      },
+      "question": "If a particular area is brought under the Fifth Schedule of the Constitution of India, which one of the following statements best reflects the consequence of it?",
+      "options": [
+        "This would prevent the transfer of land of tribal people to non-tribal people.",
+        "This would create a local self-governing body in that area.",
+        "This would convert that area into a Union Territory.",
+        "The State having such areas would be declared a Special Category State."
+      ],
+      "answer": "(a)",
+      "explanation": "The Fifth Schedule provides for the administration of Scheduled Areas. A primary protection offered is the prohibition or restriction of land transfers from tribal to non-tribal persons to preserve tribal integrity.",
+      "keywords": [
+        "Scheduled Areas",
+        "Tribal integrity"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [
+          "Fifth Schedule",
+          "Article 244(1)"
+        ],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Choosing (b); while local bodies exist, the specific primary consequence of Schedule V classification is land protection.",
+      "why_important": "",
+      "sources": [
+        "Previous Year UPSC Polity Questions - Vishnu IAS Academy"
+      ]
+    },
+    {
+      "id": "PYQ-038",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": 2022,
+        "stage": "Prelims"
+      },
+      "question": "Which one of the following in Indian polity is an essential feature that indicates that it is federal in character?",
+      "options": [
+        "The independence of the judiciary is safeguarded.",
+        "The Union Legislature has elected representatives from constituent units.",
+        "The Union Cabinet can have elected representatives from regional parties.",
+        "The Fundamental Rights are enforceable by Courts of Law."
+      ],
+      "answer": "(b)",
+      "explanation": "A core tenet of federalism is the representation of the constituent units (states) in the central legislature. In India, the Rajya Sabha (Council of States) fulfills this requirement. Option (a) is a supporting feature, but (b) is the structural defining characteristic of a federation.",
+      "keywords": [
+        "Constituent units",
+        "Rajya Sabha"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Selecting (a); while an independent judiciary is necessary to resolve federal disputes, the representation of units is the more direct federal indicator.",
+      "why_important": "",
+      "sources": [
+        "Previous Year UPSC Polity Questions - Vishnu IAS Academy"
+      ]
+    },
+    {
+      "id": "PYQ-039",
+      "difficulty": "hard",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": 2021,
+        "stage": "Prelims"
+      },
+      "question": "We adopted parliamentary democracy based on the British model, but how does our model differ from that model?\n1. As regards legislation, the British Parliament is supreme or sovereign but in India, the power of the Parliament to legislate is limited.\n2. In India, matters related to the constitutionality of an Amendment of an Act of the Parliament are referred to the Constitution Bench by the Supreme Court.\nWhich of the statements given above is/are correct?",
+      "options": [
+        "1 only",
+        "2 only",
+        "Both 1 and 2",
+        "Neither 1 nor 2"
+      ],
+      "answer": "(c) Both 1 and 2",
+      "explanation": "Statement 1 is correct: British Parliament is sovereign (unlimited), while Indian Parliament is limited by a written Constitution. Statement 2 is correct: India has judicial review of amendments via Constitution Benches, a feature absent in the UK's unwritten system.",
+      "keywords": [
+        "Parliamentary Sovereignty vs. Constitutional Supremacy"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [
+          "Article 13",
+          "Article 145(3)"
+        ],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Thinking India also has \"Sovereignty of Parliament\" like Britain.",
+      "why_important": "",
+      "sources": [
+        "Previous Year UPSC Polity Questions - Vishnu IAS Academy",
+        "Supreme Court History"
+      ]
+    },
+    {
+      "id": "PYQ-040",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": 2020,
+        "stage": "Prelims"
+      },
+      "question": "The Preamble to the Constitution of India is:",
+      "options": [
+        "a part of the Constitution but has no legal effect.",
+        "not a part of the Constitution and has no legal effect either.",
+        "a part of the Constitution and has the same legal effect as any other part.",
+        "a part of the Constitution but has no legal effect independently of other parts."
+      ],
+      "answer": "(d)",
+      "explanation": "In the Kesavananda Bharati case, the SC held the Preamble is a part of the Constitution. However, it is non-justiciable and does not grant independent powers or limitations; it must be read with other articles to have legal application.",
+      "keywords": [
+        "Non-justiciable",
+        "Interpretative value"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": [
+          "Kesavananda Bharati Case (1973)"
+        ]
+      },
+      "memory_trick": "",
+      "exam_trap": "Choosing (a); it does have a legal effect as an interpretative tool for ambiguous articles, just not independently.",
+      "why_important": "",
+      "sources": [
+        "Previous Year UPSC Polity Questions - Vishnu IAS Academy",
+        "Preamble Significance"
+      ]
+    },
+    {
+      "id": "PYQ-041",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": 2020,
+        "stage": "Prelims"
+      },
+      "question": "A Parliamentary System of Government is one in which:",
+      "options": [
+        "all political parties in the Parliament are represented in the Government.",
+        "the Government is responsible to the Parliament and can be removed by it.",
+        "the Government is elected by the people and can be removed by them.",
+        "the Government is chosen by the Parliament but cannot be removed by it before completion of a fixed term."
+      ],
+      "answer": "(b)",
+      "explanation": "The defining feature of a parliamentary system is the responsibility of the executive to the legislature. The government stays in power only as long as it enjoys the confidence of the lower house.",
+      "keywords": [
+        "Responsibility",
+        "Removal power"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [
+          "Article 75(3)"
+        ],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Choosing (c); people elect the legislators, not the government directly.",
+      "why_important": "",
+      "sources": [
+        "Previous Year UPSC Polity Questions - Vishnu IAS Academy",
+        "Parliamentary System"
+      ]
+    },
+    {
+      "id": "PYQ-042",
+      "difficulty": "easy",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": 2017,
+        "stage": "Prelims"
+      },
+      "question": "Which one of the following objectives is NOT embodied in the Preamble to the Constitution of India?",
+      "options": [
+        "Liberty of thought",
+        "Economic liberty",
+        "Liberty of expression",
+        "Liberty of belief"
+      ],
+      "answer": "(b) Economic liberty",
+      "explanation": "The Preamble lists \"Liberty of thought, expression, belief, faith and worship\". \"Economic\" is mentioned under Justice (\"Social, economic and political\"), but not under Liberty.",
+      "keywords": [
+        "5 types of Liberty",
+        "3 types of Justice"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "T.E.B.F.W. (Thought, Expression, Belief, Faith, Worship).",
+      "exam_trap": "Associating \"Economic\" with Liberty because of its presence in the Justice section.",
+      "why_important": "",
+      "sources": [
+        "Previous Year UPSC Polity Questions - Vishnu IAS Academy",
+        "Preamble Components"
+      ]
+    },
+    {
+      "id": "PYQ-043",
+      "difficulty": "easy",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": 2017,
+        "stage": "Prelims"
+      },
+      "question": "In the context of Indian history, the principle of 'Dyarchy' refers to:",
+      "options": [
+        "Division of the central legislature into two houses.",
+        "Introduction of double government i.e., Central and state governments.",
+        "Having two sets of rulers; one in London and another in Delhi.",
+        "Division of the subjects delegated to the provinces into two categories."
+      ],
+      "answer": "(d)",
+      "explanation": "Dyarchy (dual rule) specifically refers to the 1919 Act's scheme of dividing provincial subjects into Reserved and Transferred categories. Option (a) is bicameralism.",
+      "keywords": [
+        "Reserved vs. Transferred"
+      ],
+      "related": {
+        "acts": [
+          "GoI Act 1919"
+        ],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Confusing Dyarchy with \"Dual Government\" (Board of Control/Court of Directors) or simple Federalism.",
+      "why_important": "",
+      "sources": [
+        "Previous Year UPSC Polity Questions - Vishnu IAS Academy",
+        "Historical Background"
+      ]
+    },
+    {
+      "id": "PYQ-044",
+      "difficulty": "hard",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": 2015,
+        "stage": "Prelims"
+      },
+      "question": "The Government of India Act of 1919 clearly defined:",
+      "options": [
+        "The separation of power between the judiciary and the legislature.",
+        "The jurisdiction of the central and provincial governments.",
+        "The powers of the Secretary of State for India and the Viceroy.",
+        "None of the above."
+      ],
+      "answer": "(b)",
+      "explanation": "The 1919 Act (Mont-Ford Reforms) relaxed central control by demarcating and separating central and provincial subjects, thereby defining the administrative spheres for both levels of government.",
+      "keywords": [
+        "Demarcation",
+        "Provincial subjects"
+      ],
+      "related": {
+        "acts": [
+          "GoI Act 1919"
+        ],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Choosing (a); judicial-legislative separation was not the primary clarity of the 1919 Act (which focused on executive devolution).",
+      "why_important": "",
+      "sources": [
+        "Previous Year UPSC Polity Questions - Vishnu IAS Academy",
+        "Historical Background"
+      ]
+    },
+    {
+      "id": "PYQ-045",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": 2015,
+        "stage": "Prelims"
+      },
+      "question": "The provisions in the Fifth Schedule and Sixth Schedule in the Constitution of India are made in order to:",
+      "options": [
+        "protect the interests of Scheduled Tribes.",
+        "determine the boundaries between States.",
+        "determine the powers, authorities, and responsibilities of Panchayats.",
+        "protect the interests of all the border States."
+      ],
+      "answer": "(a) protect the interests of Scheduled Tribes",
+      "explanation": "The Fifth Schedule deals with Scheduled Areas/Tribes in most states, while the Sixth Schedule provides for autonomous councils in Assam, Meghalaya, Tripura, and Mizoram specifically to protect tribal culture and autonomy.",
+      "keywords": [
+        "Autonomous District Councils (ADCs)",
+        "Scheduled Areas"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [
+          "Article 244"
+        ],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "AMTM (Assam, Meghalaya, Tripura, Mizoram) for Sixth Schedule.",
+      "exam_trap": "Confusing Sixth Schedule tribal areas with general border security issues.",
+      "why_important": "",
+      "sources": [
+        "Previous Year UPSC Polity Questions - Vishnu IAS Academy"
+      ]
+    },
+    {
+      "id": "PYQ-046",
+      "difficulty": "easy",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": 2015,
+        "stage": "Prelims"
+      },
+      "question": "\"To uphold and protect the Sovereignty, Unity and Integrity of India\" is a provision made in the:",
+      "options": [
+        "Preamble of the Constitution",
+        "Directive Principles of State Policy",
+        "Fundamental Rights",
+        "Fundamental Duties"
+      ],
+      "answer": "(d) Fundamental Duties",
+      "explanation": "This specific phrasing is the third duty listed under Article 51A in Part IVA of the Constitution. While the Preamble mentions these concepts, the \"uphold and protect\" mandate is a duty of the citizen.",
+      "keywords": [
+        "Article 51A(c)"
+      ],
+      "related": {
+        "acts": [
+          "42nd Amendment Act 1976"
+        ],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Selecting \"Preamble\" because the keywords (Sovereignty, Integrity) are prominently displayed there as well.",
+      "why_important": "",
+      "sources": [
+        "Previous Year UPSC Polity Questions - Vishnu IAS Academy",
+        "Salient Features"
+      ]
+    },
+    {
+      "id": "PYQ-047",
+      "difficulty": "easy",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "Standard (SSC/State PSC)",
+        "year": "",
+        "stage": ""
+      },
+      "question": "On which date did the Constituent Assembly of India adopt the Constitution?",
+      "options": [
+        "26 January 1950",
+        "15 August 1947",
+        "26 November 1949",
+        "9 December 1946"
+      ],
+      "answer": "(c) 26 November 1949",
+      "explanation": "The drafting process was completed and the Constitution was formally adopted and signed on November 26, 1949. This is now celebrated as Constitution Day. Option (a) is the date it came into force.",
+      "keywords": [
+        "Adoption",
+        "Enactment",
+        "Constitution Day"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [
+          "26 Nov 1949"
+        ],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Confusing the date of adoption (Nov 26) with the date of commencement (Jan 26).",
+      "why_important": "",
+      "sources": [
+        "Making of the Constitution MCQ - Testbook",
+        "Making of the Constitution"
+      ]
+    },
+    {
+      "id": "PYQ-048",
+      "difficulty": "easy",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "Standard (SSC/Railway)",
+        "year": "",
+        "stage": ""
+      },
+      "question": "The idea of having a Preamble in the Indian Constitution was borrowed from which country?",
+      "options": [
+        "UK",
+        "France",
+        "USA",
+        "Ireland"
+      ],
+      "answer": "(c) USA",
+      "explanation": "The US Constitution was the first in the world to begin with a Preamble. The Indian phrasing \"We, the People\" is directly inspired by the US model.",
+      "keywords": [
+        "\"We, the People\""
+      ],
+      "related": {
+        "acts": [
+          "US Constitution 1787"
+        ],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Choosing UK because our parliamentary system is British, forgetting that Britain has an unwritten constitution and no formal preamble.",
+      "why_important": "",
+      "sources": [
+        "Making of the Constitution MCQ - Testbook",
+        "SSC CGL Questions"
+      ]
+    },
+    {
+      "id": "PYQ-049",
+      "difficulty": "hard",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "SSC / State PSC",
+        "year": "",
+        "stage": ""
+      },
+      "question": "Which of the following provisions is NOT borrowed by the Indian Constitution from the Canadian Constitution?",
+      "options": [
+        "Federal system with a strong centre",
+        "Appointment of state governors by the centre",
+        "Advisory jurisdiction of the Supreme Court",
+        "Nomination of members to Rajya Sabha"
+      ],
+      "answer": "(d) Nomination of members to Rajya Sabha",
+      "explanation": "The nomination of 12 members to the Rajya Sabha by the President is borrowed from the Irish Constitution. Options (a), (b), and (c) are all confirmed Canadian features.",
+      "keywords": [
+        "Quasi-federal",
+        "Strong centre"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Thinking all Rajya Sabha features are Canadian because of the \"states' house\" nature; the nomination part is specifically Irish.",
+      "why_important": "",
+      "sources": [
+        "Making of the Constitution MCQ - Testbook",
+        "Salient Features"
+      ]
+    },
+    {
+      "id": "PYQ-050",
+      "difficulty": "easy",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "State PSC",
+        "year": "",
+        "stage": ""
+      },
+      "question": "Who described the Preamble of the Indian Constitution as the 'Political horoscope' of the Constitution?",
+      "options": [
+        "NA Palkhivala",
+        "KM Munshi",
+        "Thakurdas Bhargav",
+        "BR Ambedkar"
+      ],
+      "answer": "(b) KM Munshi",
+      "explanation": "K.M. Munshi, a member of the Drafting Committee, used this phrase to signify how the Preamble predicts the nature and future of the Indian polity. Option (a) called it the \"Identity Card\".",
+      "keywords": [
+        "Horoscope of the Republic"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": [
+          "K.M. Munshi"
+        ]
+      },
+      "memory_trick": "",
+      "exam_trap": "Confusing Munshi's \"Horoscope\" quote with Palkhivala's \"Identity Card\" quote.",
+      "why_important": "",
+      "sources": [
+        "Making of the Constitution MCQ - Testbook",
+        "Preamble Significance"
+      ]
+    },
+    {
+      "id": "PYQ-051",
+      "difficulty": "easy",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "SSC CGL",
+        "year": "",
+        "stage": ""
+      },
+      "question": "In the Indian Constitution, the section on Citizenship draws inspiration from the constitution of which country?",
+      "options": [
+        "France",
+        "USA",
+        "Australia",
+        "UK"
+      ],
+      "answer": "(d) UK",
+      "explanation": "India provides for a single citizenship for the whole of India, a feature borrowed from the British (UK) Constitution. In contrast, federal systems like the USA offer dual citizenship (national and state).",
+      "keywords": [
+        "Single Citizenship",
+        "Dual Polity"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [
+          "Articles 5–11"
+        ],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "U.K. = Uniform Kind (Single) citizenship.",
+      "exam_trap": "Thinking \"Federal\" always means \"Dual Citizenship\" and assuming India follows the US model in this regard.",
+      "why_important": "",
+      "sources": [
+        "Objective Question with Answer for Making of the Constitution",
+        "Salient Features of the Constitution"
+      ]
+    },
+    {
+      "id": "PYQ-052",
+      "difficulty": "easy",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "SSC / Railway",
+        "year": "",
+        "stage": ""
+      },
+      "question": "The original document of the Constitution of India was handwritten in italic style by:",
+      "options": [
+        "Dr. B.R. Ambedkar",
+        "Nandalal Bose",
+        "Prem Behari Narain Raizada",
+        "B.N. Rau"
+      ],
+      "answer": "(c) Prem Behari Narain Raizada",
+      "explanation": "Prem Behari Narain Raizada was the calligrapher of the Indian Constitution; he handwrote the original text in a flowing italic style. Nandalal Bose (Option b) led the artists from Shantiniketan who decorated and beautified the pages.",
+      "keywords": [
+        "Calligraphy",
+        "Italic style"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": [
+          "Prem Behari Narain Raizada",
+          "Nand Lal Bose"
+        ]
+      },
+      "memory_trick": "",
+      "exam_trap": "Confusing the calligrapher (Raizada) with the artist/decorator (Bose).",
+      "why_important": "",
+      "sources": [
+        "Objective Question with Answer for Making of the Constitution",
+        "Making of the Constitution"
+      ]
+    },
+    {
+      "id": "PYQ-053",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": "",
+        "stage": "Prelims"
+      },
+      "question": "Which of the following constitutional provisions was borrowed by the Indian Constitution from the British Constitution?",
+      "options": [
+        "Judicial review",
+        "Procedure established by Law",
+        "Parliamentary Privileges",
+        "Suspension of Fundamental Rights during emergency"
+      ],
+      "answer": "(c) Parliamentary Privileges",
+      "explanation": "Parliamentary privileges and the bicameral system are core features borrowed from the UK. Judicial review (Option a) is from the US; Procedure established by law (Option b) is from Japan; and Suspension of FR during emergency (Option d) is from the Weimar Constitution of Germany.",
+      "keywords": [
+        "Article 105",
+        "Immunities"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [
+          "Article 105"
+        ],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Confusing \"Emergency Provisions\" (GoI Act 1935) with \"Suspension of FR during Emergency\" (Weimar Germany).",
+      "why_important": "",
+      "sources": [
+        "Objective Question with Answer for Making of the Constitution",
+        "Salient Features of the Constitution"
+      ]
+    },
+    {
+      "id": "PYQ-054",
+      "difficulty": "easy",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "Standard (SSC/PSC)",
+        "year": "",
+        "stage": ""
+      },
+      "question": "Who was the Chairman of the Drafting Committee of the Constituent Assembly?",
+      "options": [
+        "Jawaharlal Nehru",
+        "Dr. B.R. Ambedkar",
+        "Dr. Rajendra Prasad",
+        "Sardar Vallabhbhai Patel"
+      ],
+      "answer": "(b) Dr. B.R. Ambedkar",
+      "explanation": "Dr. B.R. Ambedkar was the chairman of the seven-member Drafting Committee set up on August 29, 1947. He is recognized as the \"Father of the Indian Constitution\" and the \"Modern Manu\".",
+      "keywords": [
+        "Chief Architect",
+        "Drafting Committee"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [
+          "August 29, 1947"
+        ],
+        "committees": [
+          "Drafting Committee"
+        ],
+        "personalities": [
+          "Dr. B.R. Ambedkar"
+        ]
+      },
+      "memory_trick": "Drafting = Dr. Ambedkar.",
+      "exam_trap": "Confusing the Chairman of the Drafting Committee with the President of the Constituent Assembly (Rajendra Prasad).",
+      "why_important": "",
+      "sources": [
+        "Objective Question with Answer for Making of the Constitution",
+        "Making of the Constitution"
+      ]
+    },
+    {
+      "id": "PYQ-055",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": "",
+        "stage": "Prelims"
+      },
+      "question": "The provision of \"Advisory Jurisdiction of the Supreme Court\" in the Indian Constitution is borrowed from which country?",
+      "options": [
+        "USA",
+        "Canada",
+        "Australia",
+        "Ireland"
+      ],
+      "answer": "(b) Canada",
+      "explanation": "Under Article 143, the President can seek the opinion of the Supreme Court; this advisory role is a feature borrowed from the Canadian Constitution.",
+      "keywords": [
+        "Article 143",
+        "Advisory Jurisdiction"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [
+          "Article 143"
+        ],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Associating all \"Supreme Court\" features with the USA; while independence is from the US, advisory jurisdiction is specifically Canadian.",
+      "why_important": "",
+      "sources": [
+        "Objective Question with Answer for Making of the Constitution",
+        "Salient Features of the Constitution"
+      ]
+    },
+    {
+      "id": "PYQ-056",
+      "difficulty": "easy",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": "",
+        "stage": "Prelims"
+      },
+      "question": "From which country's constitution did India borrow the procedure for the impeachment of the President?",
+      "options": [
+        "UK",
+        "USA",
+        "Ireland",
+        "Canada"
+      ],
+      "answer": "(b) USA",
+      "explanation": "The provisions for the impeachment of the President and the removal of Supreme Court/High Court judges were borrowed from the US Constitution.",
+      "keywords": [
+        "Article 61",
+        "Bill of Rights"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [
+          "Article 61"
+        ],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "President Punishment (Impeachment) = Powerful US inspiration.",
+      "exam_trap": "Mistakenly linking the President's election (Ireland) with his removal (USA).",
+      "why_important": "",
+      "sources": [
+        "Objective Question with Answer for Making of the Constitution",
+        "Salient Features of the Constitution"
+      ]
+    },
+    {
+      "id": "PYQ-057",
+      "difficulty": "easy",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC",
+        "year": "",
+        "stage": "Prelims"
+      },
+      "question": "The concept of \"Joint Sitting of the two Houses of Parliament\" was borrowed from the constitution of:",
+      "options": [
+        "USA",
+        "Canada",
+        "Australia",
+        "Ireland"
+      ],
+      "answer": "(c) Australia",
+      "explanation": "To resolve deadlocks between the Lok Sabha and Rajya Sabha, Article 108 provides for a joint sitting, a procedure inspired by the Australian Constitution.",
+      "keywords": [
+        "Article 108",
+        "Legislative deadlock"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [
+          "Article 108"
+        ],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Thinking \"Joint Sitting\" is a British feature because of the \"Bicameralism\" source; however, the resolution mechanism is Australian.",
+      "why_important": "",
+      "sources": [
+        "Objective Question with Answer for Making of the Constitution",
+        "Salient Features of the Constitution"
+      ]
+    },
+    {
+      "id": "PYQ-058",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC Mains (PSIR Optional)",
+        "year": 1997,
+        "stage": "Mains"
+      },
+      "question": "\"The origins of the Indian political system are rooted in the history of British India.\" This statement implies:",
+      "options": [
+        "The Constitution is a mere continuation of colonial laws without change.",
+        "Modern Indian governance is a complete departure from British administrative logic.",
+        "Many features like the parliamentary system and federal lists evolved through British legislative interventions.",
+        "The Indian political system was designed exclusively based on ancient Indian texts like Arthashastra."
+      ],
+      "answer": "(c)",
+      "explanation": "Modern Indian governance is an institutional adaptation of structures established during the colonial era (like the 1935 Act), modified for a sovereign republic. The origins lie in the progression from mercantile trade (1600) to sovereign rule.",
+      "keywords": [
+        "Constitutional antecedents",
+        "Historical process"
+      ],
+      "related": {
+        "acts": [
+          "GoI Act 1935"
+        ],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Dismissing the colonial legacy as \"only negative\" or assuming it had \"no structural impact\" on the 1950 Constitution.",
+      "why_important": "",
+      "sources": [
+        "Making of the Indian Constitution: PSIR Optional PYQs",
+        "Historical Evolution Framework"
+      ]
+    },
+    {
+      "id": "PYQ-059",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC Mains (PSIR Optional)",
+        "year": 1999,
+        "stage": "Mains"
+      },
+      "question": "In the framing of the Indian Constitution, whose influence is most visible in the provisions related to Village Panchayats?",
+      "options": [
+        "Jawaharlal Nehru",
+        "Sardar Patel",
+        "Mahatma Gandhi",
+        "Dr. B.R. Ambedkar"
+      ],
+      "answer": "(c) Mahatma Gandhi",
+      "explanation": "While Gandhi was not a member of the Constituent Assembly, his \"Gandhian Principles\" heavily influenced the Directive Principles of State Policy, specifically Article 40 regarding the organization of Village Panchayats.",
+      "keywords": [
+        "Article 40",
+        "Grassroots democracy"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [
+          "Article 40"
+        ],
+        "dates": [],
+        "committees": [],
+        "personalities": [
+          "Mahatma Gandhi"
+        ]
+      },
+      "memory_trick": "",
+      "exam_trap": "Thinking Gandhi was a member of the Constituent Assembly; in reality, he was a notable exception to the Assembly's membership.",
+      "why_important": "",
+      "sources": [
+        "Objective Question with Answer for Making of the Constitution",
+        "Women in the making of Indian Constitution"
+      ]
+    },
+    {
+      "id": "PYQ-060",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC Mains (PSIR Optional)",
+        "year": 2001,
+        "stage": "Mains"
+      },
+      "question": "How did the National Movement impact the making of the Indian Constitution?",
+      "options": [
+        "It forced the British to write the constitution for India.",
+        "It provided the core values of secularism, social justice, and liberty adopted by the framers.",
+        "It demanded that India remain a dominion under the British Crown permanently.",
+        "It rejected the idea of a Constituent Assembly in favor of a military coup."
+      ],
+      "answer": "(b)",
+      "explanation": "The experiences of the colonial struggle shaped the democratic and inclusive values (justice, liberty, equality) embedded in the Constitution. The values of the national movement guided the founding fathers.",
+      "keywords": [
+        "Social contract",
+        "Aspirations of a diverse society"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Thinking the Constitution was a purely \"legal/technical\" document with no political or emotional history.",
+      "why_important": "",
+      "sources": [
+        "Historical Background",
+        "Historical Background to the Constitution"
+      ]
+    },
+    {
+      "id": "PYQ-061",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC Mains (PSIR Optional)",
+        "year": 2008,
+        "stage": "Mains"
+      },
+      "question": "The framing of the Indian Constitution was influenced by external factors such as:",
+      "options": [
+        "The Russian Revolution's ideal of social and economic justice.",
+        "The French Revolution's ideals of liberty, equality, and fraternity.",
+        "The US Bill of Rights.",
+        "All of the above."
+      ],
+      "answer": "(d) All of the above.",
+      "explanation": "The framers ransacked all major global constitutions. The Russian Revolution (1917) influenced the socialist goal and justice ideals, while the French and US models influenced the Preamble and Fundamental Rights.",
+      "keywords": [
+        "Global inspirations",
+        "Synthesis"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Focusing only on \"Western\" (UK/US) influences while ignoring the \"Eastern\" (USSR) socialist influence.",
+      "why_important": "",
+      "sources": [
+        "Salient Features",
+        "Major Sources"
+      ]
+    },
+    {
+      "id": "PYQ-062",
+      "difficulty": "hard",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC Mains (PSIR Optional)",
+        "year": 2010,
+        "stage": "Mains"
+      },
+      "question": "\"The Constituent Assembly was a one-party body in an essentially one-party country. The Assembly was the Congress and the Congress was India.\" This famous critique was made by:",
+      "options": [
+        "Winston Churchill",
+        "Lord Viscount Simon",
+        "Granville Austin",
+        "Naziruddin Ahmad"
+      ],
+      "answer": "(c) Granville Austin",
+      "explanation": "Granville Austin made this remark regarding the Congress party's dominance within the Constituent Assembly. Churchill remarked that the Assembly represented \"only one major community\".",
+      "keywords": [
+        "Congress domination",
+        "One-party body"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": [
+          "Granville Austin",
+          "INC"
+        ]
+      },
+      "memory_trick": "",
+      "exam_trap": "Confusing Austin's \"One-party\" quote with Churchill's communal critique or Simon's \"Body of Hindus\" critique.",
+      "why_important": "",
+      "sources": [
+        "Making of the Constitution: PSIR Optional PYQs",
+        "Criticisms of the Constituent Assembly"
+      ]
+    },
+    {
+      "id": "PYQ-063",
+      "difficulty": "hard",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC Mains (PSIR Optional)",
+        "year": 2019,
+        "stage": "Mains"
+      },
+      "question": "Which factor was the single uppermost concern in the minds of the Constitution makers during the framing process?",
+      "options": [
+        "Rapid industrialization",
+        "Maintaining the British Commonwealth ties",
+        "Unity and integrity of the nation",
+        "Absolute decentralization of power"
+      ],
+      "answer": "(c) Unity and integrity of the nation",
+      "explanation": "The horrific partition violence and the fragmentation of identity during that period made unity and integrity the paramount factor for the makers. This led to a \"mixture of federalism and unitarianism\" to secure the nation.",
+      "keywords": [
+        "National integration",
+        "Partition shadow"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [
+          "Preamble (Integrity)",
+          "Article 1 (Union)"
+        ],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Choosing \"decentralization\"; while important, the makers actually created a strong centre precisely because they feared further disintegration.",
+      "why_important": "",
+      "sources": [
+        "Mixture of Federalism and Unitarianism",
+        "PSIR Optional PYQs"
+      ]
+    },
+    {
+      "id": "PYQ-064",
+      "difficulty": "hard",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC Mains (PSIR Optional)",
+        "year": 2020,
+        "stage": "Mains"
+      },
+      "question": "The Indian Constitution makers' concerns regarding social inequality are most primarily reflected in:",
+      "options": [
+        "The creation of a powerful Executive.",
+        "The inclusion of Directive Principles of State Policy (DPSP).",
+        "The provision for a bicameral legislature.",
+        "The adoption of English as an official language."
+      ],
+      "answer": "(b) The inclusion of Directive Principles of State Policy (DPSP)",
+      "explanation": "DPSPs were included to tackle social and economic challenges and establish a Welfare State. They reflect the commitment to address historical injustices and inequalities.",
+      "keywords": [
+        "Welfare State",
+        "Socio-economic justice"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [
+          "Part IV",
+          "Article 38"
+        ],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Thinking \"Fundamental Rights\" are the only tool for equality; while FRs protect liberties, the programmatic mandate to end inequality is in DPSP.",
+      "why_important": "",
+      "sources": [
+        "Directive Principles meaning",
+        "Historical Background"
+      ]
+    },
+    {
+      "id": "PYQ-065",
+      "difficulty": "hard",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC Mains (PSIR Optional)",
+        "year": 2021,
+        "stage": "Mains"
+      },
+      "question": "\"The Constitution of India is a product of a historical process, rich with constitutional antecedents.\" This implies that the Constitution:",
+      "options": [
+        "Was written in a vacuum after 1947.",
+        "Represents an evolution from early British Acts to the 1935 Act.",
+        "Is a mere translation of the Magna Carta.",
+        "Was gifted by the British Parliament to the Indian people."
+      ],
+      "answer": "(b)",
+      "explanation": "The Constitution evolved through a series of legislative and administrative developments during British rule, from the 1773 Act to the 1947 Act. It is not a revolutionary break but an evolutionary synthesis.",
+      "keywords": [
+        "Legacy",
+        "Layers of background"
+      ],
+      "related": {
+        "acts": [
+          "1773–1947 Acts"
+        ],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Believing the Constitution was \"self-made\" means it had no historical precedents; \"Self-made\" refers to its enactment by Indians, but its structure is evolutionary.",
+      "why_important": "",
+      "sources": [
+        "Historical Evolution",
+        "Significance of the Indian Independence Act"
+      ]
+    },
+    {
+      "id": "PYQ-066",
+      "difficulty": "hard",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC Mains (PSIR Optional)",
+        "year": 2021,
+        "stage": "Mains"
+      },
+      "question": "How did the Constitution makers forge a common national identity in the face of unparalleled diversity?",
+      "options": [
+        "By enforcing a single religion on all citizens.",
+        "By adopting a federal structure with a unitary bias and single citizenship.",
+        "By dividing the country into thousands of sovereign micro-states.",
+        "By granting separate electorates to every religious and linguistic group."
+      ],
+      "answer": "(b)",
+      "explanation": "To maintain unity in diversity, the makers opted for a \"Union of States\" with no right to secede and a single citizenship to ensure uniform political rights for all. This created a \"federal equilibrium\".",
+      "keywords": [
+        "Federal unifier",
+        "Mixture of federalism/unitarianism"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [
+          "Article 1"
+        ],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Thinking \"Federalism\" (equal state power) was the solution; it was actually \"Quasi-federalism\" (strong centre) that forged the identity.",
+      "why_important": "",
+      "sources": [
+        "Mixture of Federalism and Unitarianism",
+        "Single integrated State"
+      ]
+    },
+    {
+      "id": "PYQ-067",
+      "difficulty": "hard",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC Mains (PSIR Optional)",
+        "year": 2022,
+        "stage": "Mains"
+      },
+      "question": "The making of the Indian Constitution is described by Granville Austin as an attempt towards a \"social revolution\". This is primarily because:",
+      "options": [
+        "It aimed at a violent overthrow of the capitalist class.",
+        "It sought to establish a new social order based on justice, liberty, and the removal of untouchability.",
+        "It replaced the Indian monarchy with a British one.",
+        "It mandated that all wealth be owned by the state."
+      ],
+      "answer": "(b)",
+      "explanation": "The Constitution was seen as a vehicle for social change, aiming to provide \"people a new framework of life\" and committing to secure justice and promote fraternity. Provisions like Article 17 (Abolition of Untouchability) were key to this revolution.",
+      "keywords": [
+        "Social Revolution",
+        "Cornerstone of a nation"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [
+          "Article 17"
+        ],
+        "dates": [],
+        "committees": [],
+        "personalities": [
+          "Granville Austin"
+        ]
+      },
+      "memory_trick": "",
+      "exam_trap": "Thinking \"Revolution\" in the Constitution means \"Political independence\" only; it specifically refers to Social/Structural change in the caste and class hierarchy.",
+      "why_important": "",
+      "sources": [
+        "Preamble philosophy",
+        "Women members' objectives (Dakshayani Velayudhan)"
+      ]
+    },
+    {
+      "id": "PYQ-068",
+      "difficulty": "hard",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC Mains (PSIR Optional)",
+        "year": 2023,
+        "stage": "Mains"
+      },
+      "question": "Why did Granville Austin describe the Constitution of India as the 'cornerstone of a nation'?",
+      "options": [
+        "Because it was made of high-quality marble.",
+        "Because it provided the basic legal and ethical framework for progress and national unity.",
+        "Because it was the first document to ever mention the word \"India\".",
+        "Because it was written in a single day."
+      ],
+      "answer": "(b)",
+      "explanation": "The Constitution provides the foundational framework for national identity, development, and progress. It is the \"resilient framework\" that has guided India's path since 1950.",
+      "keywords": [
+        "Basic ethical framework",
+        "Guided path"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": [
+          "Granville Austin"
+        ]
+      },
+      "memory_trick": "",
+      "exam_trap": "Thinking the \"cornerstone\" refers to its legal supremacy only; it equally emphasizes its ethical/social role in building the nation.",
+      "why_important": "",
+      "sources": [
+        "President's Address on 50th Anniversary",
+        "PSIR Optional PYQs"
+      ]
+    },
+    {
+      "id": "PYQ-069",
+      "difficulty": "hard",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC Mains (PSIR Optional)",
+        "year": 2023,
+        "stage": "Mains"
+      },
+      "question": "Despite its sovereign character, the imprint of the British Constitution on the Indian model is most evident in the:",
+      "options": [
+        "Procedure for electing the President.",
+        "Concept of Judicial Review.",
+        "Parliamentary form of government and Rule of Law.",
+        "Provision of Fundamental Duties."
+      ],
+      "answer": "(c) Parliamentary form of government and Rule of Law.",
+      "explanation": "The political and legislative framework (parliamentary system, cabinet, rule of law, writs) is directly derived from the British model. India chose the Westminster model but replaced parliamentary sovereignty with constitutional supremacy.",
+      "keywords": [
+        "Westminster model",
+        "Prerogative writs"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Mistaking the President's election (Ireland) or Judicial Review (USA) as British imprints.",
+      "why_important": "",
+      "sources": [
+        "Sources and Synthesis",
+        "Major Sources Table"
+      ]
+    },
+    {
+      "id": "PYQ-070",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC Mains (PSIR Optional)",
+        "year": 2024,
+        "stage": "Mains"
+      },
+      "question": "The Objectives Resolution, moved by Jawaharlal Nehru, eventually served as the framework for which part of the Constitution?",
+      "options": [
+        "Fundamental Rights",
+        "Directive Principles of State Policy",
+        "The Preamble",
+        "The Tenth Schedule"
+      ],
+      "answer": "(c) The Preamble",
+      "explanation": "A modified version of the Objectives Resolution, adopted on January 22, 1947, became the Preamble to the modern Constitution. It defined the guiding philosophy for the entire draft.",
+      "keywords": [
+        "Guiding philosophy",
+        "Modified version"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [
+          "Dec 13, 1946",
+          "Jan 22, 1947"
+        ],
+        "committees": [],
+        "personalities": [
+          "Nehru"
+        ]
+      },
+      "memory_trick": "",
+      "exam_trap": "Thinking the Resolution is the Preamble; it was the blueprint, and the Preamble is the enacted summary.",
+      "why_important": "",
+      "sources": [
+        "Objectives Resolution",
+        "Timeline of Evolution"
+      ]
+    },
+    {
+      "id": "PYQ-071",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC Mains",
+        "year": 2016,
+        "stage": "Mains"
+      },
+      "question": "In the context of the Government of India Act of 1935, why did the proposed \"All-India Federation\" fail to materialize?",
+      "options": [
+        "The British Parliament vetoed it at the last moment.",
+        "The Indian National Congress refused to accept any form of federation.",
+        "The required number of Princely States refused to sign the Instruments of Accession.",
+        "The Act did not provide for a Federal Court."
+      ],
+      "answer": "(c)",
+      "explanation": "Joining the federation was voluntary for the princely states, and because they refused to join, the federation never came into being. The Act was condemned by sections for its \"safeguards\" that acted as brakes.",
+      "keywords": [
+        "Instrument of Accession",
+        "Voluntary nature"
+      ],
+      "related": {
+        "acts": [
+          "GoI Act 1935"
+        ],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": [
+          "Princely States"
+        ]
+      },
+      "memory_trick": "",
+      "exam_trap": "Thinking the federation failed because it wasn't provided for; it was fully designed but never implemented.",
+      "why_important": "",
+      "sources": [
+        "GoI Act 1935 Features",
+        "Criticism of the Act"
+      ]
+    },
+    {
+      "id": "PYQ-072",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "UPSC Mains",
+        "year": 2023,
+        "stage": "Mains"
+      },
+      "question": "While borrowing from the British model, the Indian Constitution established a Republic instead of a Monarchy. What is the core characteristic of this \"Republic\"?",
+      "options": [
+        "The head of state is a hereditary king.",
+        "All powers are concentrated in the hands of a single dictator.",
+        "The head of state (President) is an elected official.",
+        "The country is part of the British Commonwealth."
+      ],
+      "answer": "(c) The head of state (President) is an elected official.",
+      "explanation": "A Republic implies that the head of state is elected (directly or indirectly) for a fixed term. It also signifies the absence of any privileged class and that political sovereignty vests in the people.",
+      "keywords": [
+        "Elected head",
+        "Political sovereignty in people"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [
+          "Preamble",
+          "Article 52"
+        ],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Thinking India is a monarchy because it is in the Commonwealth; India is a Republic that chooses to be a member of the Commonwealth.",
+      "why_important": "",
+      "sources": [
+        "Salient Features (Republic)",
+        "Preamble Keywords"
+      ]
+    },
+    {
+      "id": "PYQ-073",
+      "difficulty": "easy",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "NDA / CDS",
+        "year": "",
+        "stage": ""
+      },
+      "question": "Arrange the following events in chronological order:\n1. Cabinet Mission\n2. Cripps Mission\n3. Wavell Plan\n4. August Offer\nSelect the correct sequence:",
+      "options": [
+        "1-3-2-4",
+        "4-2-3-1",
+        "4-3-1-2",
+        "2-4-3-1"
+      ],
+      "answer": "(b) 4-2-3-1",
+      "explanation": "The correct timeline is: August Offer (1940) → Cripps Mission (1942) → Wavell Plan (1945) → Cabinet Mission (1946).",
+      "keywords": [
+        "Chronology",
+        "Decolonization"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [
+          "1940",
+          "1942",
+          "1945",
+          "1946"
+        ],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "Always Come With Care (August, Cripps, Wavell, Cabinet).",
+      "exam_trap": "Mixing up the Wavell Plan (1945) with the Cabinet Mission (1946).",
+      "why_important": "",
+      "sources": [
+        "Chronological Order Solution",
+        "Timeline of Evolution"
+      ]
+    },
+    {
+      "id": "PYQ-074",
+      "difficulty": "easy",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "Standard History/Polity",
+        "year": "",
+        "stage": ""
+      },
+      "question": "Which constitutional proposal was famously called a \"post-dated cheque\" by Mahatma Gandhi?",
+      "options": [
+        "August Offer, 1940",
+        "Cripps Mission, 1942",
+        "Cabinet Mission Plan, 1946",
+        "Mountbatten Plan, 1947"
+      ],
+      "answer": "(b) Cripps Mission, 1942",
+      "explanation": "Gandhi described the Cripps proposal as a \"post-dated cheque on a crashing bank\" because it promised Dominion status only after the war.",
+      "keywords": [
+        "Post-dated cheque",
+        "Post-war status"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [
+          "March 1942"
+        ],
+        "committees": [],
+        "personalities": [
+          "Sir Stafford Cripps"
+        ]
+      },
+      "memory_trick": "",
+      "exam_trap": "Thinking this remark was about the \"August Offer\" since both offered post-war reforms.",
+      "why_important": "",
+      "sources": [
+        "Cripps Mission Facts",
+        "Background to Independence"
+      ]
+    },
+    {
+      "id": "PYQ-075",
+      "difficulty": "easy",
+      "type": "mcq",
+      "question_category": "pyq",
+      "exam": {
+        "name": "SSC / Testbook",
+        "year": "",
+        "stage": ""
+      },
+      "question": "The 1947 partition divided the province of Punjab into two parts. What were they officially called?",
+      "options": [
+        "North Punjab and South Punjab",
+        "Upper Punjab and Lower Punjab",
+        "East Punjab and West Punjab",
+        "Indian Punjab and Lahore Punjab"
+      ],
+      "answer": "(c) East Punjab and West Punjab",
+      "explanation": "Under the partition plan, Punjab was divided into East Punjab (which remained with India) and West Punjab (which went to Pakistan).",
+      "keywords": [
+        "Partition",
+        "1947"
+      ],
+      "related": {
+        "acts": [
+          "Indian Independence Act 1947"
+        ],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": [
+          "Cyril Radcliffe"
+        ]
+      },
+      "memory_trick": "",
+      "exam_trap": "Using the current modern names (\"Punjab\" vs \"Punjab Province\") instead of the historical 1947 designations.",
+      "why_important": "",
+      "sources": [
+        "Partition of Punjab Questions",
+        "Indian Independence Act Summary"
+      ]
+    },
+    {
+      "id": "PRE-010",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "According to the Objectives Resolution moved by Jawaharlal Nehru, all power and authority of the sovereign independent India are derived from which of the following?",
+      "options": [
+        "The British Parliament",
+        "The Constituent Assembly",
+        "The People",
+        "The Princely States"
+      ],
+      "answer": "(c) The People",
+      "explanation": "The Objectives Resolution explicitly stated that all power and authority of Independent India, its constituent parts, and organs of government are derived from the people. Option (a) is incorrect as the resolution aimed for independence from British authority. Option (b) is incorrect because the Assembly acted only as the representative body, not the ultimate source of power.",
+      "keywords": [
+        "Derivation of power",
+        "Guiding philosophy"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [
+          "December 13, 1946"
+        ],
+        "committees": [],
+        "personalities": [
+          "Jawaharlal Nehru"
+        ]
+      },
+      "memory_trick": "",
+      "exam_trap": "Thinking the power was derived from the Indian Independence Act 1947; that Act provided the legal mechanism, but the philosophical source was the people.",
+      "why_important": "This focuses on the origin of sovereignty in the Objective Resolution, a conceptual pillar that defines the democratic nature of the Indian state.",
+      "sources": [
+        "Making of the Constitution - InclusiveIAS",
+        "Making of the Constitution"
+      ]
+    },
+    {
+      "id": "PRE-011",
+      "difficulty": "easy",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "Under the scheme recommended by the Cabinet Mission, the Constituent Assembly seats were allotted to each province and princely state in proportion to their respective population, roughly in the ratio of one seat for every:",
+      "options": [
+        "1,00,000 population",
+        "5,00,000 population",
+        "1,000,000 population",
+        "10,000,000 population"
+      ],
+      "answer": "(c) 1,000,000 population",
+      "explanation": "The Cabinet Mission Plan of 1946 stipulated that seats were to be allotted based on the population of provinces and states, following the metric of one seat per million people.",
+      "keywords": [
+        "Seat allocation criteria",
+        "Million population"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [],
+        "committees": [
+          "Cabinet Mission Plan 1946"
+        ],
+        "personalities": []
+      },
+      "memory_trick": "Mission = Million.",
+      "exam_trap": "",
+      "why_important": "Focuses on the demographic metrics of the Cabinet Mission Plan, which is a foundational fact for understanding the Assembly's representative character.",
+      "sources": [
+        "Constituent Assembly - Digital Sansad",
+        "Composition of Constituent Assembly",
+        "Making of the Constitution - InclusiveIAS"
+      ]
+    },
+    {
+      "id": "PRE-012",
+      "difficulty": "hard",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "While the Indian Independence Act 1947 and the Government of India Act 1935 were repealed upon the commencement of the Constitution, which of the following was expressly retained?",
+      "options": [
+        "The Regulating Act of 1773",
+        "The Indian Councils Act of 1909",
+        "The Abolition of Privy Council Jurisdiction Act, 1949",
+        "The Government of India Act 1919"
+      ],
+      "answer": "(c) The Abolition of Privy Council Jurisdiction Act, 1949",
+      "explanation": "Article 395 of the Constitution repealed the 1935 and 1947 Acts, but it retained the Abolition of Privy Council Jurisdiction Act, 1949, to ensure that judicial appeals continued to be handled within India rather than London.",
+      "keywords": [
+        "Repeal",
+        "Legal effect",
+        "Article 395"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [
+          "Article 395"
+        ],
+        "dates": [
+          "January 26, 1950"
+        ],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Assuming all British-era \"Constitutional\" Acts were repealed simultaneously.",
+      "why_important": "Tests knowledge of legal continuity, specifically identifying the one major colonial-era Act that was not repealed by Article 395 in 1950.",
+      "sources": [
+        "Enforcement of the Constitution of India - InclusiveIAS"
+      ]
+    },
+    {
+      "id": "PRE-013",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "In the 1935 Act, how were residuary powers exercised by the Viceroy/Governor-General?",
+      "options": [
+        "He legislated on them personally without a council.",
+        "He authorized either the federal or provincial legislature to enact a law on such matters.",
+        "He referred all such matters to the British Parliament.",
+        "He delegated these powers to the Federal Court."
+      ],
+      "answer": "(b) He authorized either the federal or provincial legislature to enact a law on such matters.",
+      "explanation": "Unlike modern India where residuary powers belong to the Union Parliament, the 1935 Act gave the Viceroy the personal discretion to decide whether the federal or a provincial legislature should handle an unlisted subject.",
+      "keywords": [
+        "Personal discretion",
+        "Authorized legislature"
+      ],
+      "related": {
+        "acts": [
+          "Government of India Act 1935"
+        ],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Thinking the Viceroy was the legislator for residuary subjects; he was the gatekeeper who decided who could legislate.",
+      "why_important": "Clarifies the specific procedural mechanism of residuary powers under the 1935 Act, which differs from modern parliamentary residency.",
+      "sources": [
+        "The Blueprint of the Federal Structure - Master Knowledge Base"
+      ]
+    },
+    {
+      "id": "PRE-014",
+      "difficulty": "hard",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "What is the primary structural difference between the \"Dual Government\" of 1784 and the \"Dyarchy\" of 1919?",
+      "options": [
+        "Dual government was in India, while Dyarchy was in London.",
+        "Dual government was a commercial-political split in London, while Dyarchy was a split executive in Indian provinces.",
+        "Dyarchy applied to the Supreme Court, while Dual government applied to the Executive Council.",
+        "There was no difference; both terms refer to the Board of Control."
+      ],
+      "answer": "(b)",
+      "explanation": "\"Dual Government\" (1784) split authority in London between the Court of Directors (commercial) and Board of Control (political). \"Dyarchy\" (1919) was an executive split within Indian provinces between Reserved and Transferred subjects.",
+      "keywords": [
+        "Metropolitan level vs. Provincial level"
+      ],
+      "related": {
+        "acts": [
+          "Pitt's India Act 1784",
+          "GoI Act 1919"
+        ],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Using the terms interchangeably because both involve a \"two-part\" administration.",
+      "why_important": "Requires an analytical distinction between metropolitan and provincial dual authority systems.",
+      "sources": [
+        "Conceptual Disambiguation - Master Knowledge Base"
+      ]
+    },
+    {
+      "id": "PRE-015",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "Which Act established a legislative council that functioned as a \"mini-parliament\" by adopting the same procedural rules as the British Parliament?",
+      "options": [
+        "Charter Act, 1833",
+        "Charter Act, 1853",
+        "Indian Councils Act, 1861",
+        "Government of India Act, 1858"
+      ],
+      "answer": "(b) Charter Act, 1853",
+      "explanation": "The 1853 Act created a 12-member Indian Legislative Council that functioned as a mini-parliament, adopting the rules and procedures used by the British Parliament.",
+      "keywords": [
+        "Mini-parliament",
+        "Procedural rules"
+      ],
+      "related": {
+        "acts": [
+          "Charter Act 1853"
+        ],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "",
+      "why_important": "Focuses on the procedural evolution of the Central Legislative Council into a \"mini-parliament.\"",
+      "sources": [
+        "Charter Act of 1853 - Master Knowledge Base",
+        "Making of the Constitution"
+      ]
+    },
+    {
+      "id": "PRE-016",
+      "difficulty": "easy",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "The Charter Act of 1833 added a fourth member to the Governor-General's Executive Council. This member was designated as the:",
+      "options": [
+        "Revenue Member",
+        "Law Member",
+        "Military Member",
+        "Commerce Member"
+      ],
+      "answer": "(b) Law Member",
+      "explanation": "To assist in codifying laws, the 1833 Act added a Law Member to the council. Lord Macaulay was the first to hold this post.",
+      "keywords": [
+        "Law Member",
+        "Codification"
+      ],
+      "related": {
+        "acts": [
+          "Charter Act 1833"
+        ],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": [
+          "Lord Macaulay"
+        ]
+      },
+      "memory_trick": "",
+      "exam_trap": "Thinking the Law Member was added in 1853; 1853 was when legislative and executive functions were separated, but the member was added in 1833.",
+      "why_important": "A standard factual milestone regarding the first professionalization of the executive council.",
+      "sources": [
+        "Charter Act of 1833 - Master Knowledge Base",
+        "The Historical Evolution"
+      ]
+    },
+    {
+      "id": "PRE-017",
+      "difficulty": "easy",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "Who was the first Indian to join the Viceroy's Executive Council under the provisions of the Morley-Minto Reforms of 1909?",
+      "options": [
+        "Dadabhai Naoroji",
+        "Satyendra Prasad Sinha",
+        "Gopal Krishna Gokhale",
+        "Sir Dinkar Rao"
+      ],
+      "answer": "(b) Satyendra Prasad Sinha",
+      "explanation": "The 1909 Act provided for the association of Indians with the executive councils; Satyendra Prasad Sinha was the first to join as the Law Member.",
+      "keywords": [
+        "Viceroy's Executive Council",
+        "Law Member"
+      ],
+      "related": {
+        "acts": [
+          "Indian Councils Act 1909"
+        ],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": [
+          "S.P. Sinha"
+        ]
+      },
+      "memory_trick": "",
+      "exam_trap": "Confusing Sinha with the three Indians nominated to the Legislative Council in 1862 (Raja of Benares, etc.).",
+      "why_important": "Focuses on the first Indian entry into the highest executive body, a key nationalist victory.",
+      "sources": [
+        "Morley-Minto Reforms - Master Knowledge Base",
+        "Making of the Constitution"
+      ]
+    },
+    {
+      "id": "PRE-018",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "Although the Government of India Act was passed in 1935, the system of \"Provincial Autonomy\" and the abolition of dyarchy in provinces became effective in:",
+      "options": [
+        "1935",
+        "1936",
+        "1937",
+        "1939"
+      ],
+      "answer": "(c) 1937",
+      "explanation": "The 1935 Act proposed autonomy, but it was officially implemented in the provinces in 1937.",
+      "keywords": [
+        "Effective date",
+        "Implementation gap"
+      ],
+      "related": {
+        "acts": [
+          "Government of India Act 1935"
+        ],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Selecting 1935; while the Act was passed then, the administrative shift occurred two years later.",
+      "why_important": "Tests the implementation gap of the 1935 Act, distinguishing the date of the Act from the date its provincial provisions became operational.",
+      "sources": [
+        "Centralization vs. Decentralization - Master Knowledge Base",
+        "Blueprint of the Federal Structure"
+      ]
+    },
+    {
+      "id": "PRE-019",
+      "difficulty": "easy",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "In October 1953, the Government of India was forced to create the first linguistic state, known as:",
+      "options": [
+        "Tamil Nadu",
+        "Andhra State",
+        "Kerala",
+        "Gujarat"
+      ],
+      "answer": "(b) Andhra State",
+      "explanation": "Following the death of Potti Sriramulu after a 56-day hunger strike, the government separated Telugu-speaking areas from Madras to form Andhra State in 1953.",
+      "keywords": [
+        "First linguistic state",
+        "Telugu speaking areas"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [
+          "October 1953"
+        ],
+        "committees": [],
+        "personalities": [
+          "Potti Sriramulu"
+        ]
+      },
+      "memory_trick": "Andhra is Always first (in language states).",
+      "exam_trap": "",
+      "why_important": "Focuses on the first linguistic state, a critical post-independence evolution of the Union structure.",
+      "sources": [
+        "Expected questions for Prelims 2025 - Vishnu IAS"
+      ]
+    },
+    {
+      "id": "PRE-020",
+      "difficulty": "easy",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "The Boundary Commission created to demarcate the borders between India and Pakistan was headed by:",
+      "options": [
+        "Lord Mountbatten",
+        "Sir Cyril Radcliffe",
+        "Sir Pethick-Lawrence",
+        "Sir Stafford Cripps"
+      ],
+      "answer": "(b) Sir Cyril Radcliffe",
+      "explanation": "Sir Cyril Radcliffe chaired the commission tasked with drawing the boundaries for partition under the 1947 Act.",
+      "keywords": [
+        "Boundary Commission",
+        "Radcliffe Line"
+      ],
+      "related": {
+        "acts": [
+          "Indian Independence Act 1947"
+        ],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": [
+          "Sir Cyril Radcliffe"
+        ]
+      },
+      "memory_trick": "",
+      "exam_trap": "",
+      "why_important": "Factual detail regarding the demarcation authority under the 1947 Act.",
+      "sources": [
+        "Indian Independence Act 1947 - PadhAI.ai",
+        "Making of the Constitution"
+      ]
+    },
+    {
+      "id": "PRE-021",
+      "difficulty": "hard",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "In the context of women's contributions, who piloted the change of phrase in the UN Human Rights Council from \"All men are born free and equal\" to \"All human beings are born free and equal\"?",
+      "options": [
+        "Vijayalakshmi Pandit",
+        "Hansa Jivraj Mehta",
+        "Sarojini Naidu",
+        "Rajkumari Amrit Kaur"
+      ],
+      "answer": "(b) Hansa Jivraj Mehta",
+      "explanation": "Hansa Mehta, a member of the Constituent Assembly and the UN Human Rights Council, was instrumental in changing the phrase to be gender-neutral, reflecting her advocacy for gender equality.",
+      "keywords": [
+        "Gender neutral language",
+        "Human beings"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": [
+          "Hansa Jivraj Mehta"
+        ]
+      },
+      "memory_trick": "",
+      "exam_trap": "Selecting Vijayalakshmi Pandit due to her presidency of the UN General Assembly.",
+      "why_important": "Highlights a sophisticated gender-neutral contribution by an Indian woman to global and domestic human rights.",
+      "sources": [
+        "Women in the making of Indian Constitution - Shankar IAS"
+      ]
+    },
+    {
+      "id": "PRE-022",
+      "difficulty": "easy",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "Who was the only Muslim woman member of the Constituent Assembly of India?",
+      "options": [
+        "Begum Aizaz Rasul",
+        "Malati Choudhury",
+        "Annie Mascarene",
+        "Sucheta Kripalani"
+      ],
+      "answer": "(a) Begum Aizaz Rasul",
+      "explanation": "Begum Aizaz Rasul was the only Muslim woman among the 15 female members of the Assembly.",
+      "keywords": [
+        "Only Muslim woman",
+        "Minority leadership"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": [
+          "Begum Aizaz Rasul"
+        ]
+      },
+      "memory_trick": "",
+      "exam_trap": "",
+      "why_important": "Identifies a unique demographic representative in the Assembly whose presence symbolized secular integration.",
+      "sources": [
+        "Women in the making of Indian Constitution - Shankar IAS"
+      ]
+    },
+    {
+      "id": "PRE-023",
+      "difficulty": "hard",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "Dakshayani Velayudhan, the first and only Dalit woman in the Assembly, argued that the \"protection of underdogs\" could only be achieved through:",
+      "options": [
+        "Separate electorates for Scheduled Castes",
+        "A strong, democratic, and socialist republic",
+        "Retaining British judicial oversight",
+        "Creating a dual polity for castes"
+      ],
+      "answer": "(b) A strong, democratic, and socialist republic",
+      "explanation": "Velayudhan held the conviction that only an independent socialist republic could help uplift Dalits and provide real liberties, rather than just procedural electorates.",
+      "keywords": [
+        "Socialist republic",
+        "Moral safeguard"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [
+          "Article 17"
+        ],
+        "dates": [],
+        "committees": [],
+        "personalities": [
+          "Dakshayani Velayudhan"
+        ]
+      },
+      "memory_trick": "",
+      "exam_trap": "Thinking she supported separate electorates like the early 1932 demands; she actually supported integration through a strong republic.",
+      "why_important": "Explores the socio-political conviction of the only Dalit woman member, linking caste abolition to a specific form of republic.",
+      "sources": [
+        "Women in the making of Indian Constitution - Shankar IAS"
+      ]
+    },
+    {
+      "id": "PRE-024",
+      "difficulty": "easy",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "Which woman member of the Constituent Assembly went on to become India's first female Chief Minister?",
+      "options": [
+        "Durgabai Deshmukh",
+        "Sucheta Kripalani",
+        "Vijayalakshmi Pandit",
+        "Ammu Swaminathan"
+      ],
+      "answer": "(b) Sucheta Kripalani",
+      "explanation": "Sucheta Kripalani became the Chief Minister of Uttar Pradesh in 1963, marking history as the first female CM in India.",
+      "keywords": [
+        "First women Chief Minister",
+        "Uttar Pradesh"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": [
+          "Sucheta Kripalani"
+        ]
+      },
+      "memory_trick": "",
+      "exam_trap": "",
+      "why_important": "A standard factual detail about the post-Assembly legacy of its prominent female members.",
+      "sources": [
+        "Women in the making of Indian Constitution - Shankar IAS"
+      ]
+    },
+    {
+      "id": "PRE-025",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "Who was the Chairman of the Committee on the Functions of the Constituent Assembly?",
+      "options": [
+        "Dr. Rajendra Prasad",
+        "G.V. Mavalankar",
+        "Dr. B.R. Ambedkar",
+        "Jawaharlal Nehru"
+      ],
+      "answer": "(b) G.V. Mavalankar",
+      "explanation": "G.V. Mavalankar chaired the committee responsible for the legislative functions of the Assembly.",
+      "keywords": [
+        "Committee on Functions",
+        "G.V. Mavalankar"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": [
+          "G.V. Mavalankar"
+        ]
+      },
+      "memory_trick": "",
+      "exam_trap": "Selecting Dr. Rajendra Prasad because he was the President of the Assembly, but the Functions Committee was Mavalankar's domain.",
+      "why_important": "Differentiates the leadership of procedural vs. legislative functions within the Assembly's committee structure.",
+      "sources": [
+        "Important Committees of Constituent Assembly - Digital Sansad",
+        "Minor Committees"
+      ]
+    },
+    {
+      "id": "PRE-026",
+      "difficulty": "hard",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "Who served as the Chairperson of the Ad-hoc Committee on the Supreme Court, despite not being a member of the Constituent Assembly?",
+      "options": [
+        "S. Varadachari",
+        "B.N. Rau",
+        "Nalini Ranjan Sarkar",
+        "S.K. Dar"
+      ],
+      "answer": "(a) S. Varadachari",
+      "explanation": "S. Varadachari was a non-assembly member who chaired the Ad-hoc Committee on the Supreme Court.",
+      "keywords": [
+        "Non-Assembly member",
+        "Supreme Court Committee"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": [
+          "S. Varadachari"
+        ]
+      },
+      "memory_trick": "",
+      "exam_trap": "Thinking all committee chairs had to be delegates of the Assembly.",
+      "why_important": "Identifies a non-Assembly member in a position of institutional leadership, a nuance often targeted in high-level civil service exams.",
+      "sources": [
+        "Major and Minor Committees - Master Knowledge Base",
+        "Minor Committees"
+      ]
+    },
+    {
+      "id": "PRE-027",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "The Linguistic Provinces Commission, set up to examine the feasibility of state reorganization on linguistic lines, was chaired by:",
+      "options": [
+        "Fazl Ali",
+        "S.K. Dar",
+        "H.N. Kunzru",
+        "Jawaharlal Nehru"
+      ],
+      "answer": "(b) S.K. Dar",
+      "explanation": "S.K. Dar chaired the Linguistic Provinces Commission (also a non-assembly member). Fazl Ali chaired the States Reorganisation Commission later in 1953.",
+      "keywords": [
+        "Linguistic Provinces Commission",
+        "S.K. Dar"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": [
+          "S.K. Dar"
+        ]
+      },
+      "memory_trick": "",
+      "exam_trap": "Confusing the Dar Commission (1948) with the Fazl Ali Commission (1953).",
+      "why_important": "Focuses on the linguistic commissions, which were critical precursors to the reorganization of states.",
+      "sources": [
+        "Minor Committees - InclusiveIAS",
+        "Dhar Commission - Vishnu IAS"
+      ]
+    },
+    {
+      "id": "PRE-028",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "Who was the Chairman of the Credentials Committee of the Constituent Assembly?",
+      "options": [
+        "Alladi Krishnaswami Ayyar",
+        "B. Pattabhi Sitaramayya",
+        "Dr. K.M. Munshi",
+        "Dr. Rajendra Prasad"
+      ],
+      "answer": "(a) Alladi Krishnaswami Ayyar",
+      "explanation": "Alladi Krishnaswami Ayyar, an eminent jurist, was the chairman of the Credentials Committee.",
+      "keywords": [
+        "Credentials Committee",
+        "Chairman"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": [
+          "Alladi Krishnaswami Ayyar"
+        ]
+      },
+      "memory_trick": "",
+      "exam_trap": "",
+      "why_important": "A specific factual detail on procedural committees, commonly tested in multi-statement questions.",
+      "sources": [
+        "Important Committees - Digital Sansad",
+        "Minor Committees"
+      ]
+    },
+    {
+      "id": "PRE-029",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "Which member of the Drafting Committee also served as the Chairman of the Order of Business Committee?",
+      "options": [
+        "N. Madhava Rau",
+        "Dr. K.M. Munshi",
+        "Syed Mohammad Saadullah",
+        "T.T. Krishnamachari"
+      ],
+      "answer": "(b) Dr. K.M. Munshi",
+      "explanation": "Dr. K.M. Munshi was the chairman of the Order of Business Committee and also a prominent member of the Drafting Committee.",
+      "keywords": [
+        "Order of Business Committee",
+        "K.M. Munshi"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": [
+          "Dr. K.M. Munshi"
+        ]
+      },
+      "memory_trick": "",
+      "exam_trap": "",
+      "why_important": "Identifies the manager of daily flow, a key administrative role in the Assembly's efficiency.",
+      "sources": [
+        "Important Committees - Digital Sansad",
+        "Minor Committees"
+      ]
+    },
+    {
+      "id": "PRE-030",
+      "difficulty": "easy",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "The House Committee, responsible for accommodation and facilities for delegates, was chaired by:",
+      "options": [
+        "B. Pattabhi Sitaramayya",
+        "H.C. Mukherjee",
+        "Gopinath Bardoloi",
+        "A.V. Thakkar"
+      ],
+      "answer": "(a) B. Pattabhi Sitaramayya",
+      "explanation": "B. Pattabhi Sitaramayya was the chairman of the House Committee.",
+      "keywords": [
+        "House Committee",
+        "Sitaramayya"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": [
+          "B. Pattabhi Sitaramayya"
+        ]
+      },
+      "memory_trick": "",
+      "exam_trap": "",
+      "why_important": "Focuses on the logistical management of the Assembly, identifying a key regional leader's role.",
+      "sources": [
+        "Important Committees - Digital Sansad",
+        "Minor Committees"
+      ]
+    },
+    {
+      "id": "PRE-031",
+      "difficulty": "hard",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "The Objective Resolution uniquely stated that the sovereign republic would contribute to which of the following?",
+      "options": [
+        "The expansion of the British Commonwealth",
+        "The promotion of world peace and welfare of mankind",
+        "The establishment of a South Asian trade bloc",
+        "The centralization of global currency"
+      ],
+      "answer": "(b) The promotion of world peace and welfare of mankind",
+      "explanation": "One of the final points of the Objective Resolution was a commitment that India shall contribute to the promotion of world peace and the welfare of mankind.",
+      "keywords": [
+        "World peace",
+        "Welfare of mankind"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [
+          "Article 51"
+        ],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "",
+      "why_important": "Explores the global commitment of the Indian Constitution, as formulated in its founding resolution.",
+      "sources": [
+        "Objectives Resolution - InclusiveIAS",
+        "Making of the Constitution"
+      ]
+    },
+    {
+      "id": "PRE-032",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "Who described the Preamble as the 'Identity Card' of the Constitution?",
+      "options": [
+        "K.M. Munshi",
+        "N.A. Palkhivala",
+        "Sir Ernest Barker",
+        "Sir Alladi Krishnaswami Iyer"
+      ],
+      "answer": "(b) N.A. Palkhivala",
+      "explanation": "N.A. Palkhivala, an eminent jurist, called the Preamble the 'Identity Card' of the Constitution. K.M. Munshi called it the \"Political horoscope\".",
+      "keywords": [
+        "Identity Card",
+        "N.A. Palkhivala"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": [
+          "N.A. Palkhivala"
+        ]
+      },
+      "memory_trick": "",
+      "exam_trap": "",
+      "why_important": "Focuses on a conceptual description that encapsulates the Preamble's summarized value.",
+      "sources": [
+        "Salient Features of the Constitution - Vishnu IAS"
+      ]
+    },
+    {
+      "id": "PRE-033",
+      "difficulty": "hard",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "In the case of Nakara vs. Union of India, the Supreme Court stated that Indian socialism is a blend of:",
+      "options": [
+        "Capitalism and Feudalism",
+        "Marxism and Gandhism",
+        "Fabianism and Utilitarianism",
+        "Liberalism and Authoritarianism"
+      ],
+      "answer": "(b) Marxism and Gandhism",
+      "explanation": "The SC held that Indian socialism is a blend of Marxism and Gandhism, with a heavy leaning towards Gandhian socialism.",
+      "keywords": [
+        "Nakara vs. UoI",
+        "Marxism and Gandhism"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [
+          "Preamble"
+        ],
+        "dates": [],
+        "committees": [],
+        "personalities": [
+          "Supreme Court"
+        ]
+      },
+      "memory_trick": "",
+      "exam_trap": "Thinking Indian socialism is purely \"Communistic\" or \"Marxist\"; it is actually Democratic Socialism.",
+      "why_important": "Tests knowledge of the ideological synthesis of Indian socialism, as defined by the Supreme Court.",
+      "sources": [
+        "Preamble of the Constitution - Vishnu IAS"
+      ]
+    },
+    {
+      "id": "PRE-034",
+      "difficulty": "hard",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "Which of the following best describes the \"Indian Concept of Secularism\"?",
+      "options": [
+        "Complete separation of state and religion (Negative concept)",
+        "Protecting all religions equally or giving equal respect to all (Positive concept)",
+        "The state enforces a single official religion",
+        "Religion is barred from all public discourse"
+      ],
+      "answer": "(b)",
+      "explanation": "Unlike the Western \"Negative\" concept (total separation), India follows the \"Positive\" concept of secularism, ensuring equal respect and protection for all religions.",
+      "keywords": [
+        "Positive concept",
+        "Equal respect"
+      ],
+      "related": {
+        "acts": [
+          "42nd Amendment Act 1976"
+        ],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "",
+      "why_important": "Requires an analytical distinction between negative and positive secularism concepts.",
+      "sources": [
+        "Salient Features - Vishnu IAS",
+        "Preamble"
+      ]
+    },
+    {
+      "id": "PRE-035",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "In the context of the Indian Preamble, which of the following are the two-fold implications of the term \"Republic\"?\n1. Vesting of political sovereignty in the people rather than a single individual.\n2. The presence of a privileged class that advises the elected head.\n3. The absence of any privileged class, making all public offices open to every citizen.\nSelect the correct answer:",
+      "options": [
+        "1 and 2 only",
+        "1 and 3 only",
+        "2 and 3 only",
+        "1, 2 and 3"
+      ],
+      "answer": "(b) 1 and 3 only",
+      "explanation": "A Republic means that the head of state is elected and that political sovereignty resides in the people (1). It also implies the absence of any privileged class, ensuring all public offices are accessible to every citizen without discrimination (3). Statement 2 is incorrect as the existence of a privileged class is characteristic of a Monarchy, not a Republic.",
+      "keywords": [
+        "Political sovereignty",
+        "No privileged class"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [
+          "Preamble"
+        ],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "",
+      "why_important": "Explores the substantive meaning of a \"Republic,\" a core Preamble concept that distinguishes India from its former status as a British Dominion.",
+      "sources": [
+        "Historical Background to the Constitution - Edukemy",
+        "Preamble - Master Knowledge Base"
+      ]
+    },
+    {
+      "id": "PRE-036",
+      "difficulty": "easy",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "Which three new words were added to the Preamble of the Indian Constitution by the 42nd Constitutional Amendment Act of 1976?",
+      "options": [
+        "Socialist, Secular, and Democratic",
+        "Sovereign, Socialist, and Secular",
+        "Socialist, Secular, and Integrity",
+        "Liberty, Equality, and Fraternity"
+      ],
+      "answer": "(c) Socialist, Secular, and Integrity",
+      "explanation": "The 42nd Amendment (1976) added \"Socialist\" and \"Secular\" between 'Sovereign' and 'Democratic,' and changed \"unity of the Nation\" to \"unity and integrity of the Nation\". These words were not part of the original 1950 text.",
+      "keywords": [
+        "Mini-Constitution",
+        "1976"
+      ],
+      "related": {
+        "acts": [
+          "42nd CAA 1976"
+        ],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "S.S.I. (Socialist, Secular, Integrity).",
+      "exam_trap": "",
+      "why_important": "Focuses on the 42nd Amendment Act, the only time the Preamble was modified, which is a fundamental fact for all competitive exams.",
+      "sources": [
+        "Making of Constitution 100 MCQs - Knowledge Chronicles",
+        "Salient Features - Master Knowledge Base"
+      ]
+    },
+    {
+      "id": "PRE-037",
+      "difficulty": "hard",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "In which landmark case did the Supreme Court initially opine that the Preamble is NOT a part of the Constitution?",
+      "options": [
+        "Kesavananda Bharati Case (1973)",
+        "Berubari Union Case (1960)",
+        "LIC of India Case (1995)",
+        "Minerva Mills Case (1980)"
+      ],
+      "answer": "(b) Berubari Union Case (1960)",
+      "explanation": "In the Berubari Union case (1960), the Supreme Court stated that while the Preamble shows the general purpose of the Constitution, it is not a part of it. This was later reversed in the Kesavananda Bharati case (1973), where it was held to be an integral part.",
+      "keywords": [
+        "Judicial reversal",
+        "Integral part"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": [
+          "Berubari Case",
+          "Kesavananda Bharati Case"
+        ]
+      },
+      "memory_trick": "",
+      "exam_trap": "Confusing Berubari (where it was not a part) with Kesavananda (where it became a part).",
+      "why_important": "High-level judicial evolution question regarding the status of the Preamble, often used to test deep conceptual understanding.",
+      "sources": [
+        "Preamble as a Part of Constitution - Master Knowledge Base"
+      ]
+    },
+    {
+      "id": "PRE-038",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "According to Dr. B.R. Ambedkar, the phrase \"Union of States\" was preferred over \"Federation of States\" to indicate that:",
+      "options": [
+        "The Indian federation is the result of an agreement among the states.",
+        "The states have the right to secede from the federation if they choose.",
+        "The federation was not formed by agreement and states have no right to secede.",
+        "India is a unitary state with no federal features."
+      ],
+      "answer": "(c)",
+      "explanation": "Dr. Ambedkar explained that \"Union\" was used because the Indian Federation is not the result of an agreement by the states (unlike the US) and no state has the right to secede from it. This makes the Union indestructible while the states are destructible.",
+      "keywords": [
+        "Indestructible Union",
+        "No right to secede"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [
+          "Article 1"
+        ],
+        "dates": [],
+        "committees": [],
+        "personalities": [
+          "Dr. B.R. Ambedkar"
+        ]
+      },
+      "memory_trick": "",
+      "exam_trap": "",
+      "why_important": "Clarifies the nomenclature of the Union, explaining why India is described as a \"Union of States\" rather than a \"Federation.\"",
+      "sources": [
+        "Union and its Territory - Master Knowledge Base",
+        "Edukemy"
+      ]
+    },
+    {
+      "id": "PRE-039",
+      "difficulty": "hard",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "Which of the following is a wider expression in the Indian Constitution?",
+      "options": [
+        "Union of India",
+        "Territory of India",
+        "Both are synonymous",
+        "Neither, as they refer to different legal entities"
+      ],
+      "answer": "(b) Territory of India",
+      "explanation": "\"Territory of India\" is a wider expression because it includes the states, the union territories, and any territories that may be acquired by the Government of India in the future. \"Union of India\" includes only the states that share a distribution of power with the Centre.",
+      "keywords": [
+        "Acquired territories",
+        "Distribution of powers"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [
+          "Article 1"
+        ],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "",
+      "why_important": "Tests the precise legal distinction between two technical constitutional terms regarding India's geography.",
+      "sources": [
+        "Union and its Territory - Master Knowledge Base"
+      ]
+    },
+    {
+      "id": "PRE-040",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "Which Article of the Constitution empowers the Parliament to internal reorganization (alter areas, boundaries, or names) of existing states that are already part of the Union of India?",
+      "options": [
+        "Article 1",
+        "Article 2",
+        "Article 3",
+        "Article 4"
+      ],
+      "answer": "(c) Article 3",
+      "explanation": "Article 3 authorizes Parliament to form new states by separation of territory from existing states or by uniting states, and to alter the area, boundaries, or names of existing states. Article 2 deals with the admission or establishment of new states that were not previously part of the Union.",
+      "keywords": [
+        "Internal reorganization vs. External admission"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [
+          "Article 3"
+        ],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Using Article 2 for internal changes like the creation of Telangana or Uttarakhand; those were Article 3 actions.",
+      "why_important": "Focuses on the division of power regarding the admission of new states versus the internal reorganization of existing states.",
+      "sources": [
+        "Union and its Territory - Master Knowledge Base",
+        "IASbaba"
+      ]
+    },
+    {
+      "id": "PRE-041",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "Arrange the following Commissions/Committees related to the reorganization of states in their correct chronological order:\n1. JVP Committee\n2. Dhar Commission\n3. Fazl Ali Commission\nSelect the correct sequence:",
+      "options": [
+        "1 - 2 - 3",
+        "2 - 1 - 3",
+        "2 - 3 - 1",
+        "3 - 2 - 1"
+      ],
+      "answer": "(b) 2 - 1 - 3",
+      "explanation": "The sequence is: Dhar Commission (June 1948) → JVP Committee (December 1948) → Fazl Ali Commission (December 1953). The Dhar and JVP bodies initially rejected language as a basis, while Fazl Ali accepted it but rejected \"one language, one state\".",
+      "keywords": [
+        "Linguistic provinces",
+        "Administrative convenience"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": [
+          "S.K. Dhar",
+          "Jawaharlal Nehru",
+          "Fazl Ali"
+        ]
+      },
+      "memory_trick": "",
+      "exam_trap": "",
+      "why_important": "Factual question on the chronology of state reorganization commissions, essential for understanding India's internal boundary evolution.",
+      "sources": [
+        "Dhar Commission and JVP Committee - Master Knowledge Base"
+      ]
+    },
+    {
+      "id": "PRE-042",
+      "difficulty": "hard",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "Under the Supreme Court's opinion in the Berubari Union case (1960), if the Government of India decides to cede a part of its territory to a foreign state, it can only be done by:",
+      "options": [
+        "An executive order by the President.",
+        "A law passed under Article 3.",
+        "An amendment of the Constitution under Article 368.",
+        "A resolution passed by the Rajya Sabha under Article 249."
+      ],
+      "answer": "(c) An amendment of the Constitution under Article 368.",
+      "explanation": "The SC held that Parliament's power to diminish the area of a state under Article 3 does not include the power to cede territory to a foreign country. Such cession requires a Constitutional Amendment under Article 368, which led to the 9th CAA (1960) for the Berubari transfer.",
+      "keywords": [
+        "Cession of territory",
+        "Article 368"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [
+          "Article 368"
+        ],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Thinking territory can be ceded by simple law (Article 3); the SC clarified that Article 3 only covers internal reorganization.",
+      "why_important": "Focuses on the Berubari Case (1960) and the necessity of a Constitutional Amendment for the cession of territory, a high-level conceptual point.",
+      "sources": [
+        "Berubari Case - Master Knowledge Base"
+      ]
+    },
+    {
+      "id": "PRE-043",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "The 100th Constitutional Amendment Act (2015) was enacted to facilitate which of the following?",
+      "options": [
+        "The creation of the state of Telangana.",
+        "The exchange of territorial enclaves between India and Bangladesh.",
+        "The grant of special status to the state of Jammu and Kashmir.",
+        "The reservation of seats for women in Panchayats."
+      ],
+      "answer": "(b)",
+      "explanation": "The 100th CAA (2015) gave effect to the 1974 Land Boundary Agreement between India and Bangladesh, involving the exchange of 111 enclaves to Bangladesh and 51 to India.",
+      "keywords": [
+        "Land Boundary Agreement",
+        "Enclaves"
+      ],
+      "related": {
+        "acts": [
+          "100th CAA 2015"
+        ],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "",
+      "why_important": "Factual detail on the 100th Amendment Act, the most significant recent change to India's territorial boundaries.",
+      "sources": [
+        "Exchange of Territories with Bangladesh - Master Knowledge Base",
+        "Vishnu IAS"
+      ]
+    },
+    {
+      "id": "PRE-044",
+      "difficulty": "easy",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "Match the following princely states with the method by which they were integrated into the Indian Union:\n1. Hyderabad — a. Referendum\n2. Junagarh — b. Instrument of Accession\n3. Kashmir — c. Police Action\nSelect the correct match:",
+      "options": [
+        "1-c, 2-a, 3-b",
+        "1-a, 2-b, 3-c",
+        "1-b, 2-c, 3-a",
+        "1-c, 2-b, 3-a"
+      ],
+      "answer": "(a) 1-c, 2-a, 3-b",
+      "explanation": "Hyderabad was integrated via police action (Operation Polo), Junagarh via referendum, and Kashmir through the signing of the Instrument of Accession by Maharaja Hari Singh.",
+      "keywords": [
+        "Police action",
+        "Referendum"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "",
+      "why_important": "Tests knowledge of the integration of recalcitrant princely states, a standard factual area for defense and state exams.",
+      "sources": [
+        "Integration of Princely States - Master Knowledge Base"
+      ]
+    },
+    {
+      "id": "PRE-045",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "Sikkim was conferred the status of an \"associate state\" (later repealed) and then a full-fledged state of the Indian Union by which two consecutive Amendment Acts?",
+      "options": [
+        "34th and 35th CAA",
+        "35th and 36th CAA",
+        "22nd and 23rd CAA",
+        "7th and 8th CAA"
+      ],
+      "answer": "(b) 35th and 36th CAA",
+      "explanation": "The 35th CAA (1974) introduced the unique category of \"Associate State\" for Sikkim and added the 10th Schedule. Following a referendum in 1975, the 36th CAA (1975) made it a full state and repealed the Associate status.",
+      "keywords": [
+        "Associate state",
+        "Chogyal",
+        "Full statehood"
+      ],
+      "related": {
+        "acts": [
+          "35th CAA",
+          "36th CAA"
+        ],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "",
+      "why_important": "Clarifies the two-step integration of Sikkim, distinguishing between \"Associate\" and \"Full\" statehood.",
+      "sources": [
+        "Sikkim - Master Knowledge Base",
+        "Edukemy"
+      ]
+    },
+    {
+      "id": "PRE-046",
+      "difficulty": "hard",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "By which Constitutional Amendment Act was the Union Territory of Delhi redesignated as the National Capital Territory (NCT) of Delhi?",
+      "options": [
+        "61st CAA, 1989",
+        "69th CAA, 1991",
+        "73rd CAA, 1992",
+        "42nd CAA, 1976"
+      ],
+      "answer": "(b) 69th CAA, 1991",
+      "explanation": "The 69th CAA (1991) provided a special status to the UT of Delhi, redesignating it as the National Capital Territory of Delhi and providing for a legislative assembly and a council of ministers.",
+      "keywords": [
+        "NCT of Delhi"
+      ],
+      "related": {
+        "acts": [
+          "69th CAA 1991"
+        ],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "",
+      "why_important": "Focuses on the special status of Delhi, a unique administrative arrangement within the Union.",
+      "sources": [
+        "Change of Names - Master Knowledge Base"
+      ]
+    },
+    {
+      "id": "PRE-047",
+      "difficulty": "easy",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "Which of the following state name changes is INCORRECTLY matched with its year?",
+      "options": [
+        "United Provinces to Uttar Pradesh — 1950",
+        "Madras to Tamil Nadu — 1969",
+        "Mysore to Karnataka — 1973",
+        "Orissa to Odisha — 2006"
+      ],
+      "answer": "(d)",
+      "explanation": "Orissa was renamed Odisha in 2011, not 2006. In 2006, Uttaranchal was renamed Uttarakhand and Pondicherry became Puducherry. Options (a), (b), and (c) are all correct.",
+      "keywords": [
+        "Renaming of States"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "",
+      "why_important": "Standard factual milestones regarding the renaming of states, often appearing in chronological order questions.",
+      "sources": [
+        "Change of Names - Master Knowledge Base"
+      ]
+    },
+    {
+      "id": "PRE-048",
+      "difficulty": "easy",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "The provision for the suspension of Fundamental Rights during an emergency was borrowed from the constitution of:",
+      "options": [
+        "USA",
+        "Canada",
+        "Weimar Constitution of Germany",
+        "Government of India Act 1935"
+      ],
+      "answer": "(c) Weimar Constitution of Germany",
+      "explanation": "While the administrative details of emergency provisions are from the 1935 Act, the specific suspension of Fundamental Rights during such a period is inspired by the Weimar Constitution of Germany.",
+      "keywords": [
+        "Weimar Constitution",
+        "Suspension of FR"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Selecting the 1935 Act; that provided the framework for declaring emergency, but not the rights suspension mechanism.",
+      "why_important": "Clarifies the source of emergency rights suspension, distinguishing it from the administrative emergency framework.",
+      "sources": [
+        "Major Sources Table - Master Knowledge Base",
+        "PWOnlyIAS"
+      ]
+    },
+    {
+      "id": "PRE-049",
+      "difficulty": "easy",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "The method of election of the President of India is a feature borrowed from which country's constitution?",
+      "options": [
+        "USA",
+        "Ireland",
+        "UK",
+        "South Africa"
+      ],
+      "answer": "(b) Ireland",
+      "explanation": "The Indian Constitution borrowed the method of electing the President (proportional representation by single transferable vote) and the Directive Principles (DPSP) from the Irish Constitution.",
+      "keywords": [
+        "Presidential Election method"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "",
+      "why_important": "A foundational factual detail about the presidential election process.",
+      "sources": [
+        "Sources and Synthesis - Master Knowledge Base",
+        "Testbook"
+      ]
+    },
+    {
+      "id": "PRE-050",
+      "difficulty": "easy",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "The concept of Fundamental Duties and the ideals of Justice (Social, Economic, and Political) in the Preamble were inspired by the constitution of:",
+      "options": [
+        "USA",
+        "France",
+        "USSR (Soviet Union)",
+        "Australia"
+      ],
+      "answer": "(c) USSR (Soviet Union)",
+      "explanation": "Both the Fundamental Duties (added in 1976) and the three types of Justice mentioned in the Preamble are derived from the USSR Constitution.",
+      "keywords": [
+        "Socio-economic justice",
+        "USSR"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "",
+      "why_important": "Connects the ideology of civic duty with its historical global source.",
+      "sources": [
+        "Sources of the Indian Constitution - PWOnlyIAS",
+        "Master Knowledge Base"
+      ]
+    },
+    {
+      "id": "PRE-051",
+      "difficulty": "easy",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "The ideals of Liberty, Equality, and Fraternity in the Preamble of the Indian Constitution were borrowed from:",
+      "options": [
+        "American Revolution",
+        "French Revolution",
+        "Russian Revolution",
+        "Irish Home Rule Movement"
+      ],
+      "answer": "(b) French Revolution",
+      "explanation": "The famous triad of Liberty, Equality, and Fraternity was the slogan of the French Revolution (1789–1799) and was adopted into the Indian Preamble from the French model.",
+      "keywords": [
+        "1789 Revolution"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "",
+      "why_important": "Standard factual source for the moral ideals of the Preamble.",
+      "sources": [
+        "Preamble - Master Knowledge Base",
+        "Salient Features - Edukemy"
+      ]
+    },
+    {
+      "id": "PRE-052",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "The procedure for the amendment of the Constitution of India (Article 368) is borrowed from the constitution of:",
+      "options": [
+        "UK",
+        "Canada",
+        "South Africa",
+        "Japan"
+      ],
+      "answer": "(c) South Africa",
+      "explanation": "The method of amending the constitution under Article 368 was borrowed from the South African Constitution.",
+      "keywords": [
+        "Article 368",
+        "South Africa"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [
+          "Article 368"
+        ],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "",
+      "why_important": "Identifies the source for Constitutional Amendment, a key mechanism for the document's longevity.",
+      "sources": [
+        "Major Sources - Master Knowledge Base",
+        "Testbook"
+      ]
+    },
+    {
+      "id": "PRE-053",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "While the nomination of members to the Rajya Sabha is Irish, the election of members of the Rajya Sabha by state legislatures is borrowed from:",
+      "options": [
+        "Ireland",
+        "South Africa",
+        "USA",
+        "Canada"
+      ],
+      "answer": "(b) South Africa",
+      "explanation": "The Indian Constitution borrowed the procedure for electing Rajya Sabha members from the South African Constitution.",
+      "keywords": [
+        "Election vs. Nomination"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "Selecting Ireland for both; remember, Nomination = Irish, Election = South African.",
+      "why_important": "Differentiates the source for Rajya Sabha elections, often confused with the nomination source.",
+      "sources": [
+        "Sources of the Indian Constitution - Testbook",
+        "PWOnlyIAS"
+      ]
+    },
+    {
+      "id": "PRE-054",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "The idea of a Concurrent List and the provisions regarding Freedom of Trade and Commerce were borrowed from the constitution of:",
+      "options": [
+        "Canada",
+        "Australia",
+        "USA",
+        "Germany"
+      ],
+      "answer": "(b) Australia",
+      "explanation": "The Concurrent List (List III) and the freedom of inter-state trade and commerce were inspired by the Australian Constitution.",
+      "keywords": [
+        "List III",
+        "Trade and Commerce"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "",
+      "why_important": "Connects inter-state economic interaction with its constitutional source.",
+      "sources": [
+        "Major Sources - Master Knowledge Base",
+        "Vishnu IAS"
+      ]
+    },
+    {
+      "id": "PRE-055",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "The concept of a \"Joint Sitting of the two Houses of Parliament\" (Article 108) to resolve deadlocks is borrowed from:",
+      "options": [
+        "UK",
+        "USA",
+        "Australia",
+        "Canada"
+      ],
+      "answer": "(c) Australia",
+      "explanation": "The provision for a Joint Sitting of the Lok Sabha and Rajya Sabha under Article 108 is a feature borrowed from the Australian Constitution.",
+      "keywords": [
+        "Article 108",
+        "Deadlock"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [
+          "Article 108"
+        ],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "",
+      "why_important": "Standard factual source for the legislative deadlock resolution mechanism.",
+      "sources": [
+        "Major Sources - Master Knowledge Base",
+        "Testbook"
+      ]
+    },
+    {
+      "id": "PRE-056",
+      "difficulty": "hard",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "With reference to the Amending Act of 1781 (Act of Settlement), which of the following is correct regarding native judicial officers?",
+      "options": [
+        "They were made directly responsible to the Supreme Court.",
+        "Native judges in provincial courts were granted immunity from prosecution for errors committed in their jurisdiction.",
+        "All native judicial decisions had to be ratified by the Lord Chancellor in London.",
+        "Native judges were replaced by British judges in all provincial courts."
+      ],
+      "answer": "(b)",
+      "explanation": "One significant provision of the 1781 Act was granting immunity to native judges and officials in provincial courts from prosecution in the Supreme Court for actions performed within their judicial capacity.",
+      "keywords": [
+        "Judicial immunity",
+        "Provincial courts"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "",
+      "why_important": "Focuses on a rarely tested nuance of the 1781 Act regarding the protection of local officials, a typical \"separator\" question in elite exams.",
+      "sources": [
+        "Historical Evolution - Master Knowledge Base"
+      ]
+    },
+    {
+      "id": "PRE-057",
+      "difficulty": "hard",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "In the structural analysis of the Indian Constitution, which source is correctly matched with the part of the framework it primarily influenced?\n1. Structural Part — Government of India Act, 1935\n2. Philosophical Part — American and Irish Constitutions\n3. Political Part — British Constitution\nSelect the correct answer:",
+      "options": [
+        "1 only",
+        "1 and 2 only",
+        "2 and 3 only",
+        "1, 2 and 3"
+      ],
+      "answer": "(d) 1, 2 and 3",
+      "explanation": "The Structural part (administrative machinery) is largely from the 1935 Act; the Philosophical part (FR and DPSP) is from the American and Irish models; and the Political part (Cabinet/Executive-Legislative relation) is from the British model.",
+      "keywords": [
+        "Structural, Philosophical, Political framework"
+      ],
+      "related": {
+        "acts": [],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": []
+      },
+      "memory_trick": "",
+      "exam_trap": "",
+      "why_important": "Tests a high-level structural classification of the Constitution's origins, often used in descriptive or deep-analysis MCQs.",
+      "sources": [
+        "Sources of the Indian Constitution - PWOnlyIAS"
+      ]
+    },
+    {
+      "id": "PRE-058",
+      "difficulty": "hard",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "Under the Act of 1786, which of the following significant changes was made specifically to accommodate Lord Cornwallis?",
+      "options": [
+        "He was given the power to override the decision of his council in special cases.",
+        "He was designated as both the Governor-General and the Commander-in-Chief.",
+        "He was authorized to declare war without the consent of the Board of Control.",
+        "Both (a) and (b)."
+      ],
+      "answer": "(d)",
+      "explanation": "Lord Cornwallis insisted on two conditions: he wanted the power to override his council in special cases and he wanted to hold the office of Commander-in-Chief. The Act of 1786 granted both.",
+      "keywords": [
+        "Override power",
+        "Commander-in-Chief"
+      ],
+      "related": {
+        "acts": [
+          "Act of 1786"
+        ],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": [
+          "Lord Cornwallis"
+        ]
+      },
+      "memory_trick": "",
+      "exam_trap": "",
+      "why_important": "Focuses on the Act of 1786, an often-overlooked amendment that created the \"powerful Governor-General\" prototype.",
+      "sources": [
+        "List of Acts - Physics Wallah",
+        "IASbaba"
+      ]
+    },
+    {
+      "id": "PRE-059",
+      "difficulty": "hard",
+      "type": "mcq",
+      "question_category": "predicted",
+      "exam": {
+        "name": "",
+        "year": "",
+        "stage": ""
+      },
+      "question": "Which Charter Act formally separated revenue administration from judicial functions, leading to the disappearance of the Maal Adalats (Revenue Courts)?",
+      "options": [
+        "Regulating Act, 1773",
+        "Pitt's India Act, 1784",
+        "Charter Act, 1793",
+        "Charter Act, 1833"
+      ],
+      "answer": "(c) Charter Act, 1793",
+      "explanation": "The Charter Act of 1793 (under the Cornwallis Code) formally separated revenue administration from the judiciary, abolishing revenue courts and transferring their functions to the civil courts.",
+      "keywords": [
+        "Separation of revenue and judiciary",
+        "Maal Adalats"
+      ],
+      "related": {
+        "acts": [
+          "Charter Act 1793"
+        ],
+        "articles": [],
+        "dates": [],
+        "committees": [],
+        "personalities": [
+          "Lord Cornwallis"
+        ]
+      },
+      "memory_trick": "",
+      "exam_trap": "",
+      "why_important": "Tests knowledge of a sophisticated administrative shift in the 1793 Act that pre-empted modern revenue-judicial separation.",
+      "sources": [
+        "The 1793 Charter Act - Edukemy",
+        "List of Acts - Physics Wallah"
+      ]
+    }
+  ]
+}
