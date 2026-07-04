@@ -194,39 +194,92 @@ export default function GraphViewerClient({ material }: Props) {
       />
 
       {/* Side panel on click */}
-      {selectedNode && (
-        <div style={{
-          position: 'absolute', top: 60, right: 0, width: '300px', bottom: 0,
-          background: '#FFF', borderLeft: '3px solid #000',
-          padding: '1.5rem', overflowY: 'auto', zIndex: 20,
-        }}>
-          <button
-            onClick={() => setSelectedNode(null)}
-            style={{
-              position: 'absolute', top: '0.75rem', right: '0.75rem',
-              background: '#000', color: '#FFF', border: 'none',
-              cursor: 'pointer', fontWeight: 900, fontSize: '1rem',
-              width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center',
-            }}
-          >×</button>
+      {selectedNode && (() => {
+        // Find all records that contain this node's value in its column
+        const colIdx = selectedNode.group - 1;
+        const matchingRecords = selectedNode.group === 0
+          ? [Object.fromEntries(material.columns.map(c => [c, '']))] // root: show empty
+          : material.records.filter(r => {
+              const col = material.columns[colIdx];
+              if (!col) return false;
+              const v = (r[col] || '').replace(/<[^>]+>/g, '').trim();
+              return v === selectedNode.name;
+            });
 
+        return (
           <div style={{
-            display: 'inline-block', padding: '2px 8px', marginBottom: '0.75rem',
-            background: LEVEL_COLORS[selectedNode.group % LEVEL_COLORS.length],
-            color: '#FFF', fontSize: '0.65rem', fontWeight: 700,
-            fontFamily: 'Inter, sans-serif', textTransform: 'uppercase', letterSpacing: '0.05em',
+            position: 'absolute', top: 54, right: 0, width: '320px', bottom: 0,
+            background: '#FFF', borderLeft: '3px solid #000',
+            display: 'flex', flexDirection: 'column', zIndex: 20,
           }}>
-            {selectedNode.group === 0 ? 'ROOT' : (selectedNode.column || `Level ${selectedNode.group}`)}
-          </div>
+            {/* Panel header */}
+            <div style={{ padding: '0.75rem 1rem', borderBottom: '2px solid #000', display: 'flex', alignItems: 'center', gap: '0.5rem', background: LEVEL_COLORS[selectedNode.group % LEVEL_COLORS.length], flexShrink: 0 }}>
+              <span style={{ flex: 1, color: '#FFF', fontFamily: 'Inter, sans-serif', fontWeight: 900, fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                {selectedNode.group === 0 ? 'Root' : (selectedNode.column || `Level ${selectedNode.group}`)}
+              </span>
+              <button
+                onClick={() => setSelectedNode(null)}
+                style={{ background: 'rgba(255,255,255,0.2)', color: '#FFF', border: 'none', cursor: 'pointer', fontWeight: 900, fontSize: '1rem', width: 26, height: 26, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}
+              >×</button>
+            </div>
 
-          <p style={{
-            fontFamily: 'Inter, sans-serif', fontSize: '0.95rem', fontWeight: 600,
-            color: '#111', lineHeight: 1.6, textTransform: 'none',
-          }}>
-            {selectedNode.name}
-          </p>
-        </div>
-      )}
+            {/* Selected node name */}
+            <div style={{ padding: '0.75rem 1rem', borderBottom: '2px solid #EEE', background: LEVEL_BG[selectedNode.group % LEVEL_BG.length], flexShrink: 0 }}>
+              <p style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: '0.95rem', color: '#111', lineHeight: 1.5, textTransform: 'none', margin: 0 }}>
+                {selectedNode.name}
+              </p>
+            </div>
+
+            {/* Full rows */}
+            <div style={{ flex: 1, overflowY: 'auto', padding: '1rem' }}>
+              {matchingRecords.length === 0 ? (
+                <p style={{ color: '#888', fontSize: '0.85rem', fontFamily: 'Inter, sans-serif' }}>No matching records found.</p>
+              ) : (
+                matchingRecords.map((rec, recIdx) => (
+                  <div key={recIdx} style={{ marginBottom: recIdx < matchingRecords.length - 1 ? '1.5rem' : 0 }}>
+                    {matchingRecords.length > 1 && (
+                      <div style={{ fontSize: '0.65rem', fontFamily: 'Inter, sans-serif', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', color: '#888', marginBottom: '0.5rem' }}>
+                        Record {recIdx + 1}
+                      </div>
+                    )}
+                    {material.columns.map((col, ci) => {
+                      const val = (rec[col] || '').replace(/<[^>]+>/g, '').trim();
+                      if (!val || val === '—') return null;
+                      const isActive = ci === colIdx;
+                      return (
+                        <div key={col} style={{ marginBottom: '0.75rem', paddingLeft: ci * 10, position: 'relative' }}>
+                          {ci > 0 && (
+                            <div style={{ position: 'absolute', left: ci * 10 - 8, top: 0, bottom: 0, width: 2, background: LEVEL_COLORS[ci % LEVEL_COLORS.length], opacity: 0.3 }} />
+                          )}
+                          <div style={{
+                            fontSize: '0.6rem', fontFamily: 'Inter, sans-serif', fontWeight: 700,
+                            textTransform: 'uppercase', letterSpacing: '0.07em',
+                            color: LEVEL_COLORS[ci % LEVEL_COLORS.length],
+                            marginBottom: '0.2rem',
+                          }}>{col}</div>
+                          <div style={{
+                            fontSize: '0.85rem', fontFamily: 'Inter, sans-serif', fontWeight: isActive ? 700 : 400,
+                            color: '#111', lineHeight: 1.55,
+                            background: isActive ? LEVEL_BG[ci % LEVEL_BG.length] : 'transparent',
+                            padding: isActive ? '4px 6px' : '0',
+                            borderLeft: isActive ? `3px solid ${LEVEL_COLORS[ci % LEVEL_COLORS.length]}` : 'none',
+                            borderRadius: '0px',
+                          }}>
+                            {val}
+                          </div>
+                        </div>
+                      );
+                    })}
+                    {recIdx < matchingRecords.length - 1 && (
+                      <div style={{ height: 2, background: '#EEE', margin: '1rem 0' }} />
+                    )}
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+        );
+      })()}
     </div>
   );
 }
