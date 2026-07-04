@@ -131,7 +131,7 @@ export default function ChapterPage({ chapterId, chapterName, subjectId, subject
                           <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem' }}>Loading…</span>
                         </div>
                       ) : materialContent ? (
-                        <MindMapViewer material={materialContent} />
+                        <MindMapViewer material={materialContent} materialId={m.id} />
                       ) : (
                         <div className="alert alert-error">Failed to load content.</div>
                       )}

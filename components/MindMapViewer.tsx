@@ -5,9 +5,10 @@ import { MindMapJSON } from '@/lib/types';
 
 interface Props {
   material: MindMapJSON;
+  materialId?: string;
 }
 
-export default function MindMapViewer({ material }: Props) {
+export default function MindMapViewer({ material, materialId }: Props) {
   const [search, setSearch] = useState('');
   const [expandedRow, setExpandedRow] = useState<number | null>(null);
 
@@ -44,9 +45,21 @@ export default function MindMapViewer({ material }: Props) {
           onChange={e => { setSearch(e.target.value); setExpandedRow(null); }}
           style={{ maxWidth: '320px', fontSize: '0.88rem', padding: '0.55rem 1rem' }}
         />
-        <span style={{ fontSize: '0.78rem', fontFamily: 'var(--font-mono)', color: 'var(--cream-dim)', opacity: 0.6 }}>
+        <span style={{ fontSize: '0.78rem', fontFamily: 'var(--font-mono)', color: 'var(--cream-dim)', opacity: 0.6, flex: 1 }}>
           {filtered.length} / {material.records.length} rows
         </span>
+        {materialId && (
+          <a
+            href={`/graph/${materialId}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-primary btn-sm"
+            style={{ fontSize: '0.75rem', padding: '0.4rem 0.75rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            Graph View
+          </a>
+        )}
       </div>
 
       {/* Desktop: full table */}
