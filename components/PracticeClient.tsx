@@ -18,9 +18,9 @@ export default function PracticeClient({ batch, questions, attemptId }: Props) {
   const [loading, setLoading] = useState(false);
   const [answers, setAnswers] = useState<Record<string, any>>({});
   const [loadingExplanation, setLoadingExplanation] = useState(false);
+  const [showExplanation, setShowExplanation] = useState(false);
   const router = useRouter();
 
-  // Refs to measure card heights so we can animate the container properly
   const frontRef = useRef<HTMLDivElement>(null);
   const backRef  = useRef<HTMLDivElement>(null);
   const [innerHeight, setInnerHeight] = useState<number | undefined>(undefined);
@@ -28,20 +28,19 @@ export default function PracticeClient({ batch, questions, attemptId }: Props) {
   const currentQ   = questions[currentIndex];
   const isFinished = currentIndex >= questions.length;
   const currentAns = currentQ ? answers[currentQ.id] : null;
-  const isFlipped  = !!currentAns && currentAns.verdict !== 'unanswered';
+  const isFlipped  = showExplanation && !!currentAns && currentAns.verdict !== 'unanswered';
   const verdict    = currentAns?.verdict || null;
   const aiFeedback = currentAns?.aiFeedback || null;
 
-  // Recalculate container height whenever flipped state or AI content changes
   useEffect(() => {
     const update = () => {
       const el = isFlipped ? backRef.current : frontRef.current;
       if (el) setInnerHeight(el.scrollHeight);
     };
     update();
-    // Small delay so DOM has painted new content
     const t = setTimeout(update, 50);
-    return () => clearTimeout(t);
+    const t2 = setTimeout(update, 300);
+    return () => { clearTimeout(t); clearTimeout(t2); };
   }, [isFlipped, currentIndex, currentAns?.aiDetailedExplanation]);
 
   useEffect(() => {
@@ -49,7 +48,7 @@ export default function PracticeClient({ batch, questions, attemptId }: Props) {
   }, [currentIndex, currentQ, answers]);
 
   async function handleMCQSubmit(option: string, index: number) {
-    if (isFlipped) return;
+    if (currentAns && currentAns.verdict !== 'unanswered') return;
     setStudentAnswer(option);
     const optLetter   = String.fromCharCode(65 + index).toLowerCase();
     const ans         = currentQ.answer.toLowerCase().trim();
@@ -67,6 +66,7 @@ export default function PracticeClient({ batch, questions, attemptId }: Props) {
       ...prev,
       [currentQ.id]: { questionId: currentQ.id, studentAnswer: option, verdict: v, aiFeedback: null, marksAwarded: isCorrect ? 1 : 0 }
     }));
+    setShowExplanation(true);
   }
 
   async function handleShortAnswerSubmit() {
@@ -84,6 +84,7 @@ export default function PracticeClient({ batch, questions, attemptId }: Props) {
         ...prev,
         [currentQ.id]: { questionId: currentQ.id, studentAnswer, verdict: v, aiFeedback: data.feedback, marksAwarded: v === 'correct' ? 1 : v === 'partial' ? 0.5 : 0 }
       }));
+      setShowExplanation(true);
     } catch { /* keep loading false */ }
     finally   { setLoading(false); }
   }
@@ -92,10 +93,14 @@ export default function PracticeClient({ batch, questions, attemptId }: Props) {
     if (!answers[currentQ.id]) {
       setAnswers(prev => ({ ...prev, [currentQ.id]: { questionId: currentQ.id, studentAnswer: '', verdict: 'unanswered', aiFeedback: null, marksAwarded: 0 } }));
     }
+    setShowExplanation(false);
     setCurrentIndex(prev => prev + 1);
   }
 
-  function handleNext() { setCurrentIndex(prev => prev + 1); }
+  function handleNext() { 
+    setShowExplanation(false);
+    setCurrentIndex(prev => prev + 1); 
+  }
 
   async function handleFinish() {
     setLoading(true);
@@ -118,7 +123,12 @@ export default function PracticeClient({ batch, questions, attemptId }: Props) {
       const res  = await fetch('/api/explain', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question: currentQ.question, answer: currentQ.answer, explanation: currentQ.explanation }),
+        body: JSON.stringify({ 
+          question: currentQ.question, 
+          answer: currentQ.answer, 
+          explanation: currentQ.explanation,
+          studentAnswer: currentAns.studentAnswer
+        }),
       });
       const data = await res.json();
       if (data.explanation) {
@@ -143,7 +153,7 @@ export default function PracticeClient({ batch, questions, attemptId }: Props) {
 
   /* ── MCQ option colour helper ────────────────────────── */
   function optClass(opt: string, i: number) {
-    if (!isFlipped) return '';
+    if (!currentAns || currentAns.verdict === 'unanswered') return '';
     const optLetter = String.fromCharCode(65 + i).toLowerCase();
     const ans  = currentQ.answer.toLowerCase().trim();
     const text = opt.toLowerCase().trim();
@@ -157,7 +167,7 @@ export default function PracticeClient({ batch, questions, attemptId }: Props) {
 
   /* ── FRONT card content ──────────────────────────────── */
   const frontCard = (
-    <div ref={frontRef} style={{ padding: '1.75rem' }}>
+    <>
       <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1.25rem', alignItems: 'center' }}>
         <span className={`pill pill-${currentQ.difficulty}`}>{currentQ.difficulty}</span>
         <span style={{ fontSize: '0.72rem', fontFamily: 'var(--font-heading)', fontWeight: 900, padding: '3px 8px', background: '#000', color: '#FFF', textTransform: 'uppercase' }}>
@@ -173,22 +183,17 @@ export default function PracticeClient({ batch, questions, attemptId }: Props) {
             <div
               key={i}
               className={`omr-option ${optClass(opt, i)}`}
-              onClick={() => !isFlipped && handleMCQSubmit(opt, i)}
-              style={{ cursor: isFlipped ? 'default' : 'pointer', pointerEvents: isFlipped ? 'none' : 'auto' }}
+              onClick={() => (!currentAns || currentAns.verdict === 'unanswered') && handleMCQSubmit(opt, i)}
+              style={{ cursor: (currentAns && currentAns.verdict !== 'unanswered') ? 'default' : 'pointer', pointerEvents: (currentAns && currentAns.verdict !== 'unanswered') ? 'none' : 'auto' }}
             >
               <div className="omr-bubble"><span>{String.fromCharCode(65 + i)}</span></div>
               <span className="omr-option-text">{opt}</span>
             </div>
           ))}
-          {!isFlipped && (
-            <button className="btn btn-ghost w-full" onClick={handleSkip} style={{ justifyContent: 'center', marginTop: '0.25rem', opacity: 0.6, fontSize: '0.88rem' }}>
-              Skip this question
-            </button>
-          )}
         </div>
       )}
 
-      {currentQ.type === 'short' && !isFlipped && (
+      {currentQ.type === 'short' && (!currentAns || currentAns.verdict === 'unanswered') && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <textarea className="input" placeholder="Type your answer here..." value={studentAnswer} onChange={e => setStudentAnswer(e.target.value)} style={{ minHeight: '120px' }} />
           <div style={{ display: 'flex', gap: '0.75rem' }}>
@@ -200,17 +205,24 @@ export default function PracticeClient({ batch, questions, attemptId }: Props) {
         </div>
       )}
 
-      {currentQ.type === 'short' && isFlipped && (
+      {currentQ.type === 'short' && (currentAns && currentAns.verdict !== 'unanswered') && (
         <div style={{ padding: '0.75rem 1rem', background: 'var(--sage-bg)', border: 'var(--border-thick)', fontSize: '0.9rem' }}>
           <strong>Your answer:</strong> {currentAns?.studentAnswer}
         </div>
       )}
-    </div>
+
+      {/* Button to flip to explanation if already answered but viewing front */}
+      {(currentAns && currentAns.verdict !== 'unanswered' && !isFlipped) && (
+        <button className="btn btn-primary w-full" onClick={() => setShowExplanation(true)} style={{ justifyContent: 'center', marginTop: '1.25rem' }}>
+          View Explanation →
+        </button>
+      )}
+    </>
   );
 
   /* ── BACK card content ───────────────────────────────── */
   const backCard = (
-    <div ref={backRef} style={{ padding: '1.75rem' }}>
+    <>
       {/* Verdict */}
       <div style={{
         fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 900,
@@ -287,19 +299,14 @@ export default function PracticeClient({ batch, questions, attemptId }: Props) {
           className="btn btn-ghost w-full"
           onClick={handleExplainMore}
           disabled={loadingExplanation}
-          style={{ justifyContent: 'center', marginBottom: '1.5rem', borderStyle: 'dashed', gap: '0.5rem' }}
+          style={{ justifyContent: 'center', marginBottom: '0', borderStyle: 'dashed', gap: '0.5rem' }}
         >
           {loadingExplanation
             ? <><span className="spinner" style={{ width: 14, height: 14, borderWidth: 2 }} /> Generating AI explanation…</>
             : <><Sparkles size={14} /> Explain More with AI</>}
         </button>
       )}
-
-      {/* Next button inside the back card */}
-      <button className="btn btn-primary w-full" onClick={handleNext} style={{ justifyContent: 'center' }}>
-        Next Question →
-      </button>
-    </div>
+    </>
   );
 
   /* ── Main render ─────────────────────────────────────── */
@@ -317,37 +324,54 @@ export default function PracticeClient({ batch, questions, attemptId }: Props) {
         </div>
       </div>
 
-      {/* Flip Card — container height dynamically tracks whichever face is active */}
-      <div className="study-card-wrap" style={{ marginBottom: '1.5rem' }}>
+      {/* Flip Card — uses JS height calculation since CSS Grid + 3D transforms has dynamic height bugs in browsers */}
+      <div className="study-card-wrap" style={{ marginBottom: '1.5rem', perspective: 2000 }}>
         <div
           className={`study-card-inner ${isFlipped ? 'flipped' : ''}`}
-          style={{ height: innerHeight ? `${innerHeight}px` : undefined, transition: 'transform 500ms cubic-bezier(0.16,1,0.3,1), height 300ms ease' }}
+          style={{ 
+            height: innerHeight ? `${innerHeight}px` : undefined,
+            transition: 'transform 600ms cubic-bezier(0.16,1,0.3,1), height 300ms ease',
+            transformStyle: 'preserve-3d',
+            transform: isFlipped ? 'rotateY(180deg)' : 'none',
+            position: 'relative'
+          }}
         >
           {/* FRONT */}
-          <div className="study-card-face card" style={{ position: 'absolute', inset: 0, overflow: 'hidden' }}>
+          <div ref={frontRef} className="study-card-face card" style={{ position: 'absolute', inset: 0, backfaceVisibility: 'hidden', zIndex: isFlipped ? 0 : 1, overflow: 'hidden' }}>
             {frontCard}
           </div>
 
           {/* BACK */}
-          <div className="study-card-face study-card-back card-paper" style={{ position: 'absolute', top: 0, left: 0, right: 0, minHeight: '100%', overflow: 'visible' }}>
+          <div ref={backRef} className="study-card-face study-card-back card-paper" style={{ position: 'absolute', top: 0, left: 0, right: 0, minHeight: '100%', backfaceVisibility: 'hidden', transform: 'rotateY(180deg)', zIndex: isFlipped ? 1 : 0, overflow: 'hidden' }}>
             {backCard}
           </div>
         </div>
       </div>
 
       {/* Navigation row */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1rem', flexWrap: 'wrap' }}>
-        <button className="btn btn-ghost" onClick={() => setCurrentIndex(c => c - 1)} disabled={currentIndex === 0}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
+        <button 
+          className="btn btn-ghost" 
+          onClick={() => { setShowExplanation(false); setCurrentIndex(c => c - 1); }} 
+          disabled={currentIndex === 0}
+        >
           ← Previous
         </button>
+        
         {currentIndex === questions.length - 1 ? (
           <button className="btn btn-primary" onClick={handleFinish} disabled={loading}>
             {loading ? 'Saving...' : 'Finish Practice'}
           </button>
         ) : (
-          <button className="btn btn-ghost" onClick={() => setCurrentIndex(c => c + 1)} disabled={!isFlipped}>
-            Skip →
-          </button>
+          isFlipped ? (
+            <button className="btn btn-primary" onClick={handleNext}>
+              Next Question →
+            </button>
+          ) : (
+            <button className="btn btn-ghost" onClick={handleSkip}>
+              Skip →
+            </button>
+          )
         )}
       </div>
     </div>

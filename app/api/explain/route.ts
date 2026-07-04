@@ -9,21 +9,27 @@ export async function POST(req: NextRequest) {
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const body = await req.json();
-  const { question, answer, explanation } = body;
+  const { question, answer, explanation, studentAnswer } = body;
 
   if (!question || !answer) {
     return NextResponse.json({ error: 'Missing question or answer' }, { status: 400 });
   }
 
-  const prompt = `You are a helpful exam tutor for Indian competitive exams (UPSC, SSC, etc.).
-Explain this question and its correct answer clearly and concisely.
-Provide: why the answer is correct, key concepts, and any useful memory tricks.
+  const prompt = `You are a helpful and highly encouraging exam tutor for Indian competitive exams (UPSC, SSC, etc.).
+Explain this question and its concepts in very simple, easy-to-understand words. Go in-depth but keep it accessible.
 
 Question: ${question}
 Correct Answer: ${answer}
-${explanation ? `Given Explanation: ${explanation}` : ''}
+Student's Selected Answer: ${studentAnswer || 'None'}
+${explanation ? `Existing Explanation Context: ${explanation}` : ''}
 
-Keep it under 200 words. Do not use markdown headers. Use plain paragraphs.`;
+Instructions:
+1. If the student selected the wrong answer, start by kindly explaining WHY their selected option is incorrect, pointing out the misconception.
+2. If they got it right, congratulate them and reinforce why it's right.
+3. Then, explain the correct answer in depth using simple words. Break down the core concepts so they truly understand the "why".
+4. Provide any useful memory tricks or analogies if relevant.
+
+Do not use markdown headers (e.g., no # or ##). Use simple paragraphs, bullet points, and bold text for emphasis.`;
 
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
@@ -34,13 +40,13 @@ Keep it under 200 words. Do not use markdown headers. Use plain paragraphs.`;
 
   try {
     const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${apiKey}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: { temperature: 0.3, maxOutputTokens: 400 },
+          generationConfig: { temperature: 0.3, maxOutputTokens: 1500 },
         }),
       }
     );
