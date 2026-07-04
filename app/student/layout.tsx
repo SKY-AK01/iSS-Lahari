@@ -14,9 +14,12 @@ export default async function StudentLayout({ children }: { children: React.Reac
     .eq('id', user.id)
     .single();
 
+  // Mentors are always redirected to /mentor — student pages are for students only
+  if (profile?.role === 'mentor') redirect('/mentor');
+
   return (
     <>
-      <StudentNav name={profile?.name ?? ''} isMentor={profile?.role === 'mentor'} />
+      <StudentNav name={profile?.name ?? ''} isMentor={false} />
       <main>{children}</main>
     </>
   );
