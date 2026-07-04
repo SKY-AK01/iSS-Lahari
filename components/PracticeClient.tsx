@@ -10,13 +10,36 @@ interface Props {
   batch: any;
   questions: Question[];
   attemptId: string;
+  existingAnswers?: any[];
 }
 
-export default function PracticeClient({ batch, questions, attemptId }: Props) {
-  const [currentIndex, setCurrentIndex] = useState(0);
+export default function PracticeClient({ batch, questions, attemptId, existingAnswers = [] }: Props) {
+  const [answers, setAnswers] = useState<Record<string, any>>(() => {
+    const map: Record<string, any> = {};
+    existingAnswers.forEach(ans => {
+      map[ans.question_id] = {
+        questionId: ans.question_id,
+        studentAnswer: ans.student_answer,
+        verdict: ans.verdict,
+        aiFeedback: ans.ai_feedback,
+        aiDetailedExplanation: ans.ai_detailed_explanation,
+        marksAwarded: ans.marks_awarded
+      };
+    });
+    return map;
+  });
+
+  const [currentIndex, setCurrentIndex] = useState(() => {
+    if (existingAnswers.length === 0) return 0;
+    const firstUnansweredIndex = questions.findIndex(q => {
+      const ans = existingAnswers.find(a => a.question_id === q.id);
+      return !ans || ans.verdict === 'unanswered';
+    });
+    return firstUnansweredIndex === -1 ? 0 : firstUnansweredIndex;
+  });
+
   const [studentAnswer, setStudentAnswer] = useState('');
   const [loading, setLoading] = useState(false);
-  const [answers, setAnswers] = useState<Record<string, any>>({});
   const [loadingExplanation, setLoadingExplanation] = useState(false);
   const [showExplanation, setShowExplanation] = useState(false);
   const router = useRouter();
@@ -37,15 +60,43 @@ export default function PracticeClient({ batch, questions, attemptId }: Props) {
       const el = isFlipped ? backRef.current : frontRef.current;
       if (el) setInnerHeight(el.scrollHeight);
     };
+    
     update();
     const t = setTimeout(update, 50);
     const t2 = setTimeout(update, 300);
-    return () => { clearTimeout(t); clearTimeout(t2); };
+    
+    const el = isFlipped ? backRef.current : frontRef.current;
+    let observer: ResizeObserver | null = null;
+    if (el) {
+      observer = new ResizeObserver(() => update());
+      observer.observe(el);
+    }
+    
+    return () => {
+      clearTimeout(t);
+      clearTimeout(t2);
+      if (observer) observer.disconnect();
+    };
   }, [isFlipped, currentIndex, currentAns?.aiDetailedExplanation]);
 
   useEffect(() => {
     if (currentQ) setStudentAnswer(answers[currentQ.id]?.studentAnswer || '');
   }, [currentIndex, currentQ, answers]);
+
+  async function saveAnswer(ansData: any) {
+    try {
+      await fetch('/api/attempts/save-answer', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          attemptId,
+          ...ansData
+        }),
+      });
+    } catch (e) {
+      console.error('Failed to auto-save answer:', e);
+    }
+  }
 
   async function handleMCQSubmit(option: string, index: number) {
     if (currentAns && currentAns.verdict !== 'unanswered') return;
@@ -62,11 +113,14 @@ export default function PracticeClient({ batch, questions, attemptId }: Props) {
       ans === `${optLetter}.` ||
       ans === `${optLetter})`;
     const v: Verdict = isCorrect ? 'correct' : 'incorrect';
+    
+    const ansData = { questionId: currentQ.id, studentAnswer: option, verdict: v, aiFeedback: null, marksAwarded: isCorrect ? 1 : 0 };
     setAnswers(prev => ({
       ...prev,
-      [currentQ.id]: { questionId: currentQ.id, studentAnswer: option, verdict: v, aiFeedback: null, marksAwarded: isCorrect ? 1 : 0 }
+      [currentQ.id]: ansData
     }));
     setShowExplanation(true);
+    saveAnswer(ansData);
   }
 
   async function handleShortAnswerSubmit() {
@@ -80,18 +134,23 @@ export default function PracticeClient({ batch, questions, attemptId }: Props) {
       });
       const data = await res.json();
       const v: Verdict = data.verdict || 'incorrect';
+      
+      const ansData = { questionId: currentQ.id, studentAnswer, verdict: v, aiFeedback: data.feedback, marksAwarded: v === 'correct' ? 1 : v === 'partial' ? 0.5 : 0 };
       setAnswers(prev => ({
         ...prev,
-        [currentQ.id]: { questionId: currentQ.id, studentAnswer, verdict: v, aiFeedback: data.feedback, marksAwarded: v === 'correct' ? 1 : v === 'partial' ? 0.5 : 0 }
+        [currentQ.id]: ansData
       }));
       setShowExplanation(true);
+      saveAnswer(ansData);
     } catch { /* keep loading false */ }
     finally   { setLoading(false); }
   }
 
   function handleSkip() {
     if (!answers[currentQ.id]) {
-      setAnswers(prev => ({ ...prev, [currentQ.id]: { questionId: currentQ.id, studentAnswer: '', verdict: 'unanswered', aiFeedback: null, marksAwarded: 0 } }));
+      const ansData = { questionId: currentQ.id, studentAnswer: '', verdict: 'unanswered', aiFeedback: null, marksAwarded: 0 };
+      setAnswers(prev => ({ ...prev, [currentQ.id]: ansData }));
+      saveAnswer(ansData);
     }
     setShowExplanation(false);
     setCurrentIndex(prev => prev + 1);
@@ -133,6 +192,7 @@ export default function PracticeClient({ batch, questions, attemptId }: Props) {
       const data = await res.json();
       if (data.explanation) {
         setAnswers(prev => ({ ...prev, [currentQ.id]: { ...prev[currentQ.id], aiDetailedExplanation: data.explanation } }));
+        saveAnswer({ ...currentAns, aiDetailedExplanation: data.explanation });
       }
     } catch { /* silent fail */ }
     finally { setLoadingExplanation(false); }
@@ -285,7 +345,7 @@ export default function PracticeClient({ batch, questions, attemptId }: Props) {
 
       {/* AI Detailed Explanation */}
       {currentAns?.aiDetailedExplanation && (
-        <div style={{ padding: '1.25rem', background: 'var(--sage-bg)', border: 'var(--border-thick)', marginBottom: '1.5rem', fontSize: '0.92rem', lineHeight: 1.75 }}>
+        <div style={{ padding: '1.25rem', background: 'var(--sage-bg)', border: 'var(--border-thick)', marginBottom: '1.5rem', fontSize: '0.92rem', lineHeight: 1.75, maxHeight: '300px', overflowY: 'auto' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.72rem', fontFamily: 'var(--font-heading)', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.75rem', color: '#000' }}>
             <Sparkles size={13} /> AI Detailed Explanation
           </div>

@@ -39,15 +39,17 @@ export async function POST(req: NextRequest) {
     if (answers && answers.length > 0) {
       const { error: answersErr } = await supabase
         .from('attempt_answers')
-        .insert(
+        .upsert(
           answers.map((ans: any) => ({
             attempt_id: attemptId,
             question_id: ans.questionId,
             student_answer: ans.studentAnswer,
             verdict: ans.verdict,
             ai_feedback: ans.aiFeedback,
+            ai_detailed_explanation: ans.aiDetailedExplanation,
             marks_awarded: ans.marksAwarded,
-          }))
+          })),
+          { onConflict: 'attempt_id,question_id' }
         );
       
       if (answersErr) throw answersErr;

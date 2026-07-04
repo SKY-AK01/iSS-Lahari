@@ -114,8 +114,10 @@ CREATE TABLE IF NOT EXISTS attempt_answers (
   student_answer TEXT,
   verdict TEXT CHECK (verdict IN ('correct', 'partial', 'incorrect', 'unanswered')),
   ai_feedback TEXT,         -- one-line feedback from Gemini grading
+  ai_detailed_explanation TEXT, -- full detailed explanation from AI
   marks_awarded NUMERIC DEFAULT 0,
-  created_at TIMESTAMPTZ DEFAULT NOW()
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE(attempt_id, question_id)
 );
 
 -- ============================================================

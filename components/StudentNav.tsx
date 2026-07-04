@@ -45,6 +45,15 @@ export default function StudentNav({ name, isMentor }: { name: string; isMentor:
             letterSpacing: '0.05em',
             border: '2px solid #000',
           }}>STUDENT</span>
+          <span style={{
+            marginLeft: '0.75rem',
+            fontSize: '0.65rem',
+            color: 'var(--cream-dim)',
+            fontWeight: 600,
+            textTransform: 'none',
+            letterSpacing: 0,
+            fontFamily: 'var(--font-body)'
+          }}>health is also important take rest</span>
         </div>
 
         {/* Desktop links */}

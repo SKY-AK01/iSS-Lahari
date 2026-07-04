@@ -27,5 +27,10 @@ export default async function PracticePage({ params, searchParams }: { params: P
   // Sort questions by sort_order implicitly or just use as returned
   const questions = batch.questions.sort((a, b) => a.id.localeCompare(b.id)); // simple sort for consistency
 
-  return <PracticeClient batch={batch} questions={questions} attemptId={attemptId} />;
+  const { data: existingAnswersData } = await supabase
+    .from('attempt_answers')
+    .select('*')
+    .eq('attempt_id', attemptId);
+
+  return <PracticeClient batch={batch} questions={questions} attemptId={attemptId} existingAnswers={existingAnswersData || []} />;
 }
