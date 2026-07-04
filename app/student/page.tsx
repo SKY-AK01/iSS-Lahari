@@ -1,9 +1,10 @@
 import { createClient } from '@/lib/supabase/server';
-import StudentTestBrowser from '@/components/StudentTestBrowser';
+import SubjectHub from '@/components/SubjectHub';
 
 export default async function StudentPage() {
   const supabase = await createClient();
 
+  // Subjects → chapters → test batches + study materials in one pass
   const { data: subjects } = await supabase
     .from('subjects')
     .select(`
@@ -12,12 +13,15 @@ export default async function StudentPage() {
         id, name,
         test_batches (
           id, batch_number, question_count, difficulty_mix, created_at
+        ),
+        study_materials (
+          id, title, material_type, created_at
         )
       )
     `)
     .order('name');
 
-  // Get student's attempt counts per batch for "Attempted" badges
+  // Attempted batch IDs for "done" badges
   const { data: { user } } = await supabase.auth.getUser();
   const { data: myAttempts } = await supabase
     .from('attempts')
@@ -25,10 +29,12 @@ export default async function StudentPage() {
     .eq('student_id', user!.id)
     .not('submitted_at', 'is', null);
 
-  const attemptedBatchIds = new Set((myAttempts ?? []).map((a: { batch_id: string }) => a.batch_id));
+  const attemptedBatchIds = new Set(
+    (myAttempts ?? []).map((a: { batch_id: string }) => a.batch_id)
+  );
 
   return (
-    <StudentTestBrowser
+    <SubjectHub
       subjects={subjects ?? []}
       attemptedBatchIds={Array.from(attemptedBatchIds)}
     />
