@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { Brain, AlertTriangle } from 'lucide-react';
+import QuestionText from '@/components/QuestionText';
 
 interface Props {
   attempt: any;
@@ -79,9 +80,7 @@ export default function StudentResultsClient({ attempt }: Props) {
                   <span className={`pill pill-${q.difficulty}`}>{q.difficulty}</span>
                 </div>
                 
-                <p className="question-text" style={{ marginBottom: '1.25rem', fontSize: '1rem' }}>
-                  {q.question}
-                </p>
+                <QuestionText text={q.question} style={{ marginBottom: '1.25rem', fontSize: '1rem' }} />
 
                 <div className={vClass} style={{ marginBottom: '1.5rem' }}>
                   <div style={{ fontSize: '0.8rem', textTransform: 'uppercase', fontWeight: 700, opacity: 0.8, marginBottom: '0.5rem' }}>

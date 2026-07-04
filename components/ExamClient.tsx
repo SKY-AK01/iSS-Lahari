@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Question } from '@/lib/types';
 import { Flag } from 'lucide-react';
+import QuestionText from '@/components/QuestionText';
 
 interface Props {
   batch: any;
@@ -200,9 +201,7 @@ export default function ExamClient({ batch, questions, attemptId, durationMinute
             </button>
           </div>
 
-          <p className="question-text" style={{ marginBottom: '1.75rem' }}>
-            {currentQ.question}
-          </p>
+          <QuestionText text={currentQ.question} style={{ marginBottom: '1.75rem' }} />
 
           <div style={{ flex: 1 }}>
             {currentQ.type === 'mcq' && (

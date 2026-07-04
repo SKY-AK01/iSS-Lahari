@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Question, Verdict } from '@/lib/types';
 import { Brain, AlertTriangle } from 'lucide-react';
+import QuestionText from '@/components/QuestionText';
 
 interface Props {
   batch: any;
@@ -153,9 +154,7 @@ export default function PracticeClient({ batch, questions, attemptId }: Props) {
               </span>
             </div>
 
-            <p className="question-text" style={{ marginBottom: '1.75rem' }}>
-              {currentQ.question}
-            </p>
+            <QuestionText text={currentQ.question} style={{ marginBottom: '1.75rem' }} />
 
             {currentQ.type === 'mcq' && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
