@@ -754,6 +754,16 @@ textarea.input { resize: vertical; min-height: 120px; font-size: 0.85rem; }
   }
 }
 
+/* Study browser mobile show/hide helpers */
+.study-back-btn { display: none; }
+
+@media (max-width: 900px) {
+  .study-sidebar-hidden { display: none !important; }
+  .study-content-hidden { display: none !important; }
+  .study-back-btn { display: flex !important; }
+}
+
+
 /* ---- Nav Mobile (Hamburger + Drawer) ---- */
 .nav-hamburger {
   display: none;
@@ -829,7 +839,16 @@ textarea.input { resize: vertical; min-height: 120px; font-size: 0.85rem; }
   margin: 0;
 }
 
-/* ---- Responsive ---- */
+/* ---- Responsive — Tablet (≤ 900px) ---- */
+@media (max-width: 900px) {
+  /* Study sidebar + content stacks */
+  .study-layout-grid { grid-template-columns: 1fr !important; }
+  /* MindMapViewer: always show card list, hide table on tablet */
+  .mind-map-table-wrap { display: none; }
+  .mind-map-cards      { display: block; }
+}
+
+/* ---- Responsive — Mobile (≤ 768px) ---- */
 @media (max-width: 768px) {
   .container { padding: 0 1rem; }
   .page      { padding: 1.5rem 1rem; }
@@ -839,24 +858,22 @@ textarea.input { resize: vertical; min-height: 120px; font-size: 0.85rem; }
     height: 64px;
   }
 
-  .nav-logo {
-    font-size: 1.4rem;
-  }
+  /* Hide full nav-logo subtitle on mobile */
+  .nav-logo > span:last-child { display: none; }
+  .nav-logo { font-size: 1.4rem; }
 
   .nav-hamburger { display: flex; }
   .nav-desktop   { display: none; }
-
   .nav-drawer { top: 64px; }
 
-  /* Headings scale down more aggressively */
-  h1 { font-size: clamp(2rem, 10vw, 4rem); }
-  h2 { font-size: clamp(1.5rem, 7vw, 3rem); }
+  /* Headings */
+  h1 { font-size: clamp(2rem, 10vw, 3.5rem); }
+  h2 { font-size: clamp(1.5rem, 7vw, 2.5rem); }
   h3 { font-size: clamp(1.1rem, 5vw, 1.8rem); }
 
   /* Cards */
   .card { padding: 1.25rem; box-shadow: 4px 4px 0 0 #000; }
-
-  /* Admit cards full width on mobile */
+  .card:hover { transform: none; box-shadow: 4px 4px 0 0 #000; }
   .admit-card { flex-basis: 100% !important; }
 
   /* Score ring smaller */
@@ -866,26 +883,85 @@ textarea.input { resize: vertical; min-height: 120px; font-size: 0.85rem; }
   /* Collapsible headers */
   .collapsible-header { padding: 1rem; }
 
-  /* Study layout: always single column, content panel hides sidebar */
+  /* Study browser always single column */
   .study-layout-grid { grid-template-columns: 1fr !important; }
 
-  /* OMR options — full width, larger touch targets */
-  .omr-option { padding: 1rem; }
+  /* OMR full-width larger touch targets */
+  .omr-option { padding: 1rem; gap: 0.75rem; }
   .omr-option-text { font-size: 1rem; }
+  .omr-bubble { width: 28px; height: 28px; font-size: 0.9rem; }
 
-  /* Buttons in a row wrap */
+  /* Buttons */
   .btn { font-size: 0.9rem; padding: 0.9rem 1.25rem; }
   .btn-sm { font-size: 0.8rem; padding: 0.45rem 0.9rem; }
+
+  /* Prompt box */
+  .prompt-box { max-height: 240px; font-size: 0.8rem; }
+
+  /* Hide long text labels in view-mode toggle */
+  .view-mode-label { display: none; }
+
+  /* Exam palette — scrollable */
+  .q-palette { max-height: 120px; overflow-y: auto; }
+
+  /* Timer display */
+  .timer-display { font-size: 0.95rem; }
+
+  /* Question palette buttons slightly smaller */
+  .q-palette-btn { width: 36px; height: 36px; font-size: 0.85rem; }
+
+  /* Score ring */
+  .score-ring { width: 100px; height: 100px; }
+  .score-ring .score-value { font-size: 1.6rem; }
+  .score-ring .score-label { font-size: 0.7rem; }
+
+  /* Login / signup split layout */
+  .auth-split-grid { grid-template-columns: 1fr !important; }
 }
 
+/* ---- Responsive — Small mobile (≤ 480px) ---- */
 @media (max-width: 480px) {
-  /* Exam top bar */
-  .exam-topbar-breadcrumb { display: none; }
+  .container { padding: 0 0.75rem; }
 
-  /* Mind map: always cards */
+  /* Always show card view for mind maps */
   .mind-map-table-wrap { display: none !important; }
   .mind-map-cards      { display: block !important; }
 
-  /* Prompt box max height smaller */
-  .prompt-box { max-height: 200px; }
+  /* Prompt box smaller */
+  .prompt-box { max-height: 180px; }
+
+  /* Exam breadcrumb hidden */
+  .exam-topbar-breadcrumb { display: none; }
+
+  /* Stats grid — 2 per row max */
+  .stats-grid-4 { grid-template-columns: 1fr 1fr !important; }
+
+  /* Batch grid — 1 col */
+  .batch-grid { grid-template-columns: 1fr !important; }
+
+  /* Mode selector cards stack */
+  .mode-selector-grid { grid-template-columns: 1fr !important; }
+
+  /* OMR options */
+  .omr-option { padding: 0.85rem 0.75rem; }
+
+  /* Results detail table */
+  .results-table { font-size: 0.78rem; }
+
+  /* Q palette overflows with scroll */
+  .q-palette-btn { width: 32px; height: 32px; font-size: 0.8rem; }
+
+  /* Buttons go full width in narrow containers */
+  .btn-mobile-full { width: 100%; justify-content: center; }
+
+  /* Admit cards smaller padding */
+  .admit-card-body { padding: 0.85rem; gap: 0.75rem; }
+  .admit-card-header { padding: 0.85rem; }
+
+  /* Math game question text */
+  .math-question-text { font-size: clamp(1.8rem, 12vw, 3rem) !important; }
+
+  /* Flashcard min-height smaller on phone */
+  .flashcard-inner { min-height: 200px !important; }
 }
+

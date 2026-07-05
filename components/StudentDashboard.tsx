@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Map, FileText, BookOpen, Plus, Trash2, X } from 'lucide-react';
+import { Map, FileText, BookOpen, Plus, Trash2, X, Zap, Lightbulb } from 'lucide-react';
 
 interface SubjectCard {
   id: string; name: string;
@@ -86,6 +86,41 @@ export default function StudentDashboard({ name, subjects: initialSubjects, stat
             <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--cream-dim)' }}>{stat.label}</div>
           </div>
         ))}
+      </div>
+
+      {/* Math Speed Drill Banner */}
+      <div className="animate-up" style={{ marginBottom: '2rem' }}>
+        <div
+          onClick={() => router.push('/student/math-game')}
+          style={{
+            border: 'var(--border-thick)',
+            boxShadow: 'var(--shadow-hard)',
+            background: 'var(--ruby)',
+            padding: '1.5rem',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '1rem',
+            transition: 'all 100ms',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.transform = 'translate(-2px,-2px)'; e.currentTarget.style.boxShadow = '8px 8px 0 0 #000'; }}
+          onMouseLeave={e => { e.currentTarget.style.transform = 'translate(0,0)'; e.currentTarget.style.boxShadow = 'var(--shadow-hard)'; }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <Zap size={28} color="#FFF" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+            <div>
+              <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: '1rem', textTransform: 'uppercase', letterSpacing: '-0.02em', color: '#FFF' }}>Math Speed Drill</div>
+              <div style={{ fontFamily: 'var(--font-body)', fontWeight: 500, fontSize: '0.82rem', color: 'rgba(255,255,255,0.75)', textTransform: 'none', letterSpacing: 0, marginTop: '0.15rem' }}>60 seconds · Mental math · Streaks & bonus points</div>
+            </div>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: '0.75rem', textTransform: 'uppercase', color: 'rgba(255,255,255,0.75)', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+              <Lightbulb size={13} /> Tricks
+            </span>
+            <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: '0.9rem', color: '#FFF' }}>→</span>
+          </div>
+        </div>
       </div>
 
       {/* Recent Attempts */}

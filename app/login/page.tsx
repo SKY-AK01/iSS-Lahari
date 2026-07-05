@@ -33,7 +33,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div style={{
+    <div className="auth-split-grid" style={{
       minHeight: '100vh',
       display: 'grid',
       gridTemplateColumns: '1fr 1fr',
@@ -46,12 +46,12 @@ export default function LoginPage() {
         flexDirection: 'column',
         justifyContent: 'space-between',
         padding: '3rem',
-        background: '#FFDE00', /* Yellow panel */
+        background: 'var(--clay)', /* Pink panel */
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           <ClipboardCheck size={32} strokeWidth={2.5} color="#000" />
           <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: '1.5rem', letterSpacing: '-0.04em', textTransform: 'uppercase', color: '#000' }}>
-            Lahari<span style={{ color: '#FF3B00' }}>.</span>
+            Lahari<span style={{ color: 'var(--ruby)' }}>.</span>
           </span>
         </div>
         <div>
@@ -137,14 +137,10 @@ export default function LoginPage() {
         </div>
       </div>
 
-      {/* Mobile fallback */}
       <style>{`
         @media (max-width: 768px) {
-          div[style*="grid-template-columns: 1fr 1fr"] {
+          .auth-split-grid {
             grid-template-columns: 1fr;
-          }
-          div[style*="border-right: 3px solid"] {
-            min-height: 220px;
           }
         }
       `}</style>

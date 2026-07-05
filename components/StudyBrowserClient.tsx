@@ -43,6 +43,7 @@ export default function StudyBrowserClient({ materials }: Props) {
   const [loadedContent, setLoadedContent] = useState<MindMapJSON | null>(null);
   const [loading, setLoading] = useState(false);
   const [openSubjects, setOpenSubjects] = useState<Set<string>>(new Set());
+  const [mobileView, setMobileView] = useState<'sidebar' | 'content'>('sidebar');
 
   // Auto-open all subjects on load
   useEffect(() => {
@@ -55,6 +56,7 @@ export default function StudyBrowserClient({ materials }: Props) {
     setSelected(m);
     setLoadedContent(null);
     setLoading(true);
+    setMobileView('content');
     try {
       const res = await fetch(`/api/study-material?chapterId=${m.chapter.id}`);
       const data = await res.json();
@@ -116,8 +118,8 @@ export default function StudyBrowserClient({ materials }: Props) {
       ) : (
         <div className="study-layout-grid" style={{ display: 'grid', gridTemplateColumns: selected ? '280px 1fr' : '1fr', gap: '1.5rem', alignItems: 'start' }}>
 
-          {/* Sidebar / Browser */}
-          <div>
+          {/* Sidebar — hidden on mobile when content selected */}
+          <div className={`study-sidebar ${mobileView === 'content' && selected ? 'study-sidebar-hidden' : ''}`}>
             {/* Search */}
             <div className="search-box animate-up" style={{ marginBottom: '1rem' }}>
               <span className="search-icon"><Search size={16} /></span>
@@ -227,21 +229,29 @@ export default function StudyBrowserClient({ materials }: Props) {
 
           {/* Content Panel */}
           {selected && (
-            <div className="animate-in">
+            <div className={`animate-in ${mobileView === 'sidebar' ? 'study-content-hidden' : ''}`}>
               {/* Material header */}
               <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
-                <div>
+                <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ fontSize: '0.75rem', fontFamily: 'var(--font-heading)', fontWeight: 900, textTransform: 'uppercase', opacity: 0.5, marginBottom: '0.3rem' }}>
                     {selected.chapter.subject.name} › {selected.chapter.name}
                   </div>
                   <h2 style={{ fontSize: 'clamp(1.2rem, 3vw, 2rem)', letterSpacing: '-0.03em' }}>{selected.title}</h2>
                 </div>
-                <button
-                  className="btn btn-ghost btn-sm"
-                  onClick={() => { setSelected(null); setLoadedContent(null); }}
-                >
-                  Close
-                </button>
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  <button
+                    className="btn btn-ghost btn-sm study-back-btn"
+                    onClick={() => setMobileView('sidebar')}
+                  >
+                    ← Back
+                  </button>
+                  <button
+                    className="btn btn-ghost btn-sm"
+                    onClick={() => { setSelected(null); setLoadedContent(null); setMobileView('sidebar'); }}
+                  >
+                    Close
+                  </button>
+                </div>
               </div>
 
               {loading ? (

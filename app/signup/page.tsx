@@ -41,7 +41,7 @@ export default function SignupPage() {
   if (success) {
     return (
       <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem', background: 'var(--bg)' }}>
-        <div className="card" style={{ maxWidth: '480px', width: '100%', padding: '3rem', textAlign: 'center', background: '#FFDE00', border: '3px solid #000', boxShadow: '8px 8px 0px 0px #000' }}>
+        <div className="card" style={{ maxWidth: '480px', width: '100%', padding: '3rem', textAlign: 'center', background: 'var(--clay)', border: '3px solid #000', boxShadow: '8px 8px 0px 0px #000' }}>
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.5rem', color: '#000' }}>
             <CheckCircle2 size={64} strokeWidth={2.5} />
           </div>
@@ -49,7 +49,7 @@ export default function SignupPage() {
           <p style={{ marginBottom: '2rem', fontSize: '0.95rem', fontFamily: 'var(--font-heading)', fontWeight: 700, textTransform: 'uppercase', color: '#000', letterSpacing: '0.02em' }}>
             Account created — you can now log in. Ask your mentor to assign your role.
           </p>
-          <a href="/login" className="btn" style={{ display: 'inline-flex', justifyContent: 'center', background: '#000', color: '#FFDE00', border: '3px solid #000', boxShadow: '4px 4px 0 0 rgba(0,0,0,0.3)' }}>
+          <a href="/login" className="btn" style={{ display: 'inline-flex', justifyContent: 'center', background: '#000', color: 'var(--clay)', border: '3px solid #000', boxShadow: '4px 4px 0 0 rgba(0,0,0,0.3)' }}>
             Go to Login →
           </a>
         </div>
@@ -58,7 +58,7 @@ export default function SignupPage() {
   }
 
   return (
-    <div style={{
+    <div className="auth-split-grid" style={{
       minHeight: '100vh',
       display: 'grid',
       gridTemplateColumns: '1fr 1fr',
@@ -71,12 +71,12 @@ export default function SignupPage() {
         flexDirection: 'column',
         justifyContent: 'space-between',
         padding: '3rem',
-        background: '#FF3B00',
+        background: 'var(--ruby)',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           <ClipboardCheck size={32} strokeWidth={2.5} color="#FFF" />
           <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: '1.5rem', letterSpacing: '-0.04em', textTransform: 'uppercase', color: '#FFF' }}>
-            Lahari<span style={{ color: '#FFDE00' }}>.</span>
+            Lahari<span style={{ color: 'var(--clay)' }}>.</span>
           </span>
         </div>
         <div>
@@ -137,11 +137,8 @@ export default function SignupPage() {
 
       <style>{`
         @media (max-width: 768px) {
-          div[style*="grid-template-columns: 1fr 1fr"] {
+          .auth-split-grid {
             grid-template-columns: 1fr;
-          }
-          div[style*="border-right: 3px solid"] {
-            min-height: 220px;
           }
         }
       `}</style>
