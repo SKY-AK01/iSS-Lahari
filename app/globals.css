@@ -6,12 +6,12 @@
 
 /* ---- CSS Custom Properties (Design Tokens) ---- */
 :root {
-  /* Brand Palette - Brutalist Light */
-  --ruby:         #FF3B00; /* Brutalist Red */
-  --ruby-subtle:  #FF3B0020;
+  /* Brand Palette - Full Pink Brutalist */
+  --ruby:         #D81B60; /* Deep Pink (replaces Red) */
+  --ruby-subtle:  #D81B6020;
   
-  --bg:           #F4F4F0; /* Off-white paper */
-  --bg-2:         #F4F4F0;
+  --bg:           #FDF4F6; /* Off-white pinkish paper */
+  --bg-2:         #FDF4F6;
   --bg-3:         #FFFFFF; /* Pure white for contrast areas */
   --bg-4:         #000000; /* Pure black for borders */
   
@@ -20,10 +20,10 @@
   --cream:        #000000; /* Map 'cream' to black since text was cream in dark mode */
   --cream-dim:    #4A4A4A;
   
-  --sage:         #FFDE00; /* Brutalist Yellow */
-  --sage-bg:      #FFDE0040;
-  --clay:         #FF3B00;
-  --clay-bg:      #FF3B0020;
+  --sage:         #FF4081; /* Vibrant Pink */
+  --sage-bg:      #FF408140;
+  --clay:         #FF80AB; /* Light Pink (replaces Clay/Orange) */
+  --clay-bg:      #FF80AB40;
   --partial:      #000000;
   --partial-bg:   #E0E0E0;
 

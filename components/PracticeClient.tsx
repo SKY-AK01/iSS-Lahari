@@ -350,7 +350,7 @@ export default function PracticeClient({ batch, questions, attemptId, existingAn
 
       {/* AI Detailed Explanation */}
       {currentAns?.aiDetailedExplanation && (
-        <div style={{ padding: '1.25rem', background: 'var(--sage-bg)', border: 'var(--border-thick)', marginBottom: '1.5rem', fontSize: '0.92rem', lineHeight: 1.75, maxHeight: '300px', overflowY: 'auto' }}>
+        <div style={{ padding: '1.25rem', background: 'var(--sage-bg)', border: 'var(--border-thick)', marginBottom: '1.5rem', fontSize: '0.92rem', lineHeight: 1.75 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.72rem', fontFamily: 'var(--font-heading)', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.75rem', color: '#000' }}>
             <Sparkles size={13} /> AI Detailed Explanation
           </div>

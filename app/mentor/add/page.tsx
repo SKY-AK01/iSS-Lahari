@@ -269,11 +269,49 @@ export default function AddContentPage() {
   function validateStudy(text: string) {
     resetUpload();
     try {
-      const parsed = JSON.parse(text) as MindMapJSON;
+      const parsed = JSON.parse(text);
       if (!parsed.title) throw new Error('Missing "title" field');
-      if (!Array.isArray(parsed.columns) || !parsed.columns.length) throw new Error('Missing "columns"');
-      if (!Array.isArray(parsed.records) || !parsed.records.length) throw new Error('Empty "records"');
-      setStudyPreview(parsed);
+      
+      let records = parsed.records;
+      if (!Array.isArray(records) || !records.length) throw new Error('Empty "records" array');
+      
+      const flattenedRecords: Record<string, string>[] = [];
+      const columnSet = new Set<string>();
+      
+      for (const rec of records) {
+        const flatRec: Record<string, string> = {};
+        
+        function flatten(obj: any, prefix = '') {
+          for (const key in obj) {
+            if (obj[key] === null || obj[key] === undefined || obj[key] === '') continue;
+            
+            const newKey = prefix ? `${prefix}_${key}` : key;
+            
+            if (Array.isArray(obj[key])) {
+              if (obj[key].length > 0) flatRec[newKey] = obj[key].join(', ');
+            } else if (typeof obj[key] === 'object') {
+              flatten(obj[key], newKey);
+            } else {
+              flatRec[newKey] = String(obj[key]);
+            }
+          }
+        }
+        
+        flatten(rec);
+        for (const k of Object.keys(flatRec)) columnSet.add(k);
+        flattenedRecords.push(flatRec);
+      }
+      
+      const columns = Array.isArray(parsed.columns) && parsed.columns.length > 0 
+        ? parsed.columns 
+        : Array.from(columnSet);
+        
+      setStudyPreview({
+        title: parsed.title,
+        columns: columns,
+        records: flattenedRecords,
+        references: parsed.references
+      });
     } catch (e) { setParseError(e instanceof Error ? e.message : 'Invalid JSON'); }
   }
 

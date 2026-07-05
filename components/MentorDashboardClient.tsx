@@ -131,11 +131,68 @@ Then generate a production-ready JSON with:
 
 Output only valid JSON.`;
 
+const PROMPT_5 = `You already know the topic from our previous conversation because you generated the questions for it.
+
+**Do NOT generate questions again.**
+
+Your task is to generate a **complete, structured knowledge base** for this topic that can be directly converted into a **Mind Map / Knowledge Graph / Timeline**.
+
+## Instructions
+* Cover the topic from the earliest relevant event to the latest.
+* Include every important event, amendment, act, committee, commission, report, court case, personality, agreement, movement, policy, reform, article, institution, or milestone.
+* If multiple important events occurred in the same year, include each separately.
+* Keep information factual, concise, and complete.
+* Do not generate MCQs or questions.
+
+For every record include:
+* Year, Date (if known), Event Name, Alternative Names, Category
+* Key People, What Happened, Background, Why it Happened, Objectives, Major Features, Important Changes
+* Immediate Impact, Long-term Impact
+* Significance (Constitutional, Political, Economic, Administrative, Social, Scientific)
+* Related (Articles, Acts, Amendments, Committees, Commissions, Court Cases, Reports, Personalities, Organizations, Institutions, Keywords)
+* Memory Trick (if useful), Previous Event, Next Event, Source
+
+## Output Rules
+* Return ONLY valid JSON. No Markdown.
+* Every field/array must exist even if empty.
+* Sort records chronologically.
+
+Use this schema:
+{
+"title": "",
+"topic": "",
+"description": "",
+"records": [
+{
+"year": "",
+"date": "",
+"event": "",
+"aliases": [],
+"category": "",
+"people": [],
+"background": "",
+"why": "",
+"what_happened": "",
+"objectives": [],
+"features": [],
+"changes": [],
+"impact": { "immediate": [], "long_term": [] },
+"significance": { "constitutional": "", "political": "", "economic": "", "administrative": "", "social": "", "scientific": "" },
+"related": { "articles": [], "acts": [], "amendments": [], "committees": [], "commissions": [], "court_cases": [], "reports": [], "organizations": [], "institutions": [], "personalities": [], "keywords": [] },
+"memory_trick": "",
+"previous_event": "",
+"next_event": "",
+"sources": []
+}
+]
+}`;
+
 const INITIAL_PROMPTS = [
   { num: 1, title: 'Resource Collection', subtitle: 'Build knowledge base', content: PROMPT_1, icon: <FlaskConical size={18} /> },
   { num: 2, title: 'Audit', subtitle: 'Analyze PYQs and estimate batches', content: PROMPT_2, icon: <BarChart3 size={18} /> },
   { num: 3, title: 'Question Generation', subtitle: 'Generate exactly 25 unique questions', content: PROMPT_3, icon: <PenTool size={18} /> },
   { num: 4, title: 'JSON Builder', subtitle: 'Merge batches and output valid JSON', content: PROMPT_4, icon: <RefreshCw size={18} /> },
+  { num: 5, title: 'Mind Map Builder', subtitle: 'Generate chronological knowledge graph', content: PROMPT_5, icon: <Map size={18} /> },
 ];
 
 interface Props {
