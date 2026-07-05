@@ -3,71 +3,139 @@
 import { useState } from 'react';
 import { FlaskConical, PenTool, RefreshCw, BookOpen, BookText, FileText, BarChart3, ClipboardList, Library, Search, ChevronRight, Map } from 'lucide-react';
 
-const PROMPT_1 = `You are a deep research assistant for competitive exam preparation.
-I want you to build a comprehensive knowledge base for the following chapter:
-[CHAPTER NAME] from [SUBJECT] (for IIS / SSC CGL exam).
+const PROMPT_1 = `You are an expert researcher, subject matter expert, competitive exam analyst, and curriculum designer.
 
-Cover all of the following:
-1. Core concepts, definitions, and constitutional/legal provisions
-2. Historical background and evolution
-3. Key acts, articles, committees, and personalities
-4. Timelines and important dates
-5. Previous year questions (PYQ) trends for this chapter
-6. Standard sources: NCERT, Laxmikanth, standard polity/history/geography books
+Your task is to build the most comprehensive knowledge base for the following topic:
 
-Do NOT generate questions yet. Just build the knowledge base thoroughly.`;
+Topic: <TOPIC NAME>
 
-const PROMPT_2 = `Using the knowledge base you just built, generate exactly 15 unique exam-style questions:
-- 5 Easy, 5 Medium, 5 Hard
+## Objective
+Research this topic exhaustively and collect every reliable resource required for competitive exam preparation.
 
-For each question provide ALL of the following fields:
-Question | Answer | Detailed Explanation | Important Keywords | Relevant Acts/Articles/Dates/Committees/Personalities | Memory Trick | Common Exam Trap | Source(s)
+## Collect Resources From
+### Official Sources
+* Government publications, Official Acts / Rules / Policies, Official websites, NCERT, NIOS, Parliament / Ministries (where applicable)
 
-Mix MCQ (with 4 options) and short-answer questions.
-Each batch should be fresh — do not repeat questions from previous batches.
+### Standard Books
+* Standard textbooks, University books, Reference books, Recommended books for competitive exams
 
-Output as plain readable text (not JSON).`;
+### Previous Year Papers
+Collect questions related to this topic from: IIS, SSC CGL, SSC CHSL, SSC CPO, UPSC Prelims, UPSC Mains, CDS, NDA, CAPF, State PSC, Banking, Railways, Other Government Exams. Search across all available years.
 
-const PROMPT_3 = `You are a data formatter. I will paste exam questions to you one by one (or all together).
-Each question includes: Question, Answer, Detailed Explanation, Important Keywords,
-Relevant Acts/Articles/Dates/Committees/Personalities, Memory Trick, Common Exam Trap,
-and Source(s). Some questions are MCQ (with options), some are short-answer (no options).
+### Educational Sources
+* Reputed coaching institutes, Educational portals, University notes, Research papers, Trusted articles
 
-Wait until I say "That's all, generate the JSON now" before producing output.
+## Collect
+* Complete theory, Definitions, Concepts, Formulas (if applicable), Important facts, Important dates, Important people, Acts, Articles, Committees, Cases, Diagrams, Tables, Flowcharts, Exceptions, Frequently confused concepts, Mnemonics
 
-When I say that, also tell me:
-- Chapter name
-- Subject (Polity / History / Geography / Economy / etc.)
-- Batch number
+## Previous Year Question Collection
+Extract every question related to this topic. For every question identify: Exam, Year, Stage, Topic, Difficulty, Question Type
 
-Then convert everything into this exact JSON structure and output ONLY the JSON:
+## Trend Analysis
+Identify: Frequently asked concepts, Repeated questions, Rare questions, High-weightage concepts, Future high-probability concepts
 
-{
-  "chapter": "<chapter name>",
-  "subject": "<subject>",
-  "batch": <batch number>,
-  "questions": [
-    {
-      "id": "q1",
-      "difficulty": "easy" | "medium" | "hard",
-      "type": "mcq" | "short",
-      "question": "...",
-      "options": ["...", "...", "...", "..."],
-      "answer": "...",
-      "explanation": "...",
-      "keywords": ["...", "..."],
-      "related": ["...", "..."],
-      "memory_trick": "...",
-      "exam_trap": "...",
-      "sources": ["...", "..."]
-    }
-  ]
-}`;
+## Final Deliverable
+Create a complete knowledge base. Do NOT generate questions yet.`;
+
+const PROMPT_2 = `Using the collected knowledge base, perform a complete audit.
+
+Report:
+* Total resources
+* Total PYQs
+* Duplicate PYQs removed
+* Total unique PYQs
+* Estimated AI questions
+* Easy AI questions
+* Medium AI questions
+* Hard AI questions
+* Twisted AI questions
+* Total question bank
+
+Show:
+* Year-wise distribution
+* Exam-wise distribution
+* Topic-wise distribution
+* Difficulty distribution
+
+Finally tell me:
+* Number of 25-question batches
+* Number of 50-question batches
+* Number of complete revision cycles
+
+Do NOT generate questions.`;
+
+const PROMPT_3 = `Generate the next batch of exactly 25 unique questions.
+
+Generation Order:
+1. Exhaust every Previous Year Question first.
+2. Then generate AI Predicted Questions.
+
+Generation Priority: PYQs, Easy AI, Medium AI, Hard AI, Twisted AI
+
+Never repeat questions. Never skip questions. Continue from the previous batch.
+
+For every question include:
+* Master ID
+* Difficulty
+* Question Category
+* Exam Name
+* Year
+* Stage
+* Question
+* Options
+* Answer
+* Detailed Explanation
+* Keywords
+* Related Acts / Articles / Dates / Committees / Personalities
+* Memory Trick
+* Common Exam Trap
+* Why Important
+* Sources
+
+At the end display:
+* Questions Covered
+* Questions Remaining
+* Total Completed
+* Total Remaining
+* Percentage Completed`;
+
+const PROMPT_4 = `You are a JSON data formatter.
+
+I will paste multiple batches of questions.
+
+Do not generate JSON until I say:
+Generate Final JSON
+
+Until then:
+* Merge all batches.
+* Remove duplicates.
+* Validate IDs.
+* Preserve every field.
+* Preserve explanations exactly.
+* Fill missing values with empty strings or arrays.
+
+When I say Generate Final JSON, first ask for:
+* Subject
+* Chapter
+* Version
+* Batch Number
+* Description
+
+Then generate a production-ready JSON with:
+* Metadata
+* Statistics
+* Complete Question Bank
+* Valid IDs
+* Structured Related Data
+* Sources
+
+Output only valid JSON.`;
 
 const INITIAL_PROMPTS = [
-  { num: 1, title: 'Research Prompt', subtitle: 'Run in NotebookLM to build knowledge base', content: PROMPT_1, icon: <FlaskConical size={18} /> },
-  { num: 2, title: 'Question Generation', subtitle: 'Run against the knowledge base — re-run for fresh batches', content: PROMPT_2, icon: <PenTool size={18} /> },
-  { num: 3, title: 'JSON Converter', subtitle: 'Paste into a fresh AI chat, then paste Prompt 2 output', content: PROMPT_3, icon: <RefreshCw size={18} /> },
+  { num: 1, title: 'Resource Collection', subtitle: 'Build knowledge base', content: PROMPT_1, icon: <FlaskConical size={18} /> },
+  { num: 2, title: 'Audit', subtitle: 'Analyze PYQs and estimate batches', content: PROMPT_2, icon: <BarChart3 size={18} /> },
+  { num: 3, title: 'Question Generation', subtitle: 'Generate exactly 25 unique questions', content: PROMPT_3, icon: <PenTool size={18} /> },
+  { num: 4, title: 'JSON Builder', subtitle: 'Merge batches and output valid JSON', content: PROMPT_4, icon: <RefreshCw size={18} /> },
 ];
 
 interface Props {
@@ -85,9 +153,11 @@ export default function MentorDashboardClient({ subjects, recentAttempts, studyM
   const [search, setSearch] = useState('');
   const [prompts, setPrompts] = useState(INITIAL_PROMPTS);
   const [editingIdx, setEditingIdx] = useState<number | null>(null);
+  const [topicName, setTopicName] = useState('');
 
   function copyPrompt(text: string, idx: number) {
-    navigator.clipboard.writeText(text);
+    const finalContent = text.replace(/<TOPIC NAME>/g, topicName || '<TOPIC NAME>');
+    navigator.clipboard.writeText(finalContent);
     setCopiedIdx(idx);
     setTimeout(() => setCopiedIdx(null), 2000);
   }
@@ -139,11 +209,23 @@ export default function MentorDashboardClient({ subjects, recentAttempts, studyM
 
       {/* Prompts Section */}
       <div className="animate-up" style={{ marginBottom: '2.5rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem', flexWrap: 'wrap', gap: '1rem' }}>
           <h2 style={{ fontSize: '1.2rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <ClipboardList size={20} /> Question Pipeline Prompts
           </h2>
-          <a href="/mentor/add-test" className="btn btn-primary btn-sm">+ Add Test</a>
+          <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+              <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>Topic:</span>
+              <input
+                className="input"
+                placeholder="e.g. Fundamental Rights"
+                value={topicName}
+                onChange={e => setTopicName(e.target.value)}
+                style={{ width: '220px', padding: '0.4rem 0.75rem', fontSize: '0.85rem', minHeight: 'auto' }}
+              />
+            </div>
+            <a href="/mentor/add-test" className="btn btn-primary btn-sm">+ Add Test</a>
+          </div>
         </div>
 
         <div className="stagger" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -185,7 +267,9 @@ export default function MentorDashboardClient({ subjects, recentAttempts, studyM
                   }}
                 />
               ) : (
-                <div className="prompt-box">{p.content}</div>
+                <div className="prompt-box" style={{ whiteSpace: 'pre-wrap' }}>
+                  {p.content.replace(/<TOPIC NAME>/g, topicName || '<TOPIC NAME>')}
+                </div>
               )}
             </div>
           ))}

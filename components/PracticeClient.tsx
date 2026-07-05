@@ -228,11 +228,16 @@ export default function PracticeClient({ batch, questions, attemptId, existingAn
   /* ── FRONT card content ──────────────────────────────── */
   const frontCard = (
     <>
-      <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1.25rem', alignItems: 'center' }}>
+      <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1.25rem', alignItems: 'center', flexWrap: 'wrap' }}>
         <span className={`pill pill-${currentQ.difficulty}`}>{currentQ.difficulty}</span>
         <span style={{ fontSize: '0.72rem', fontFamily: 'var(--font-heading)', fontWeight: 900, padding: '3px 8px', background: '#000', color: '#FFF', textTransform: 'uppercase' }}>
           {currentQ.type}
         </span>
+        {currentQ.related && !Array.isArray(currentQ.related) && currentQ.related.exam_year && (
+          <span style={{ fontSize: '0.72rem', fontFamily: 'var(--font-heading)', fontWeight: 900, padding: '3px 8px', background: 'var(--ruby)', color: '#FFF', textTransform: 'uppercase' }}>
+            Year: {currentQ.related.exam_year}
+          </span>
+        )}
       </div>
 
       <QuestionText text={currentQ.question} style={{ marginBottom: '1.75rem' }} />

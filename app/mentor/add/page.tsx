@@ -3,12 +3,116 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { FileText, Map, ChevronRight, Trash2 } from 'lucide-react';
-import { PastedTestJSON, MindMapJSON } from '@/lib/types';
+import { PastedTestJSON, MindMapJSON, PastedQuestion, PastedQuestionRelated } from '@/lib/types';
 
 type Step = 'subject' | 'chapter' | 'type' | 'upload';
 type ContentType = 'test' | 'study';
 
 interface SubjectOption { id: string; name: string; chapters: { id: string; name: string }[] }
+
+function parseMarkdownTest(text: string): PastedTestJSON {
+  const blocks = text.split('---').map(b => b.trim()).filter(Boolean);
+  const questions: PastedQuestion[] = [];
+  
+  for (const block of blocks) {
+    if (!block.includes('Master ID:')) continue;
+    
+    const idMatch = block.match(/## Master ID:\s*(.+)/);
+    const difficultyMatch = block.match(/\*\*Difficulty:\*\*\s*(.+)/);
+    const yearMatch = block.match(/\*\*Year:\*\*\s*(.+)/);
+    
+    const qMatch = block.match(/\*\*Question:\*\*\s*([\s\S]*?)(?=\*\*Correct Answer:\*\*)/);
+    const aMatch = block.match(/\*\*Correct Answer:\*\*\s*(.+)/);
+    const expMatch = block.match(/\*\*Detailed Explanation:\*\*\s*([\s\S]*?)(?=\*\*Important Keywords:\*\*|\*\*Relevant|\*\*Source:\*\*|##|$)/);
+    const kwMatch = block.match(/\*\*Important Keywords:\*\*\s*(.+)/);
+    
+    if (!idMatch || !qMatch || !aMatch) continue;
+    
+    const rawQ = qMatch[1].trim();
+    const options: string[] = [];
+    const qLines: string[] = [];
+    
+    for (const line of rawQ.split('\n')) {
+      const trimmed = line.trim();
+      if (/^\([a-d]\)/i.test(trimmed)) {
+        options.push(trimmed);
+      } else {
+        qLines.push(line);
+      }
+    }
+    
+    const type: 'mcq' | 'short' = options.length > 0 ? 'mcq' : 'short';
+    const difficulty = (difficultyMatch ? difficultyMatch[1].toLowerCase() : 'medium') as 'easy' | 'medium' | 'hard';
+    
+    const relatedObj: PastedQuestionRelated = {};
+    if (yearMatch) relatedObj.exam_year = yearMatch[1].trim();
+    
+    let keywords: string[] = [];
+    if (kwMatch) keywords = kwMatch[1].split(',').map(k => k.trim());
+    
+    questions.push({
+      id: idMatch[1].trim(),
+      difficulty,
+      type,
+      question: qLines.join('\n').trim(),
+      options: options.length > 0 ? options : undefined,
+      answer: aMatch[1].trim(),
+      explanation: expMatch ? expMatch[1].trim() : undefined,
+      keywords: keywords.length > 0 ? keywords : undefined,
+      related: Object.keys(relatedObj).length > 0 ? relatedObj : undefined,
+    });
+  }
+  
+  if (questions.length === 0) throw new Error("No questions found in Markdown.");
+  
+  return { chapter: '', subject: '', batch: 1, questions };
+}
+
+function parseRawQA(text: string): PastedTestJSON {
+  const blocks = text.split(/\n\s*\n/).filter(b => b.trim().length > 0);
+  const questions: PastedQuestion[] = [];
+  
+  for (let i = 0; i < blocks.length; i++) {
+    const block = blocks[i].trim();
+    const lines = block.split('\n').map(l => l.trim()).filter(Boolean);
+    const qLines: string[] = [];
+    const options: string[] = [];
+    let answer = '';
+    let explanation = '';
+    
+    for (const line of lines) {
+      if (/^(ans|answer|correct answer)s?[:\-\.]\s*/i.test(line)) {
+        answer = line.replace(/^(ans|answer|correct answer)s?[:\-\.]\s*/i, '').trim();
+      } else if (/^(exp|explanation|solution)s?[:\-\.]\s*/i.test(line)) {
+        explanation = line.replace(/^(exp|explanation|solution)s?[:\-\.]\s*/i, '').trim();
+      } else if (/^[a-d][\.\)]\s+/i.test(line) || /^\([a-d]\)\s+/i.test(line)) {
+        options.push(line);
+      } else {
+        qLines.push(line);
+      }
+    }
+    
+    const questionText = qLines.join('\n').replace(/^(Q\d*[:\.\-]?\s*|Question\s*\d*[:\.\-]?\s*)/i, '').trim();
+    if (!questionText) continue;
+    // For short answers, answer might be missing in some raw texts, but we require it.
+    if (!answer && options.length === 0) answer = 'No answer provided';
+    else if (!answer && options.length > 0) answer = options[0]; // fallback
+    
+    questions.push({
+      id: `raw-${Date.now()}-${i}`,
+      difficulty: 'medium',
+      type: options.length > 0 ? 'mcq' : 'short',
+      question: questionText,
+      options: options.length > 0 ? options : undefined,
+      answer: answer,
+      explanation: explanation || undefined,
+    });
+  }
+  
+  if (questions.length === 0) throw new Error("Could not parse any questions. Try standardizing formatting (e.g., 'Answer: X').");
+  
+  return { chapter: '', subject: '', batch: 1, questions };
+}
 
 // ── Shared file upload zone ──────────────────────────────────────────
 function FileUploadZone({ fileName, onFile, onError }: {
@@ -106,7 +210,7 @@ export default function AddContentPage() {
   const [jsonText, setJsonText] = useState('');
   const [fileName, setFileName] = useState('');
   const [parseError, setParseError] = useState('');
-  const [testPreview, setTestPreview] = useState<PastedTestJSON | null>(null);
+  const [testPreviews, setTestPreviews] = useState<PastedTestJSON[] | null>(null);
   const [studyPreview, setStudyPreview] = useState<MindMapJSON | null>(null);
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState('');
@@ -122,30 +226,44 @@ export default function AddContentPage() {
   const chaptersForSubject = subjectOptions.find(s => s.name === subject)?.chapters ?? [];
 
   function handleBack() {
-    if (step === 'upload') { setStep('type'); setTestPreview(null); setStudyPreview(null); setParseError(''); setJsonText(''); setFileName(''); }
+    if (step === 'upload') { setStep('type'); setTestPreviews(null); setStudyPreview(null); setParseError(''); setJsonText(''); setFileName(''); }
     else if (step === 'type') { setStep('chapter'); setContentType(null); }
     else if (step === 'chapter') { setStep('subject'); setChapter(''); }
     else router.push('/mentor');
   }
 
-  function resetUpload() { setTestPreview(null); setStudyPreview(null); setParseError(''); setSaveError(''); setSaved(false); }
+  function resetUpload() { setTestPreviews(null); setStudyPreview(null); setParseError(''); setSaveError(''); setSaved(false); }
 
   // ── Validate & preview ───────────────────────────────────────────
   function validateTest(text: string) {
     resetUpload();
     try {
-      const parsed = JSON.parse(text) as PastedTestJSON;
-      if (!Array.isArray(parsed.questions) || parsed.questions.length === 0) throw new Error('No questions found');
-      for (const [i, q] of parsed.questions.entries()) {
-        if (!q.question) throw new Error(`Q${i + 1}: missing "question"`);
-        if (!q.answer) throw new Error(`Q${i + 1}: missing "answer"`);
-        if (!['mcq', 'short'].includes(q.type)) throw new Error(`Q${i + 1}: type must be "mcq" or "short"`);
-        if (!['easy', 'medium', 'hard'].includes(q.difficulty)) throw new Error(`Q${i + 1}: invalid difficulty`);
-        if (q.type === 'mcq' && (!Array.isArray(q.options) || q.options.length < 2)) throw new Error(`Q${i + 1}: MCQ needs 2+ options`);
+      let parsedArr: PastedTestJSON[];
+      if (text.trim().startsWith('## Master ID:')) {
+        parsedArr = [parseMarkdownTest(text)];
+      } else if (text.trim().startsWith('{') || text.trim().startsWith('[')) {
+        const rawJson = JSON.parse(text);
+        parsedArr = Array.isArray(rawJson) ? rawJson : [rawJson];
+      } else {
+        parsedArr = [parseRawQA(text)];
+      }
+      
+      const validatedArr: PastedTestJSON[] = [];
+      
+      for (const parsed of parsedArr) {
+        if (!Array.isArray(parsed.questions) || parsed.questions.length === 0) throw new Error(`Batch ${parsed.batch ?? 'unknown'}: No questions found`);
+        for (const [i, q] of parsed.questions.entries()) {
+          if (!q.question) throw new Error(`Batch ${parsed.batch}, Q${i + 1}: missing "question"`);
+          if (!q.answer) throw new Error(`Batch ${parsed.batch}, Q${i + 1}: missing "answer"`);
+          if (!['mcq', 'short'].includes(q.type)) throw new Error(`Batch ${parsed.batch}, Q${i + 1}: type must be "mcq" or "short"`);
+          if (!['easy', 'medium', 'hard'].includes(q.difficulty)) throw new Error(`Batch ${parsed.batch}, Q${i + 1}: invalid difficulty`);
+          if (q.type === 'mcq' && (!Array.isArray(q.options) || q.options.length < 2)) throw new Error(`Batch ${parsed.batch}, Q${i + 1}: MCQ needs 2+ options`);
+        }
+        validatedArr.push({ ...parsed, subject, chapter, batch: parsed.batch ?? 1 });
       }
       // Override subject/chapter from form, not from file
-      setTestPreview({ ...parsed, subject, chapter, batch: parsed.batch ?? 1 });
-    } catch (e) { setParseError(e instanceof Error ? e.message : 'Invalid JSON'); }
+      setTestPreviews(validatedArr);
+    } catch (e) { setParseError(e instanceof Error ? e.message : 'Invalid JSON or Markdown'); }
   }
 
   function validateStudy(text: string) {
@@ -169,14 +287,16 @@ export default function AddContentPage() {
   async function handleSave() {
     setSaving(true); setSaveError('');
     try {
-      if (contentType === 'test' && testPreview) {
-        const res = await fetch('/api/tests', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(testPreview),
-        });
-        const d = await res.json();
-        if (!res.ok) throw new Error(d.error || 'Failed to save');
+      if (contentType === 'test' && testPreviews) {
+        for (const preview of testPreviews) {
+          const res = await fetch('/api/tests', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(preview),
+          });
+          const d = await res.json();
+          if (!res.ok) throw new Error(d.error || 'Failed to save a batch');
+        }
       } else if (contentType === 'study' && studyPreview) {
         const res = await fetch('/api/study-material', {
           method: 'POST',
@@ -425,17 +545,17 @@ export default function AddContentPage() {
           </div>
 
           {/* Test preview */}
-          {testPreview && (
-            <div className="animate-in card" style={{ padding: '1.5rem', marginBottom: '1rem' }}>
+          {testPreviews && testPreviews.map((preview, bIndex) => (
+            <div key={bIndex} className="animate-in card" style={{ padding: '1.5rem', marginBottom: '1rem' }}>
               <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.06em', color: '#000', marginBottom: '1rem' }}>
-                Preview
+                Preview Batch #{preview.batch}
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '0.75rem', marginBottom: '1rem' }}>
                 {[
                   { label: 'Subject', value: subject },
                   { label: 'Chapter', value: chapter },
-                  { label: 'Batch', value: `#${testPreview.batch}` },
-                  { label: 'Questions', value: testPreview.questions.length },
+                  { label: 'Batch', value: `#${preview.batch}` },
+                  { label: 'Questions', value: preview.questions.length },
                 ].map(item => (
                   <div key={item.label} style={{ background: 'var(--bg)', border: 'var(--border-thick)', padding: '0.75rem' }}>
                     <div style={{ fontSize: '0.62rem', fontFamily: 'var(--font-heading)', fontWeight: 900, textTransform: 'uppercase', opacity: 0.4, marginBottom: '0.2rem' }}>{item.label}</div>
@@ -445,13 +565,13 @@ export default function AddContentPage() {
               </div>
               <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
                 {Object.entries(
-                  testPreview.questions.reduce((acc: Record<string, number>, q) => { acc[q.difficulty] = (acc[q.difficulty] || 0) + 1; return acc; }, {})
+                  preview.questions.reduce((acc: Record<string, number>, q) => { acc[q.difficulty] = (acc[q.difficulty] || 0) + 1; return acc; }, {})
                 ).map(([d, n]) => (
                   <span key={d} className={`pill pill-${d}`}>{d}: {n}</span>
                 ))}
               </div>
               <div style={{ maxHeight: '240px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
-                {testPreview.questions.map((q, i) => (
+                {preview.questions.map((q, i) => (
                   <div key={i} style={{ display: 'flex', gap: '0.6rem', padding: '0.55rem 0.75rem', background: 'var(--bg)', border: 'var(--border-thin)', alignItems: 'flex-start' }}>
                     <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', opacity: 0.4, minWidth: '1.8rem' }}>Q{i + 1}</span>
                     <span className={`pill pill-${q.difficulty}`} style={{ flexShrink: 0, fontSize: '0.62rem' }}>{q.difficulty}</span>
@@ -460,7 +580,7 @@ export default function AddContentPage() {
                 ))}
               </div>
             </div>
-          )}
+          ))}
 
           {/* Study preview */}
           {studyPreview && (
@@ -510,7 +630,7 @@ export default function AddContentPage() {
           )}
 
           {/* Save */}
-          {(testPreview || studyPreview) && (
+          {(testPreviews || studyPreview) && (
             <div>
               {saveError && <div className="alert alert-error" style={{ marginBottom: '0.75rem' }}><span style={{ fontWeight: 900 }}>Error:</span> {saveError}</div>}
               {saved ? (
@@ -520,7 +640,7 @@ export default function AddContentPage() {
                   {saving
                     ? <><span className="spinner" style={{ width: 14, height: 14, borderWidth: 2 }} /> Saving…</>
                     : contentType === 'test'
-                      ? `Save Test — ${testPreview?.questions.length} Questions`
+                      ? `Save ${testPreviews?.length} Test Batch${testPreviews && testPreviews.length > 1 ? 'es' : ''}`
                       : `Save Study Material — ${studyPreview?.records.length} Rows`}
                 </button>
               )}

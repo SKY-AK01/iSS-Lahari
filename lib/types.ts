@@ -48,7 +48,7 @@ export interface Question {
   answer: string;
   explanation: string | null;
   keywords: string[] | null;
-  related: string[] | null;
+  related: PastedQuestionRelated | string[] | null;
   memory_trick: string | null;
   exam_trap: string | null;
   sources: string[] | null;
@@ -91,6 +91,7 @@ export interface PastedQuestionRelated {
   dates?: string[];
   committees?: string[];
   personalities?: string[];
+  exam_year?: string | number;
 }
 
 export interface PastedQuestionExam {

@@ -203,9 +203,16 @@ export default function ExamClient({ batch, questions, attemptId, durationMinute
       <div className="container flex-col" style={{ flex: 1, paddingTop: '1.5rem', paddingBottom: '2rem' }}>
         <div className="card" style={{ padding: '1.75rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', gap: '0.75rem', flexWrap: 'wrap' }}>
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: 'var(--cream-dim)' }}>
-              Q {currentIndex + 1} / {questions.length}
-            </span>
+            <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: 'var(--cream-dim)' }}>
+                Q {currentIndex + 1} / {questions.length}
+              </span>
+              {currentQ.related && !Array.isArray(currentQ.related) && currentQ.related.exam_year && (
+                <span style={{ fontSize: '0.72rem', fontFamily: 'var(--font-heading)', fontWeight: 900, padding: '3px 8px', background: 'var(--ruby)', color: '#FFF', textTransform: 'uppercase' }}>
+                  Year: {currentQ.related.exam_year}
+                </span>
+              )}
+            </div>
             <button
               className="btn btn-ghost btn-sm"
               onClick={toggleFlag}

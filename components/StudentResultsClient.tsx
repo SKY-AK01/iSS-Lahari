@@ -73,11 +73,16 @@ export default function StudentResultsClient({ attempt }: Props) {
           return (
             <div key={i} className="card animate-up" style={{ padding: '0', overflow: 'hidden' }}>
               <div style={{ padding: '1.5rem' }}>
-                <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1rem' }}>
+                <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
                   <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: 'var(--cream-dim)', minWidth: '2rem' }}>
                     Q{i + 1}
                   </span>
                   <span className={`pill pill-${q.difficulty}`}>{q.difficulty}</span>
+                  {q.related && !Array.isArray(q.related) && q.related.exam_year && (
+                    <span style={{ fontSize: '0.72rem', fontFamily: 'var(--font-heading)', fontWeight: 900, padding: '3px 8px', background: 'var(--ruby)', color: '#FFF', textTransform: 'uppercase' }}>
+                      Year: {q.related.exam_year}
+                    </span>
+                  )}
                 </div>
                 
                 <QuestionText text={q.question} style={{ marginBottom: '1.25rem', fontSize: '1rem' }} />
