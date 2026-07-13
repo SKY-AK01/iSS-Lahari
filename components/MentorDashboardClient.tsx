@@ -210,6 +210,11 @@ export default function MentorDashboardClient({ subjects, recentAttempts, studyM
   const router = useRouter();
   const supabase = createClient();
   const [isPending, startTransition] = useTransition();
+  const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
+  const [openSubjects, setOpenSubjects] = useState<Set<string>>(new Set());
+  const [search, setSearch] = useState('');
+  const [prompts, setPrompts] = useState(INITIAL_PROMPTS);
+  const [editingIdx, setEditingIdx] = useState<number | null>(null);
   const [editingSubject, setEditingSubject] = useState<{ id: string, name: string } | null>(null);
   const [editingChapter, setEditingChapter] = useState<{ id: string, name: string } | null>(null);
   const [topicName, setTopicName] = useState('');
