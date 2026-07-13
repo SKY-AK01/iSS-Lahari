@@ -41,6 +41,7 @@ export default function PYQPaperClient({ paper }: { paper: Paper }) {
   const router = useRouter();
   const [questions, setQuestions] = useState<Question[]>([]);
   const [loading, setLoading] = useState(true);
+  const [mounted, setMounted] = useState(false);
   const [language, setLanguage] = useState<'english' | 'hindi'>('english');
   const [search, setSearch] = useState('');
   const [expandedId, setExpandedId] = useState<string | null>(null);
@@ -56,7 +57,13 @@ export default function PYQPaperClient({ paper }: { paper: Paper }) {
   }, [paper.id]);
 
   useEffect(() => {
+    setMounted(true);
     fetchQuestions(language, search);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (mounted) fetchQuestions(language);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [language]);
 
@@ -136,7 +143,7 @@ export default function PYQPaperClient({ paper }: { paper: Paper }) {
       </form>
 
       {/* Count */}
-      <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--cream-dim)', marginBottom: '1rem', opacity: 0.7 }}>
+      <div suppressHydrationWarning style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--cream-dim)', marginBottom: '1rem', opacity: 0.7 }}>
         {loading ? 'Loading…' : `${questions.length} question${questions.length !== 1 ? 's' : ''}${search ? ' (filtered)' : ''}`}
       </div>
 

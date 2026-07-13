@@ -11,33 +11,70 @@ export async function GET(req: NextRequest) {
 
   if (!paperId) return NextResponse.json({ error: 'paper_id required' }, { status: 400 });
 
-  // Fetch top-level questions (no parent) with their content
-  let query = supabase
+  // Step 1: Fetch top-level questions with their content
+  const { data: topLevel, error: topErr } = await supabase
     .from('pyq_questions')
     .select(`
       id, question_number, question_type, page_start, page_end,
       images, tables, marks, word_limit, sort_order,
-      content:pyq_question_content(language, passage, question_text, statements, options),
-      sub_questions:pyq_questions!parent_id(
-        id, question_number, question_type, page_start, page_end,
-        images, tables, marks, word_limit, sort_order,
-        content:pyq_question_content(language, passage, question_text, statements, options)
-      )
+      content:pyq_question_content(language, passage, question_text, statements, options)
     `)
     .eq('paper_id', paperId)
     .is('parent_id', null)
     .order('sort_order');
 
-  const { data, error } = await query;
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (topErr) {
+    console.error('[pyq/questions] top-level error:', topErr);
+    return NextResponse.json({ error: topErr.message }, { status: 500 });
+  }
+
+  // Step 2: Fetch sub-questions separately (self-referential joins are unreliable in PostgREST)
+  // Also batch the IN query to avoid URL length limits (e.g. 80 UUIDs for Prelims)
+  const topIds = (topLevel ?? []).map((q: { id: string }) => q.id);
+  const subMap: Record<string, unknown[]> = {};
+
+  if (topIds.length > 0) {
+    const BATCH = 40;
+    const batches: string[][] = [];
+    for (let i = 0; i < topIds.length; i += BATCH) {
+      batches.push(topIds.slice(i, i + BATCH));
+    }
+
+    for (const batch of batches) {
+      const { data: subData, error: subErr } = await supabase
+        .from('pyq_questions')
+        .select(`
+          id, parent_id, question_number, question_type, page_start, page_end,
+          images, tables, marks, word_limit, sort_order,
+          content:pyq_question_content(language, passage, question_text, statements, options)
+        `)
+        .in('parent_id', batch)
+        .order('sort_order');
+
+      if (subErr) {
+        console.error('[pyq/questions] sub-questions error:', subErr);
+      } else {
+        for (const sq of (subData ?? [])) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const s = sq as any;
+          if (!subMap[s.parent_id]) subMap[s.parent_id] = [];
+          subMap[s.parent_id].push(s);
+        }
+      }
+    }
+  }
+
+  const data = topLevel;
 
   // Filter content to requested language and apply search
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let questions = (data ?? []).map((q: any) => {
     const langContent = q.content?.find((c: { language: string }) => c.language === language) ?? q.content?.[0] ?? null;
-    const subQs = (q.sub_questions ?? []).map((sq: { content: { language: string }[] }) => {
+    const rawSubQs: unknown[] = subMap[q.id] ?? [];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const subQs = rawSubQs.map((sq: any) => {
       const sqContent = sq.content?.find((c: { language: string }) => c.language === language) ?? sq.content?.[0] ?? null;
-      return { ...sq, content: sqContent, sub_questions: undefined };
+      return { ...sq, content: sqContent, sub_questions: [] };
     });
     return { ...q, content: langContent, sub_questions: subQs };
   });
