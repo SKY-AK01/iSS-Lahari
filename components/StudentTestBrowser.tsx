@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
-import { Search, ChevronRight } from 'lucide-react';
+import { createClient } from '@/lib/supabase/client';
+import { Search, ChevronRight, Edit2, Check, X } from 'lucide-react';
 
 interface Batch {
   id: string;
@@ -32,8 +33,32 @@ interface Props {
 export default function StudentTestBrowser({ subjects, attemptedBatchIds }: Props) {
   const [search, setSearch] = useState('');
   const [openSubjects, setOpenSubjects] = useState<Set<string>>(new Set(subjects.map(s => s.id)));
+  const [editingSubject, setEditingSubject] = useState<{ id: string, name: string } | null>(null);
+  const [editingChapter, setEditingChapter] = useState<{ id: string, name: string } | null>(null);
   const router = useRouter();
+  const supabase = createClient();
+  const [isPending, startTransition] = useTransition();
   const attemptedSet = new Set(attemptedBatchIds);
+
+  async function handleSaveSubject(id: string, oldName: string) {
+    if (!editingSubject || editingSubject.name.trim() === '' || editingSubject.name === oldName) {
+      setEditingSubject(null);
+      return;
+    }
+    await supabase.from('subjects').update({ name: editingSubject.name }).eq('id', id);
+    setEditingSubject(null);
+    startTransition(() => router.refresh());
+  }
+
+  async function handleSaveChapter(id: string, oldName: string) {
+    if (!editingChapter || editingChapter.name.trim() === '' || editingChapter.name === oldName) {
+      setEditingChapter(null);
+      return;
+    }
+    await supabase.from('chapters').update({ name: editingChapter.name }).eq('id', id);
+    setEditingChapter(null);
+    startTransition(() => router.refresh());
+  }
 
   function toggleSubject(id: string) {
     setOpenSubjects(prev => {
@@ -90,9 +115,29 @@ export default function StudentTestBrowser({ subjects, attemptedBatchIds }: Prop
                   id={`subject-${subject.id}`}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                    <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '1.05rem' }}>
-                      {subject.name}
-                    </span>
+                    {editingSubject?.id === subject.id ? (
+                      <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }} onClick={e => e.stopPropagation()}>
+                        <input 
+                          className="input" 
+                          value={editingSubject.name} 
+                          onChange={e => setEditingSubject({ ...editingSubject, name: e.target.value })}
+                          onKeyDown={e => e.key === 'Enter' && handleSaveSubject(subject.id, subject.name)}
+                          autoFocus
+                          style={{ padding: '0.2rem 0.5rem', minHeight: 'auto', fontSize: '1.05rem', width: '200px', background: 'transparent', color: '#FFF' }}
+                        />
+                        <button className="btn btn-primary btn-sm" style={{ padding: '4px' }} onClick={() => handleSaveSubject(subject.id, subject.name)}><Check size={14}/></button>
+                        <button className="btn btn-ghost btn-sm" style={{ padding: '4px' }} onClick={() => setEditingSubject(null)}><X size={14}/></button>
+                      </div>
+                    ) : (
+                      <>
+                        <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '1.05rem' }}>
+                          {subject.name}
+                        </span>
+                        <button className="btn btn-ghost btn-sm" style={{ padding: '2px', opacity: 0.6 }} onClick={(e) => { e.stopPropagation(); setEditingSubject({ id: subject.id, name: subject.name }); }}>
+                          <Edit2 size={14}/>
+                        </button>
+                      </>
+                    )}
                     <span className="batch-badge">{totalBatches} batch{totalBatches !== 1 ? 'es' : ''}</span>
                   </div>
                   <span className={`chevron ${isOpen ? 'open' : ''}`} style={{ display: 'flex' }}><ChevronRight size={18} /></span>
@@ -111,9 +156,29 @@ export default function StudentTestBrowser({ subjects, attemptedBatchIds }: Prop
                   }}>
                     {subject.chapters.map(chapter => (
                       <div key={chapter.id}>
-                        <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--cream-dim)', marginBottom: '0.6rem', paddingLeft: '0.25rem', letterSpacing: '0.01em' }}>
-                          {chapter.name}
-                        </div>
+                        {editingChapter?.id === chapter.id ? (
+                          <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', marginBottom: '0.6rem', paddingLeft: '0.25rem' }}>
+                            <input 
+                              className="input" 
+                              value={editingChapter.name} 
+                              onChange={e => setEditingChapter({ ...editingChapter, name: e.target.value })}
+                              onKeyDown={e => e.key === 'Enter' && handleSaveChapter(chapter.id, chapter.name)}
+                              autoFocus
+                              style={{ padding: '0.2rem 0.5rem', minHeight: 'auto', fontSize: '0.85rem', width: '250px' }}
+                            />
+                            <button className="btn btn-primary btn-sm" style={{ padding: '4px' }} onClick={() => handleSaveChapter(chapter.id, chapter.name)}><Check size={14}/></button>
+                            <button className="btn btn-ghost btn-sm" style={{ padding: '4px' }} onClick={() => setEditingChapter(null)}><X size={14}/></button>
+                          </div>
+                        ) : (
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.6rem', paddingLeft: '0.25rem' }}>
+                            <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--cream-dim)', letterSpacing: '0.01em' }}>
+                              {chapter.name}
+                            </div>
+                            <button className="btn btn-ghost btn-sm" style={{ padding: '2px', opacity: 0.5, color: '#FFF' }} onClick={() => setEditingChapter({ id: chapter.id, name: chapter.name })}>
+                              <Edit2 size={13}/>
+                            </button>
+                          </div>
+                        )}
                         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem' }}>
                           {chapter.test_batches.map(batch => {
                             const done = attemptedSet.has(batch.id);

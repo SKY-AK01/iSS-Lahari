@@ -1,7 +1,9 @@
 'use client';
 
-import { useState } from 'react';
-import { FlaskConical, PenTool, RefreshCw, BookOpen, BookText, FileText, BarChart3, ClipboardList, Library, Search, ChevronRight, Map } from 'lucide-react';
+import { useState, useTransition } from 'react';
+import { createClient } from '@/lib/supabase/client';
+import { useRouter } from 'next/navigation';
+import { FlaskConical, PenTool, RefreshCw, BookOpen, BookText, FileText, BarChart3, ClipboardList, Library, Search, ChevronRight, Map, Download, Edit2, Check, X } from 'lucide-react';
 
 const PROMPT_1 = `You are an expert researcher, subject matter expert, competitive exam analyst, and curriculum designer.
 
@@ -205,12 +207,32 @@ interface Props {
 }
 
 export default function MentorDashboardClient({ subjects, recentAttempts, studyMaterials }: Props) {
-  const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
-  const [openSubjects, setOpenSubjects] = useState<Set<string>>(new Set());
-  const [search, setSearch] = useState('');
-  const [prompts, setPrompts] = useState(INITIAL_PROMPTS);
-  const [editingIdx, setEditingIdx] = useState<number | null>(null);
+  const router = useRouter();
+  const supabase = createClient();
+  const [isPending, startTransition] = useTransition();
+  const [editingSubject, setEditingSubject] = useState<{ id: string, name: string } | null>(null);
+  const [editingChapter, setEditingChapter] = useState<{ id: string, name: string } | null>(null);
   const [topicName, setTopicName] = useState('');
+
+  async function handleSaveSubject(id: string, oldName: string) {
+    if (!editingSubject || editingSubject.name.trim() === '' || editingSubject.name === oldName) {
+      setEditingSubject(null);
+      return;
+    }
+    await supabase.from('subjects').update({ name: editingSubject.name }).eq('id', id);
+    setEditingSubject(null);
+    startTransition(() => router.refresh());
+  }
+
+  async function handleSaveChapter(id: string, oldName: string) {
+    if (!editingChapter || editingChapter.name.trim() === '' || editingChapter.name === oldName) {
+      setEditingChapter(null);
+      return;
+    }
+    await supabase.from('chapters').update({ name: editingChapter.name }).eq('id', id);
+    setEditingChapter(null);
+    startTransition(() => router.refresh());
+  }
 
   function copyPrompt(text: string, idx: number) {
     const finalContent = text.replace(/<TOPIC NAME>/g, topicName || '<TOPIC NAME>');
@@ -416,9 +438,29 @@ export default function MentorDashboardClient({ subjects, recentAttempts, studyM
                     id={`subject-${subject.id}`}
                   >
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                      <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '1rem', color: 'var(--cream)' }}>
-                        {subject.name}
-                      </span>
+                      {editingSubject?.id === subject.id ? (
+                        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }} onClick={e => e.stopPropagation()}>
+                          <input 
+                            className="input" 
+                            value={editingSubject.name} 
+                            onChange={e => setEditingSubject({ ...editingSubject, name: e.target.value })}
+                            onKeyDown={e => e.key === 'Enter' && handleSaveSubject(subject.id, subject.name)}
+                            autoFocus
+                            style={{ padding: '0.2rem 0.5rem', minHeight: 'auto', fontSize: '1rem', width: '200px' }}
+                          />
+                          <button className="btn btn-primary btn-sm" style={{ padding: '4px' }} onClick={() => handleSaveSubject(subject.id, subject.name)}><Check size={14}/></button>
+                          <button className="btn btn-ghost btn-sm" style={{ padding: '4px', background: '#FFF' }} onClick={() => setEditingSubject(null)}><X size={14}/></button>
+                        </div>
+                      ) : (
+                        <>
+                          <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '1rem', color: 'var(--cream)' }}>
+                            {subject.name}
+                          </span>
+                          <button className="btn btn-ghost btn-sm" style={{ padding: '2px', opacity: 0.6, color: '#FFF' }} onClick={(e) => { e.stopPropagation(); setEditingSubject({ id: subject.id, name: subject.name }); }}>
+                            <Edit2 size={14}/>
+                          </button>
+                        </>
+                      )}
                       <span className="batch-badge">{subject.chapters.length} chapter{subject.chapters.length !== 1 ? 's' : ''}</span>
                       <span style={{ fontSize: '0.75rem', color: 'var(--cream-dim)', opacity: 0.5 }}>{totalQ} questions</span>
                     </div>
@@ -436,9 +478,29 @@ export default function MentorDashboardClient({ subjects, recentAttempts, studyM
                     }}>
                       {subject.chapters.map((chapter) => (
                         <div key={chapter.id}>
-                          <div style={{ fontSize: '0.88rem', fontWeight: 800, fontFamily: 'var(--font-heading)', textTransform: 'uppercase', color: '#000', marginBottom: '0.5rem', paddingLeft: '0.5rem', borderLeft: '4px solid #000' }}>
-                            {chapter.name}
-                          </div>
+                          {editingChapter?.id === chapter.id ? (
+                            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', marginBottom: '0.5rem', paddingLeft: '0.5rem', borderLeft: '4px solid #000' }}>
+                              <input 
+                                className="input" 
+                                value={editingChapter.name} 
+                                onChange={e => setEditingChapter({ ...editingChapter, name: e.target.value })}
+                                onKeyDown={e => e.key === 'Enter' && handleSaveChapter(chapter.id, chapter.name)}
+                                autoFocus
+                                style={{ padding: '0.2rem 0.5rem', minHeight: 'auto', fontSize: '0.88rem', width: '250px' }}
+                              />
+                              <button className="btn btn-primary btn-sm" style={{ padding: '4px' }} onClick={() => handleSaveChapter(chapter.id, chapter.name)}><Check size={14}/></button>
+                              <button className="btn btn-ghost btn-sm" style={{ padding: '4px' }} onClick={() => setEditingChapter(null)}><X size={14}/></button>
+                            </div>
+                          ) : (
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem', paddingLeft: '0.5rem', borderLeft: '4px solid #000' }}>
+                              <div style={{ fontSize: '0.88rem', fontWeight: 800, fontFamily: 'var(--font-heading)', textTransform: 'uppercase', color: '#000' }}>
+                                {chapter.name}
+                              </div>
+                              <button className="btn btn-ghost btn-sm" style={{ padding: '2px', opacity: 0.5, color: '#000' }} onClick={() => setEditingChapter({ id: chapter.id, name: chapter.name })}>
+                                <Edit2 size={13}/>
+                              </button>
+                            </div>
+                          )}
                           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
                             {chapter.test_batches.map((batch) => {
                               const mix = batch.difficulty_mix as Record<string, number> | null;
@@ -448,7 +510,12 @@ export default function MentorDashboardClient({ subjects, recentAttempts, studyM
                                     <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.82rem', color: '#000' }}>
                                       Batch {batch.batch_number}
                                     </span>
-                                    <span className="batch-badge">{batch.question_count} Qs</span>
+                                    <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                                      <span className="batch-badge">{batch.question_count} Qs</span>
+                                      <a href={`/api/tests/${batch.id}/download`} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--ink)' }} title="Download JSON">
+                                        <Download size={14} />
+                                      </a>
+                                    </div>
                                   </div>
                                   <div className="admit-card-body">
                                     {mix && (

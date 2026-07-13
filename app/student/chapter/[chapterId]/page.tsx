@@ -9,26 +9,27 @@ export default async function ChapterRoute({ params }: PageProps) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  const { data: profile } = await supabase
-    .from('profiles').select('role').eq('id', user!.id).single();
-  const isMentor = profile?.role === 'mentor';
+  // Run all independent queries in parallel
+  const [
+    { data: profile },
+    { data: chapter },
+    { data: materialsRaw },
+    { data: batchesRaw },
+  ] = await Promise.all([
+    supabase.from('profiles').select('role').eq('id', user!.id).single(),
+    supabase.from('chapters')
+      .select(`id, name, subject_id, subject:subjects ( id, name )`)
+      .eq('id', chapterId).single(),
+    supabase.from('study_materials').select('id, title, material_type')
+      .eq('chapter_id', chapterId).order('created_at', { ascending: false }),
+    supabase.from('test_batches').select('id, batch_number, question_count, difficulty_mix')
+      .eq('chapter_id', chapterId).order('batch_number'),
+  ]);
 
-  const { data: chapter } = await supabase
-    .from('chapters')
-    .select(`id, name, subject_id, subject:subjects ( id, name )`)
-    .eq('id', chapterId).single();
   if (!chapter) notFound();
 
-  const { data: materialsRaw } = await supabase
-    .from('study_materials').select('id, title, material_type')
-    .eq('chapter_id', chapterId).order('created_at', { ascending: false });
-
+  const isMentor = profile?.role === 'mentor';
   const materials = (materialsRaw ?? []).map(m => ({ id: m.id, title: m.title, material_type: m.material_type }));
-
-  const { data: batchesRaw } = await supabase
-    .from('test_batches').select('id, batch_number, question_count, difficulty_mix')
-    .eq('chapter_id', chapterId).order('batch_number');
-
   const batchIds = (batchesRaw ?? []).map(b => b.id);
   const attemptsByBatch: Record<string, { batch_id: string; percentage: number | null; mode: string; submitted_at: string }[]> = {};
 

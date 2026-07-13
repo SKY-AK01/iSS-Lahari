@@ -18,8 +18,7 @@ export default async function StudentHistoryPage() {
       )
     `)
     .eq('student_id', user.id)
-    .not('submitted_at', 'is', null)
-    .order('submitted_at', { ascending: false });
+    .order('started_at', { ascending: false });
 
   // Supabase returns joined relations as arrays — flatten to objects
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

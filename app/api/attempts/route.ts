@@ -8,18 +8,31 @@ export async function POST(req: NextRequest) {
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const body = await req.json();
-  const { batchId, mode, examDurationMinutes, markingCorrect, markingWrong, markingPartial } = body;
+  const {
+    batchId,
+    mode,
+    examDurationMinutes,
+    markingCorrect,
+    markingWrong,
+    markingPartial,
+    questionCount, // passed from client to avoid an extra DB round-trip
+  } = body;
 
   try {
-    const { data: batch } = await supabase
-      .from('test_batches')
-      .select('question_count')
-      .eq('id', batchId)
-      .single();
+    // If questionCount not provided by client, fetch it (fallback)
+    let resolvedCount = questionCount;
+    if (!resolvedCount) {
+      const { data: batch } = await supabase
+        .from('test_batches')
+        .select('question_count')
+        .eq('id', batchId)
+        .single();
+      if (!batch) return NextResponse.json({ error: 'Batch not found' }, { status: 404 });
+      resolvedCount = batch.question_count;
+    }
 
-    if (!batch) return NextResponse.json({ error: 'Batch not found' }, { status: 404 });
-
-    const maxScore = batch.question_count * (markingCorrect || 2);
+    const mc = markingCorrect || 2;
+    const maxScore = resolvedCount * mc;
 
     const { data: attempt, error } = await supabase
       .from('attempts')
@@ -28,7 +41,7 @@ export async function POST(req: NextRequest) {
         batch_id: batchId,
         mode,
         exam_duration_minutes: examDurationMinutes || null,
-        marking_correct: markingCorrect || 2,
+        marking_correct: mc,
         marking_wrong: markingWrong || 0,
         marking_partial: markingPartial || 0,
         max_score: maxScore,

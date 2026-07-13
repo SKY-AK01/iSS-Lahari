@@ -15,8 +15,7 @@ export default async function MentorResultsPage() {
         chapter:chapters(id, name, subject:subjects(id, name))
       )
     `)
-    .not('submitted_at', 'is', null)
-    .order('submitted_at', { ascending: false });
+    .order('started_at', { ascending: false });
 
   return <MentorResultsClient attempts={attempts ?? []} />;
 }

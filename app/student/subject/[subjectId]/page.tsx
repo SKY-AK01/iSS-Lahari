@@ -9,19 +9,22 @@ export default async function SubjectRoute({ params }: PageProps) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  const { data: profile } = await supabase
-    .from('profiles').select('role').eq('id', user!.id).single();
-  const isMentor = profile?.role === 'mentor';
+  // Run all independent queries in parallel
+  const [
+    { data: profile },
+    { data: subject },
+    { data: chaptersRaw },
+  ] = await Promise.all([
+    supabase.from('profiles').select('role').eq('id', user!.id).single(),
+    supabase.from('subjects').select('id, name').eq('id', subjectId).single(),
+    supabase.from('chapters')
+      .select(`id, name, test_batches ( id ), study_materials ( id )`)
+      .eq('subject_id', subjectId).order('name'),
+  ]);
 
-  const { data: subject } = await supabase
-    .from('subjects').select('id, name').eq('id', subjectId).single();
   if (!subject) notFound();
 
-  const { data: chaptersRaw } = await supabase
-    .from('chapters')
-    .select(`id, name, test_batches ( id ), study_materials ( id )`)
-    .eq('subject_id', subjectId).order('name');
-
+  const isMentor = profile?.role === 'mentor';
   const chapterIds = (chaptersRaw ?? []).map(c => c.id);
   const attemptCountByChapter: Record<string, number> = {};
 

@@ -58,52 +58,62 @@ export default function StudentHistoryClient({ attempts }: Props) {
     grouped[subj][chap].push(a);
   }
 
-  const AttemptRow = ({ a }: { a: Attempt }) => (
-    <div
-      onClick={() => router.push(`/student/results/${a.id}`)}
-      style={{
-        display: 'flex', alignItems: 'center', gap: '0.75rem',
-        padding: '0.65rem 0.9rem',
-        border: 'var(--border-thin)',
-        background: 'var(--bg-3)',
-        cursor: 'pointer',
-        flexWrap: 'wrap',
-        transition: 'background 100ms',
-      }}
-      onMouseEnter={e => (e.currentTarget.style.background = 'var(--sage)')}
-      onMouseLeave={e => (e.currentTarget.style.background = 'var(--bg-3)')}
-    >
-      <span style={{
-        fontSize: '0.7rem', fontFamily: 'var(--font-heading)', fontWeight: 900,
-        padding: '2px 8px',
-        background: a.mode === 'exam' ? 'var(--ruby)' : '#000',
-        color: '#FFF',
-        textTransform: 'uppercase',
-        flexShrink: 0,
-      }}>
-        {a.mode}
-      </span>
-      <span className="batch-badge" style={{ flexShrink: 0 }}>Batch {a.batch?.batch_number}</span>
-      <span style={{ fontSize: '0.75rem', color: 'var(--cream-dim)', opacity: 0.55, flex: 1, minWidth: '100px' }}>
-        {a.submitted_at ? formatDate(a.submitted_at) : '—'}
-      </span>
-      {a.percentage != null ? (
-        <>
-          <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 800, fontSize: '0.95rem', color: scoreColor(a.percentage), flexShrink: 0 }}>
-            {a.percentage.toFixed(1)}%
+  const AttemptRow = ({ a }: { a: Attempt }) => {
+    const isSubmitted = !!a.submitted_at;
+    return (
+      <div
+        onClick={() => isSubmitted && router.push(`/student/results/${a.id}`)}
+        style={{
+          display: 'flex', alignItems: 'center', gap: '0.75rem',
+          padding: '0.65rem 0.9rem',
+          border: isSubmitted ? 'var(--border-thin)' : '2px dashed #CCC',
+          background: 'var(--bg-3)',
+          cursor: isSubmitted ? 'pointer' : 'default',
+          flexWrap: 'wrap',
+          transition: 'background 100ms',
+          opacity: isSubmitted ? 1 : 0.7,
+        }}
+        onMouseEnter={e => isSubmitted && (e.currentTarget.style.background = 'var(--sage)')}
+        onMouseLeave={e => (e.currentTarget.style.background = 'var(--bg-3)')}
+      >
+        <span style={{
+          fontSize: '0.7rem', fontFamily: 'var(--font-heading)', fontWeight: 900,
+          padding: '2px 8px',
+          background: a.mode === 'exam' ? 'var(--ruby)' : '#000',
+          color: '#FFF',
+          textTransform: 'uppercase',
+          flexShrink: 0,
+        }}>
+          {a.mode}
+        </span>
+        <span className="batch-badge" style={{ flexShrink: 0 }}>Batch {a.batch?.batch_number}</span>
+        <span style={{ fontSize: '0.75rem', color: 'var(--cream-dim)', opacity: 0.55, flex: 1, minWidth: '100px' }}>
+          {isSubmitted
+            ? formatDate(a.submitted_at!)
+            : a.started_at ? `Started ${formatDate(a.started_at)}` : '—'}
+        </span>
+        {!isSubmitted ? (
+          <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: '0.68rem', textTransform: 'uppercase', padding: '2px 8px', background: '#FF6B00', color: '#FFF', flexShrink: 0 }}>
+            In Progress
           </span>
-          {a.score != null && a.max_score != null && (
-            <span style={{ fontSize: '0.7rem', fontFamily: 'var(--font-mono)', opacity: 0.45, flexShrink: 0 }}>
-              {a.score}/{a.max_score}
+        ) : a.percentage != null ? (
+          <>
+            <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 800, fontSize: '0.95rem', color: scoreColor(a.percentage), flexShrink: 0 }}>
+              {a.percentage.toFixed(1)}%
             </span>
-          )}
-        </>
-      ) : (
-        <span style={{ fontSize: '0.75rem', opacity: 0.4, fontFamily: 'var(--font-mono)' }}>—</span>
-      )}
-      <span style={{ fontSize: '0.78rem', color: 'var(--ruby)', flexShrink: 0 }}>→</span>
-    </div>
-  );
+            {a.score != null && a.max_score != null && (
+              <span style={{ fontSize: '0.7rem', fontFamily: 'var(--font-mono)', opacity: 0.45, flexShrink: 0 }}>
+                {a.score}/{a.max_score}
+              </span>
+            )}
+          </>
+        ) : (
+          <span style={{ fontSize: '0.75rem', opacity: 0.4, fontFamily: 'var(--font-mono)' }}>—</span>
+        )}
+        {isSubmitted && <span style={{ fontSize: '0.78rem', color: 'var(--ruby)', flexShrink: 0 }}>→</span>}
+      </div>
+    );
+  };
 
   return (
     <div className="container" style={{ paddingTop: '2rem', paddingBottom: '4rem' }}>
@@ -112,7 +122,7 @@ export default function StudentHistoryClient({ attempts }: Props) {
       <div className="animate-up" style={{ marginBottom: '1.5rem' }}>
         <h1>History</h1>
         <p style={{ marginTop: '0.4rem' }}>
-          {attempts.length} attempt{attempts.length !== 1 ? 's' : ''} saved
+          {attempts.length} attempt{attempts.length !== 1 ? 's' : ''} · {attempts.filter(a => !a.submitted_at).length} in progress
         </p>
       </div>
 
@@ -186,11 +196,12 @@ export default function StudentHistoryClient({ attempts }: Props) {
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                   {Object.entries(chapters).map(([chapter, chAttempts]) => {
-                    const pcts = chAttempts.filter(a => a.percentage != null).map(a => a.percentage!);
+                    const pcts = chAttempts.filter(a => a.percentage != null && a.submitted_at != null).map(a => a.percentage!);
                     const avg = pcts.length ? pcts.reduce((s, v) => s + v, 0) / pcts.length : null;
                     const best = pcts.length ? Math.max(...pcts) : null;
                     const examCount = chAttempts.filter(a => a.mode === 'exam').length;
                     const practiceCount = chAttempts.filter(a => a.mode === 'practice').length;
+                    const inProgressCount = chAttempts.filter(a => !a.submitted_at).length;
 
                     return (
                       <div key={chapter} className="card" style={{ padding: '1.1rem', overflow: 'hidden' }}>
@@ -202,6 +213,7 @@ export default function StudentHistoryClient({ attempts }: Props) {
                               {practiceCount > 0 && `${practiceCount} practice`}
                               {practiceCount > 0 && examCount > 0 && ' · '}
                               {examCount > 0 && `${examCount} exam`}
+                              {inProgressCount > 0 && ` · ${inProgressCount} in progress`}
                             </div>
                           </div>
                           <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>

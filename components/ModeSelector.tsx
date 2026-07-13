@@ -57,6 +57,7 @@ export default function ModeSelector({ batch, previousAttempts }: Props) {
         batchId: batch.id,
         mode: 'practice',
         markingCorrect: 1, markingWrong: 0, markingPartial: 0,
+        questionCount: batch.question_count, // skip extra DB lookup
       }),
     });
     const data = await res.json();
@@ -73,6 +74,7 @@ export default function ModeSelector({ batch, previousAttempts }: Props) {
         batchId: batch.id,
         mode: 'practice',
         markingCorrect: 1, markingWrong: 0, markingPartial: 0,
+        questionCount: batch.question_count,
       }),
     });
     const data = await res.json();
@@ -90,6 +92,7 @@ export default function ModeSelector({ batch, previousAttempts }: Props) {
         mode: 'exam',
         examDurationMinutes: duration,
         markingCorrect, markingWrong, markingPartial,
+        questionCount: batch.question_count, // skip extra DB lookup
       }),
     });
     const data = await res.json();

@@ -5,34 +5,42 @@ import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import { ClipboardCheck, AlertTriangle } from 'lucide-react';
 
-export default function LoginPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+export default function UpdatePasswordPage() {
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const supabase = createClient();
 
-  async function handleLogin(e: React.FormEvent) {
+  async function handleUpdate(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
     setError('');
 
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-
-    if (error) {
-      let msg = error.message;
-      if (!msg || msg === '{}') msg = "Invalid email or password.";
-      setError(msg);
+    if (newPassword !== confirmPassword) {
+      setError('Passwords do not match.');
+      setLoading(false);
+      return;
+    }
+    
+    if (newPassword === 'Lahari@2026') {
+      setError('Please choose a new secure password.');
       setLoading(false);
       return;
     }
 
-    if (password === 'Lahari@2026') {
-      router.push('/update-password');
+    const { error } = await supabase.auth.updateUser({
+      password: newPassword
+    });
+
+    if (error) {
+      setError(error.message);
+      setLoading(false);
       return;
     }
 
+    // Success! Redirect to home
     router.push('/');
     router.refresh();
   }
@@ -44,14 +52,14 @@ export default function LoginPage() {
       gridTemplateColumns: '1fr 1fr',
       background: 'var(--bg)',
     }}>
-      {/* Left panel - branding */}
+      {/* Left panel */}
       <div style={{
         borderRight: '3px solid #000',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
         padding: '3rem',
-        background: 'var(--clay)', /* Pink panel */
+        background: 'var(--clay)',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           <ClipboardCheck size={32} strokeWidth={2.5} color="#000" />
@@ -60,25 +68,25 @@ export default function LoginPage() {
           </span>
         </div>
         <div>
-          <h1 style={{ fontSize: 'clamp(3rem, 6vw, 5rem)', lineHeight: 0.95, color: '#000', marginBottom: '1.5rem' }}>
-            EXAM<br/>PREP<br/>STUDIO.
+          <h1 style={{ fontSize: 'clamp(3rem, 6vw, 4.5rem)', lineHeight: 0.95, color: '#000', marginBottom: '1.5rem', textTransform: 'uppercase' }}>
+            MIGRATION<br/>COMPLETE.
           </h1>
           <p style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '0.95rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#000', opacity: 0.7 }}>
-            IIS & SSC CGL Platform
+            Please set a new password
           </p>
         </div>
         <div style={{ borderTop: '3px solid #000', paddingTop: '1rem', fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 700, color: '#000', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-          BUILT FOR SERIOUS STUDENTS.
+          SECURE YOUR ACCOUNT.
         </div>
       </div>
 
-      {/* Right panel - form */}
+      {/* Right panel */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '3rem' }}>
         <div style={{ width: '100%', maxWidth: '400px' }}>
           <div style={{ marginBottom: '2.5rem' }}>
-            <h2 style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>SIGN IN</h2>
+            <h2 style={{ fontSize: '2.2rem', marginBottom: '0.5rem' }}>UPDATE PASSWORD</h2>
             <p style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: '0.85rem', color: 'var(--cream-dim)' }}>
-              Access your workspace
+              Choose a strong, unique password
             </p>
           </div>
 
@@ -88,57 +96,42 @@ export default function LoginPage() {
             </div>
           )}
 
-          <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+          <form onSubmit={handleUpdate} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
             <div className="form-group">
-              <label className="form-label">Email</label>
+              <label className="form-label">New Password</label>
               <input
-                id="email"
-                type="email"
+                type="password"
                 className="input"
-                placeholder="you@example.com"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
+                placeholder="••••••••"
+                value={newPassword}
+                onChange={e => setNewPassword(e.target.value)}
                 required
-                autoComplete="email"
+                minLength={6}
               />
             </div>
 
             <div className="form-group">
-              <label className="form-label">Password</label>
+              <label className="form-label">Confirm Password</label>
               <input
-                id="password"
                 type="password"
                 className="input"
                 placeholder="••••••••"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
+                value={confirmPassword}
+                onChange={e => setConfirmPassword(e.target.value)}
                 required
-                autoComplete="current-password"
+                minLength={6}
               />
             </div>
 
             <button
-              id="login-submit"
               type="submit"
               className="btn btn-primary w-full"
               disabled={loading}
               style={{ justifyContent: 'center', marginTop: '0.5rem', padding: '1.25rem' }}
             >
-              {loading ? <>Signing in…</> : 'Sign in →'}
+              {loading ? <>Updating…</> : 'Update & Continue →'}
             </button>
           </form>
-
-          <div className="divider" style={{ margin: '2rem 0' }} />
-
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <p style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, textTransform: 'uppercase', fontSize: '0.8rem', color: 'var(--cream-dim)' }}>New here?</p>
-            <a href="/signup" className="btn btn-ghost btn-sm">
-              Create account →
-            </a>
-          </div>
-          <p style={{ fontSize: '0.75rem', color: 'var(--cream-dim)', marginTop: '1.5rem', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-            Ask your mentor to assign your role after sign-up.
-          </p>
         </div>
       </div>
 

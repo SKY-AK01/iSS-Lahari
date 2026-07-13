@@ -1,8 +1,31 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import { Map, FileText, BookOpen, Plus, Trash2, X, Zap, Lightbulb } from 'lucide-react';
+import { Map, FileText, BookOpen, Plus, Trash2, X, Zap, Lightbulb, ScrollText } from 'lucide-react';
+
+const QUOTES = [
+  { text: 'Health bhi important hai... UPSC bhaag nahi rahi, par tumhari sleep zaroor bhaag jayegi. 😭', emoji: '😭' },
+  { text: 'Rukna nahi hai... bas chai refill karke wapas baithna hai. ☕📚', emoji: '☕' },
+  { text: 'Aaj ka struggle, kal ka "IAS Ma\'am" wala introduction. 😎', emoji: '😎' },
+  { text: 'Prelims bole: "Aao." Mains bole: "Himmat hai?" Interview bole: "Confidence dikhao." 💀', emoji: '💀' },
+  { text: 'UPSC ko impress karna hai, Instagram ko nahi. 📵', emoji: '📵' },
+  { text: 'Ek aur page... phir ek aur... phir dekha toh syllabus khatam. 😌', emoji: '😌' },
+  { text: 'Thakna allowed hai... Give up karna allowed nahi. 💪', emoji: '💪' },
+  { text: 'Rukna nahi haiiiii... bas washroom break aur Maggi break valid hai. 😂', emoji: '😂' },
+  { text: 'Future collector ho... abhi bas current affairs collect karo. 📰', emoji: '📰' },
+  { text: 'Kal ka Result: "Selected." Aaj ka Status: "Still studying." 📖', emoji: '📖' },
+  { text: 'UPSC bolegi: "Kitna padhoge?" Tum bolo: "Selection tak." 😤', emoji: '😤' },
+  { text: 'Padhte raho... ek din log bolenge "Sir/Ma\'am" aur tum sochoge "Worth it." ❤️', emoji: '❤️' },
+  { text: 'Jab motivation khatam ho jaye, syllabus dekh lo... darr hi kaafi hai. 😂', emoji: '😂' },
+  { text: 'Phone ko airplane mode, dimaag ko warrior mode. ✈️⚔️', emoji: '✈️' },
+  { text: 'Rukna nahi hai... kyunki LBSNAA ka address Google Maps se nahi, mehnat se milta hai. 😉', emoji: '😉' },
+  { text: 'Ek din ye NCERT aur Laxmikant tumhari love story ban jayegi. 😂', emoji: '😂' },
+  { text: '"Bas 10 minute scroll karta hoon" — UPSC aspirant ka sabse bada jhooth. 🤡', emoji: '🤡' },
+  { text: 'Aaj ki neend sacrifice, kal ki nameplate "IAS". ✨', emoji: '✨' },
+  { text: 'Syllabus bada hai, lekin tera attitude usse bhi bada hona chahiye. 🔥', emoji: '🔥' },
+  { text: 'Rukna nahi haiiiii... IAS ki kursi kisi sleeper coach mein reserve nahi hoti. 😎', emoji: '😎' },
+];
 
 interface SubjectCard {
   id: string; name: string;
@@ -34,6 +57,9 @@ export default function StudentDashboard({ name, subjects: initialSubjects, stat
   const [newSubjectName, setNewSubjectName] = useState('');
   const [adding, setAdding] = useState(false);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+
+  // Pick a random quote once per mount (changes on every page load/refresh)
+  const quote = useMemo(() => QUOTES[Math.floor(Math.random() * QUOTES.length)], []);
 
   const totalChapters = subjects.reduce((n, s) => n + s.chapter_count, 0);
 
@@ -68,8 +94,25 @@ export default function StudentDashboard({ name, subjects: initialSubjects, stat
 
       {/* Greeting */}
       <div className="animate-up" style={{ marginBottom: '2rem' }}>
-        <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: 'clamp(1.6rem, 4vw, 2.4rem)', textTransform: 'uppercase', letterSpacing: '-0.03em', lineHeight: 1.1 }}>
+        <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: 'clamp(1.6rem, 4vw, 2.4rem)', textTransform: 'uppercase', letterSpacing: '-0.03em', lineHeight: 1.1, marginBottom: '0.85rem' }}>
           Welcome back,<br /><span style={{ color: 'var(--ruby)' }}>{name}</span>
+        </div>
+        {/* Daily motivation quote */}
+        <div style={{
+          padding: '0.85rem 1.1rem',
+          border: 'var(--border-thick)',
+          background: 'var(--bg-3)',
+          boxShadow: 'var(--shadow-btn)',
+          fontSize: '0.88rem',
+          fontFamily: 'var(--font-body)',
+          fontWeight: 500,
+          textTransform: 'none',
+          letterSpacing: 0,
+          lineHeight: 1.55,
+          color: 'var(--ink)',
+          borderLeft: '4px solid var(--ruby)',
+        }}>
+          {quote.text}
         </div>
       </div>
 
@@ -86,6 +129,36 @@ export default function StudentDashboard({ name, subjects: initialSubjects, stat
             <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--cream-dim)' }}>{stat.label}</div>
           </div>
         ))}
+      </div>
+
+      {/* PYQ Papers Banner */}
+      <div className="animate-up" style={{ marginBottom: '1rem' }}>
+        <div
+          onClick={() => router.push('/student/pyq')}
+          style={{
+            border: 'var(--border-thick)',
+            boxShadow: 'var(--shadow-hard)',
+            background: '#000',
+            padding: '1.25rem 1.5rem',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '1rem',
+            transition: 'all 100ms',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.transform = 'translate(-2px,-2px)'; e.currentTarget.style.boxShadow = '8px 8px 0 0 var(--ruby)'; }}
+          onMouseLeave={e => { e.currentTarget.style.transform = 'translate(0,0)'; e.currentTarget.style.boxShadow = 'var(--shadow-hard)'; }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <ScrollText size={26} color="#FFF" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+            <div>
+              <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: '1rem', textTransform: 'uppercase', letterSpacing: '-0.02em', color: '#FFF' }}>UPSC PYQ Papers</div>
+              <div style={{ fontFamily: 'var(--font-body)', fontWeight: 500, fontSize: '0.82rem', color: 'rgba(255,255,255,0.6)', textTransform: 'none', letterSpacing: 0, marginTop: '0.15rem' }}>2018–2025 · Prelims + Mains · Browse questions · Download PDFs</div>
+            </div>
+          </div>
+          <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: '0.9rem', color: 'var(--ruby)' }}>→</span>
+        </div>
       </div>
 
       {/* Math Speed Drill Banner */}

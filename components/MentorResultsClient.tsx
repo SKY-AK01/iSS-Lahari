@@ -31,7 +31,9 @@ export default function MentorResultsClient({ attempts }: Props) {
   }
   for (const subj of Object.keys(grouped)) {
     for (const chap of Object.keys(grouped[subj])) {
-      const pcts = grouped[subj][chap].attempts.filter((a: { percentage: number | null }) => a.percentage != null).map((a: { percentage: number }) => a.percentage);
+      const pcts = grouped[subj][chap].attempts
+        .filter((a: { percentage: number | null; submitted_at: string | null }) => a.percentage != null && a.submitted_at != null)
+        .map((a: { percentage: number }) => a.percentage);
       grouped[subj][chap].avg = pcts.length ? pcts.reduce((s: number, v: number) => s + v, 0) / pcts.length : 0;
     }
   }
@@ -40,7 +42,9 @@ export default function MentorResultsClient({ attempts }: Props) {
     <div className="container" style={{ paddingTop: '2rem', paddingBottom: '4rem' }}>
       <div className="animate-up" style={{ marginBottom: '2rem' }}>
         <h1>All Results</h1>
-        <p style={{ marginTop: '0.4rem' }}>{attempts.length} total attempt{attempts.length !== 1 ? 's' : ''}</p>
+        <p style={{ marginTop: '0.4rem' }}>
+          {attempts.length} total attempt{attempts.length !== 1 ? 's' : ''} · {attempts.filter((a: { submitted_at: string | null }) => !a.submitted_at).length} in progress
+        </p>
       </div>
 
       <div className="search-box animate-up" style={{ marginBottom: '1.5rem', maxWidth: '340px' }}>
@@ -89,45 +93,58 @@ export default function MentorResultsClient({ attempts }: Props) {
                     score: number | null;
                     max_score: number | null;
                     submitted_at: string | null;
-                  }) => (
-                    <a
-                      key={a.id}
-                      href={`/student/results/${a.id}`}
-                      style={{ textDecoration: 'none' }}
-                    >
-                      <div style={{
-                        display: 'flex', alignItems: 'center', gap: '1rem',
-                        padding: '0.65rem 0.9rem', background: 'var(--bg-3)',
-                        borderRadius: 'var(--radius-sm)', flexWrap: 'wrap',
-                        transition: 'background 200ms', cursor: 'pointer',
-                      }}
-                        onMouseEnter={e => (e.currentTarget.style.background = 'var(--bg-4)')}
-                        onMouseLeave={e => (e.currentTarget.style.background = 'var(--bg-3)')}
+                    started_at: string | null;
+                  }) => {
+                    const isSubmitted = !!a.submitted_at;
+                    return (
+                      <a
+                        key={a.id}
+                        href={isSubmitted ? `/student/results/${a.id}` : '#'}
+                        style={{ textDecoration: 'none', cursor: isSubmitted ? 'pointer' : 'default' }}
                       >
-                        <span style={{ fontWeight: 600, fontSize: '0.88rem', flex: 1 }}>{a.student?.name}</span>
-                        <span className="batch-badge">Batch {a.batch?.batch_number}</span>
-                        <span style={{
-                          padding: '2px 8px', borderRadius: '999px', fontSize: '0.72rem', fontFamily: 'var(--font-mono)',
-                          background: a.mode === 'exam' ? 'var(--ruby-subtle)' : 'var(--sage-bg)',
-                          color: a.mode === 'exam' ? 'var(--ruby)' : 'var(--sage)',
-                          border: `1px solid ${a.mode === 'exam' ? 'var(--ruby-glow)' : 'rgba(143,175,138,0.3)'}`,
-                        }}>
-                          {a.mode}
-                        </span>
-                        {a.percentage != null && (
+                        <div style={{
+                          display: 'flex', alignItems: 'center', gap: '1rem',
+                          padding: '0.65rem 0.9rem', background: 'var(--bg-3)',
+                          borderRadius: 'var(--radius-sm)', flexWrap: 'wrap',
+                          transition: 'background 200ms',
+                          cursor: isSubmitted ? 'pointer' : 'default',
+                          opacity: isSubmitted ? 1 : 0.75,
+                          border: isSubmitted ? 'none' : '2px dashed #CCC',
+                        }}
+                          onMouseEnter={e => isSubmitted && (e.currentTarget.style.background = 'var(--bg-4)')}
+                          onMouseLeave={e => (e.currentTarget.style.background = 'var(--bg-3)')}
+                        >
+                          <span style={{ fontWeight: 600, fontSize: '0.88rem', flex: 1 }}>{a.student?.name}</span>
+                          <span className="batch-badge">Batch {a.batch?.batch_number}</span>
                           <span style={{
-                            fontFamily: 'var(--font-mono)', fontWeight: 700, fontSize: '0.9rem', minWidth: '52px', textAlign: 'right',
-                            color: a.percentage >= 60 ? 'var(--sage)' : a.percentage >= 40 ? 'var(--partial)' : 'var(--clay)',
+                            padding: '2px 8px', borderRadius: '999px', fontSize: '0.72rem', fontFamily: 'var(--font-mono)',
+                            background: a.mode === 'exam' ? 'var(--ruby-subtle)' : 'var(--sage-bg)',
+                            color: a.mode === 'exam' ? 'var(--ruby)' : 'var(--sage)',
+                            border: `1px solid ${a.mode === 'exam' ? 'var(--ruby-glow)' : 'rgba(143,175,138,0.3)'}`,
                           }}>
-                            {a.percentage.toFixed(1)}%
+                            {a.mode}
                           </span>
-                        )}
-                        <span style={{ fontSize: '0.75rem', color: 'var(--cream-dim)', opacity: 0.4 }}>
-                          {a.submitted_at ? new Date(a.submitted_at).toLocaleDateString('en-IN') : ''}
-                        </span>
-                      </div>
-                    </a>
-                  ))}
+                          {!isSubmitted ? (
+                            <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: '0.7rem', textTransform: 'uppercase', padding: '2px 8px', background: '#FF6B00', color: '#FFF', letterSpacing: '0.04em' }}>
+                              In Progress
+                            </span>
+                          ) : a.percentage != null ? (
+                            <span style={{
+                              fontFamily: 'var(--font-mono)', fontWeight: 700, fontSize: '0.9rem', minWidth: '52px', textAlign: 'right',
+                              color: a.percentage >= 60 ? 'var(--sage)' : a.percentage >= 40 ? 'var(--partial)' : 'var(--clay)',
+                            }}>
+                              {a.percentage.toFixed(1)}%
+                            </span>
+                          ) : null}
+                          <span style={{ fontSize: '0.75rem', color: 'var(--cream-dim)', opacity: 0.4 }}>
+                            {isSubmitted
+                              ? new Date(a.submitted_at!).toLocaleDateString('en-IN')
+                              : a.started_at ? `Started ${new Date(a.started_at).toLocaleDateString('en-IN')}` : ''}
+                          </span>
+                        </div>
+                      </a>
+                    );
+                  })}
                 </div>
               </div>
             ))}
