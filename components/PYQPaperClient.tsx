@@ -204,7 +204,7 @@ function QuestionCard({
           <div style={{ fontSize: '0.88rem', fontWeight: 600, color: expanded ? '#FFF' : 'var(--ink)', lineHeight: 1.4, textTransform: 'none', letterSpacing: 0, fontFamily: 'var(--font-body)' }}>
             {hasSubQ
               ? (c?.question_text ?? `${question.sub_questions.length} sub-questions`)
-              : (c?.question_text?.slice(0, 120) + (c?.question_text && c.question_text.length > 120 ? '…' : '') ?? '(No text)')}
+              : (c?.question_text ? c.question_text.slice(0, 120) + (c.question_text.length > 120 ? '…' : '') : '(No text)')}
           </div>
         </div>
 
