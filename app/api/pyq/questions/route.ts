@@ -29,17 +29,9 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: topErr.message, debug: { paperId, language } }, { status: 500 });
   }
 
-  // If no rows returned, do a raw count bypassing RLS to diagnose
+  // If no rows returned, log for debugging
   if ((topLevel ?? []).length === 0) {
-    const { count: rawCount } = await supabase
-      .from('pyq_questions')
-      .select('id', { count: 'exact', head: true });
-    const { count: paperCount } = await supabase
-      .from('pyq_questions')
-      .select('id', { count: 'exact', head: true })
-      .eq('paper_id', paperId);
-    console.error('[pyq/questions] empty result', { paperId, rawCount, paperCount });
-    // Still return empty array so UI shows "No questions found"
+    console.error('[pyq/questions] no questions found for paper_id:', paperId);
   }
 
   // Step 2: Fetch sub-questions separately (self-referential joins are unreliable in PostgREST)
