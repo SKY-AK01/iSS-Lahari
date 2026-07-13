@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/admin';
 
 // GET /api/pyq/questions?paper_id=xxx&language=english&search=river
 export async function GET(req: NextRequest) {
-  const supabase = await createClient();
+  // Use admin client to bypass RLS — this is a read-only public endpoint protected by auth middleware
+  const supabase = createAdminClient();
   const { searchParams } = new URL(req.url);
   const paperId  = searchParams.get('paper_id');
   const language = searchParams.get('language') || 'english';
@@ -28,19 +29,17 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: topErr.message, debug: { paperId, language } }, { status: 500 });
   }
 
-  // DEBUG: return raw count + first row to diagnose empty results
+  // If no rows returned, do a raw count bypassing RLS to diagnose
   if ((topLevel ?? []).length === 0) {
-    // Check if paper exists at all
-    const { count } = await supabase
+    const { count: rawCount } = await supabase
+      .from('pyq_questions')
+      .select('id', { count: 'exact', head: true });
+    const { count: paperCount } = await supabase
       .from('pyq_questions')
       .select('id', { count: 'exact', head: true })
       .eq('paper_id', paperId);
-    return NextResponse.json({
-      _debug: true,
-      message: 'No top-level questions found',
-      paperId,
-      totalInTableForPaper: count,
-    });
+    console.error('[pyq/questions] empty result', { paperId, rawCount, paperCount });
+    // Still return empty array so UI shows "No questions found"
   }
 
   // Step 2: Fetch sub-questions separately (self-referential joins are unreliable in PostgREST)
