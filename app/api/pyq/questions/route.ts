@@ -25,7 +25,22 @@ export async function GET(req: NextRequest) {
 
   if (topErr) {
     console.error('[pyq/questions] top-level error:', topErr);
-    return NextResponse.json({ error: topErr.message }, { status: 500 });
+    return NextResponse.json({ error: topErr.message, debug: { paperId, language } }, { status: 500 });
+  }
+
+  // DEBUG: return raw count + first row to diagnose empty results
+  if ((topLevel ?? []).length === 0) {
+    // Check if paper exists at all
+    const { count } = await supabase
+      .from('pyq_questions')
+      .select('id', { count: 'exact', head: true })
+      .eq('paper_id', paperId);
+    return NextResponse.json({
+      _debug: true,
+      message: 'No top-level questions found',
+      paperId,
+      totalInTableForPaper: count,
+    });
   }
 
   // Step 2: Fetch sub-questions separately (self-referential joins are unreliable in PostgREST)
