@@ -25,5 +25,6 @@ export default async function MentorResultsPage() {
     `)
     .order('started_at', { ascending: false });
 
-  return <MentorResultsClient attempts={attempts ?? []} />;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return <MentorResultsClient attempts={(attempts ?? []) as any[]} />;
 }
