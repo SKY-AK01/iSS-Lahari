@@ -132,6 +132,161 @@ function parseRawQA(text: string): PastedTestJSON {
   return { chapter: '', subject: '', batch: 1, questions };
 }
 
+// ── Format Guide ─────────────────────────────────────────────────────
+const TEST_MD_SAMPLE = `**Master ID:** UPSC-XXX-001
+**Difficulty:** Moderate
+**Question Category:** History
+**Year:** 2023
+**Question:** Which battle ended French ambitions in India?
+**Options:**
+(a) Battle of Plassey
+(b) Battle of Wandiwash
+(c) Battle of Buxar
+(d) Battle of Panipat
+**Answer:** (b)
+**Detailed Explanation:** The Battle of Wandiwash (1760)...
+**Keywords:** Wandiwash, French, English.
+**Memory Trick:** "W for Win over French."
+**Common Exam Trap:** Confusing with Plassey (vs Nawab).
+
+---
+
+**Master ID:** UPSC-XXX-002
+...`;
+
+const TEST_JSON_SAMPLE = `{
+  "batch": 1,
+  "questions": [
+    {
+      "id": "Q1",
+      "difficulty": "medium",
+      "type": "mcq",
+      "question": "Which battle ended French ambitions?",
+      "options": ["(a) Plassey","(b) Wandiwash","(c) Buxar","(d) Panipat"],
+      "answer": "(b)",
+      "explanation": "Battle of Wandiwash (1760)...",
+      "keywords": ["Wandiwash","French"]
+    }
+  ]
+}`;
+
+const STUDY_JSON_SAMPLE = `{
+  "title": "Constitutional Amendments Mind Map",
+  "records": [
+    {
+      "year": "1950",
+      "event": "Constitution came into effect",
+      "category": "Constitutional",
+      "people": ["B.R. Ambedkar"],
+      "background": "...",
+      "significance": { "constitutional": "..." },
+      "related": { "acts": ["Constitution of India"] }
+    }
+  ]
+}`;
+
+function FormatGuide({ type }: { type: 'test' | 'study' | null }) {
+  const [open, setOpen] = useState(false);
+  const [tab, setTab] = useState<'md' | 'json'>('md');
+
+  if (!type) return null;
+
+  return (
+    <div style={{ marginBottom: '1.25rem', border: 'var(--border-thick)', background: 'var(--bg-3)' }}>
+      <button
+        onClick={() => setOpen(o => !o)}
+        style={{
+          width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          padding: '0.85rem 1.1rem', background: 'none', border: 'none', cursor: 'pointer',
+          fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: '0.8rem',
+          textTransform: 'uppercase', letterSpacing: '0.04em',
+        }}
+      >
+        <span>📋 Supported Formats &amp; Samples</span>
+        <span style={{ fontSize: '1rem', transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 150ms' }}>▾</span>
+      </button>
+
+      {open && (
+        <div style={{ padding: '0 1.1rem 1.1rem', borderTop: '2px solid #000' }}>
+          {type === 'test' ? (
+            <>
+              <p style={{ fontSize: '0.82rem', margin: '0.75rem 0 0.5rem', lineHeight: 1.6 }}>
+                Accepts <strong>3 formats</strong>: Markdown (qP.md style), JSON array of batches, or plain Q&amp;A text.
+              </p>
+
+              {/* Tab switcher */}
+              <div style={{ display: 'flex', marginBottom: '0.75rem', border: 'var(--border-thick)' }}>
+                {(['md', 'json'] as const).map(t => (
+                  <button key={t} onClick={() => setTab(t)} style={{
+                    flex: 1, padding: '0.4rem', border: 'none', cursor: 'pointer',
+                    fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: '0.7rem', textTransform: 'uppercase',
+                    background: tab === t ? '#000' : 'var(--bg-3)', color: tab === t ? '#FFF' : 'var(--ink)',
+                    borderRight: t === 'md' ? '2px solid #000' : 'none',
+                  }}>
+                    {t === 'md' ? '**Markdown** (qP.md)' : 'JSON'}
+                  </button>
+                ))}
+              </div>
+
+              <pre style={{
+                background: '#111', color: '#e8e8e8', padding: '1rem', fontSize: '0.72rem',
+                fontFamily: 'var(--font-mono)', overflowX: 'auto', margin: 0,
+                lineHeight: 1.6, maxHeight: '320px', overflowY: 'auto',
+              }}>
+                {tab === 'md' ? TEST_MD_SAMPLE : TEST_JSON_SAMPLE}
+              </pre>
+
+              <div style={{ marginTop: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
+                {[
+                  ['**Master ID:**', 'Unique ID for the question (used for deduplication)'],
+                  ['**Difficulty:**', 'Easy / Moderate / Hard'],
+                  ['**Question:**', 'Full question text (numbered statements go here too)'],
+                  ['**Options:**', '(a) ... (b) ... (c) ... (d) ... on separate lines'],
+                  ['**Answer:**', '(a) or (b) etc.'],
+                  ['**Detailed Explanation:**', 'Full explanation text'],
+                  ['---', 'Separator between questions (must be on its own line)'],
+                ].map(([field, desc]) => (
+                  <div key={field} style={{ display: 'flex', gap: '0.6rem', fontSize: '0.75rem', fontFamily: 'var(--font-mono)' }}>
+                    <span style={{ color: 'var(--ruby)', flexShrink: 0, minWidth: '160px' }}>{field}</span>
+                    <span style={{ color: 'var(--cream-dim)', opacity: 0.8 }}>{desc}</span>
+                  </div>
+                ))}
+              </div>
+            </>
+          ) : (
+            <>
+              <p style={{ fontSize: '0.82rem', margin: '0.75rem 0 0.5rem', lineHeight: 1.6 }}>
+                Accepts <strong>mind-map JSON</strong> with a <code>records</code> array. Each record becomes one row in the study table.
+                Nested objects are flattened automatically.
+              </p>
+              <pre style={{
+                background: '#111', color: '#e8e8e8', padding: '1rem', fontSize: '0.72rem',
+                fontFamily: 'var(--font-mono)', overflowX: 'auto', margin: 0,
+                lineHeight: 1.6, maxHeight: '320px', overflowY: 'auto',
+              }}>
+                {STUDY_JSON_SAMPLE}
+              </pre>
+              <div style={{ marginTop: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
+                {[
+                  ['"title"', 'Required. Name shown as the material heading.'],
+                  ['"records"', 'Required array. Each object = one row.'],
+                  ['Nested objects', 'Flattened automatically: significance.constitutional → significance_constitutional'],
+                  ['Arrays', 'Joined as comma-separated strings.'],
+                ].map(([field, desc]) => (
+                  <div key={field} style={{ display: 'flex', gap: '0.6rem', fontSize: '0.75rem', fontFamily: 'var(--font-mono)' }}>
+                    <span style={{ color: 'var(--ruby)', flexShrink: 0, minWidth: '160px' }}>{field}</span>
+                    <span style={{ color: 'var(--cream-dim)', opacity: 0.8 }}>{desc}</span>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ── Shared file upload zone ──────────────────────────────────────────
 function FileUploadZone({ fileName, onFile, onError }: {
   fileName: string;
@@ -599,6 +754,9 @@ export default function AddContentPage() {
               </div>
             )}
           </div>
+
+          {/* ── Supported Format Guide ── */}
+          <FormatGuide type={contentType} />
 
           {/* Test preview */}
           {testPreviews && testPreviews.map((preview, bIndex) => (
