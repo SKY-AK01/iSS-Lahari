@@ -188,8 +188,17 @@ const STUDY_JSON_SAMPLE = `{
 function FormatGuide({ type }: { type: 'test' | 'study' | null }) {
   const [open, setOpen] = useState(false);
   const [tab, setTab] = useState<'md' | 'json'>('md');
+  const [copied, setCopied] = useState(false);
 
   if (!type) return null;
+
+  const currentSample = type === 'study' ? STUDY_JSON_SAMPLE : (tab === 'md' ? TEST_MD_SAMPLE : TEST_JSON_SAMPLE);
+
+  function copySample() {
+    navigator.clipboard.writeText(currentSample);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }
 
   return (
     <div style={{ marginBottom: '1.25rem', border: 'var(--border-thick)', background: 'var(--bg-3)' }}>
@@ -228,13 +237,23 @@ function FormatGuide({ type }: { type: 'test' | 'study' | null }) {
                 ))}
               </div>
 
-              <pre style={{
-                background: '#111', color: '#e8e8e8', padding: '1rem', fontSize: '0.72rem',
-                fontFamily: 'var(--font-mono)', overflowX: 'auto', margin: 0,
-                lineHeight: 1.6, maxHeight: '320px', overflowY: 'auto',
-              }}>
-                {tab === 'md' ? TEST_MD_SAMPLE : TEST_JSON_SAMPLE}
-              </pre>
+              <div style={{ position: 'relative' }}>
+                <button onClick={copySample} style={{
+                  position: 'absolute', top: '0.5rem', right: '0.5rem', zIndex: 1,
+                  padding: '3px 10px', fontFamily: 'var(--font-heading)', fontWeight: 900,
+                  fontSize: '0.65rem', textTransform: 'uppercase', cursor: 'pointer',
+                  background: copied ? '#2a7a2a' : '#333', color: '#FFF', border: '1px solid #555',
+                }}>
+                  {copied ? '✓ Copied' : 'Copy'}
+                </button>
+                <pre style={{
+                  background: '#111', color: '#e8e8e8', padding: '1rem', fontSize: '0.72rem',
+                  fontFamily: 'var(--font-mono)', overflowX: 'auto', margin: 0,
+                  lineHeight: 1.6, maxHeight: '320px', overflowY: 'auto',
+                }}>
+                  {tab === 'md' ? TEST_MD_SAMPLE : TEST_JSON_SAMPLE}
+                </pre>
+              </div>
 
               <div style={{ marginTop: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
                 {[
@@ -259,13 +278,23 @@ function FormatGuide({ type }: { type: 'test' | 'study' | null }) {
                 Accepts <strong>mind-map JSON</strong> with a <code>records</code> array. Each record becomes one row in the study table.
                 Nested objects are flattened automatically.
               </p>
-              <pre style={{
-                background: '#111', color: '#e8e8e8', padding: '1rem', fontSize: '0.72rem',
-                fontFamily: 'var(--font-mono)', overflowX: 'auto', margin: 0,
-                lineHeight: 1.6, maxHeight: '320px', overflowY: 'auto',
-              }}>
-                {STUDY_JSON_SAMPLE}
-              </pre>
+              <div style={{ position: 'relative' }}>
+                <button onClick={copySample} style={{
+                  position: 'absolute', top: '0.5rem', right: '0.5rem', zIndex: 1,
+                  padding: '3px 10px', fontFamily: 'var(--font-heading)', fontWeight: 900,
+                  fontSize: '0.65rem', textTransform: 'uppercase', cursor: 'pointer',
+                  background: copied ? '#2a7a2a' : '#333', color: '#FFF', border: '1px solid #555',
+                }}>
+                  {copied ? '✓ Copied' : 'Copy'}
+                </button>
+                <pre style={{
+                  background: '#111', color: '#e8e8e8', padding: '1rem', fontSize: '0.72rem',
+                  fontFamily: 'var(--font-mono)', overflowX: 'auto', margin: 0,
+                  lineHeight: 1.6, maxHeight: '320px', overflowY: 'auto',
+                }}>
+                  {STUDY_JSON_SAMPLE}
+                </pre>
+              </div>
               <div style={{ marginTop: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
                 {[
                   ['"title"', 'Required. Name shown as the material heading.'],
