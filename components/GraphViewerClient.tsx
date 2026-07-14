@@ -1,348 +1,396 @@
 'use client';
 
-import { useMemo, useState, useCallback, useRef, useEffect } from 'react';
-import ForceGraph2D from 'react-force-graph-2d';
+import { useState, useMemo } from 'react';
 import { MindMapJSON } from '@/lib/types';
 
 interface Props { material: MindMapJSON }
 
-// Colour palette — level 0 = root, 1 = category, 2 = subcategory, 3 = leaf
-const PALETTE = [
-  { node: '#111', ring: '#FFDE00', text: '#111', bg: '#FFDE00' }, // root
-  { node: '#C53030', ring: '#FED7D7', text: '#FFF', bg: '#FED7D7' }, // cat
-  { node: '#2B6CB0', ring: '#BEE3F8', text: '#FFF', bg: '#BEE3F8' }, // subcat
-  { node: '#276749', ring: '#C6F6D5', text: '#FFF', bg: '#C6F6D5' }, // leaf
-  { node: '#6B46C1', ring: '#E9D8FD', text: '#FFF', bg: '#E9D8FD' },
-  { node: '#B7791F', ring: '#FEFCBF', text: '#FFF', bg: '#FEFCBF' },
-];
-
-function col(i: number) { return PALETTE[Math.min(i, PALETTE.length - 1)]; }
-
-// Pick up to 3 "structural" columns (category, subcategory, event/name) for graph
-// and treat all others as detail-only (shown in side panel)
+// Pick structural columns (category, subcategory, event/name) for the tree
 function pickStructuralCols(columns: string[]): number[] {
-  const priority = ['category','subcategory','topic','event','name','year'];
+  const priority = ['category', 'subcategory', 'topic', 'event', 'name', 'year', 'date'];
   const indices: number[] = [];
-  // First pass: preferred names
   for (const pref of priority) {
     const i = columns.findIndex(c => c.toLowerCase().includes(pref));
     if (i >= 0 && !indices.includes(i)) indices.push(i);
     if (indices.length >= 3) break;
   }
-  // Fill up to 3 from the front
   for (let i = 0; i < columns.length && indices.length < 3; i++) {
     if (!indices.includes(i)) indices.push(i);
   }
   return indices.slice(0, 3);
 }
 
-function truncate(s: string, n = 28) {
-  const clean = s.replace(/<[^>]+>/g, '').trim();
-  return clean.length > n ? clean.slice(0, n - 1) + '…' : clean;
+function clean(s: string) {
+  return (s || '').replace(/<[^>]+>/g, '').trim();
 }
 
-function wrapText(ctx: CanvasRenderingContext2D, text: string, maxW: number) {
-  const words = text.split(' ');
-  const lines: string[] = [];
-  let cur = '';
-  for (const w of words) {
-    const test = cur ? `${cur} ${w}` : w;
-    if (ctx.measureText(test).width > maxW && cur) { lines.push(cur); cur = w; }
-    else cur = test;
+// Level styles matching app design system
+const LEVEL_STYLES = [
+  // Level 0: categories — bold black header
+  {
+    node: { background: '#000', color: '#FFF', border: '3px solid #000', fontFamily: 'var(--font-heading)', fontWeight: 900, textTransform: 'uppercase' as const, letterSpacing: '-0.02em', fontSize: '0.85rem', padding: '0.6rem 1rem', boxShadow: '4px 4px 0 0 #000' },
+    dot: { background: '#D81B60', width: 12, height: 12 },
+    line: '#000',
+  },
+  // Level 1: subcategories — ruby accent
+  {
+    node: { background: '#FFF', color: '#000', border: '3px solid #000', fontFamily: 'var(--font-heading)', fontWeight: 700, textTransform: 'uppercase' as const, letterSpacing: '-0.01em', fontSize: '0.78rem', padding: '0.45rem 0.85rem', boxShadow: '3px 3px 0 0 #000' },
+    dot: { background: '#000', width: 10, height: 10 },
+    line: '#000',
+  },
+  // Level 2: leaves — light cards
+  {
+    node: { background: 'var(--bg)', color: '#000', border: '2px solid #000', fontFamily: 'var(--font-body)', fontWeight: 600, textTransform: 'none' as const, letterSpacing: '0', fontSize: '0.78rem', padding: '0.4rem 0.75rem', boxShadow: '2px 2px 0 0 #000' },
+    dot: { background: '#D81B60', width: 8, height: 8 },
+    line: '#999',
+  },
+];
+
+interface TreeNode {
+  id: string;
+  label: string;
+  level: number;
+  colIdx: number;
+  column: string;
+  children: TreeNode[];
+  records: Record<string, string>[];
+}
+
+function buildTree(material: MindMapJSON, structCols: number[]): TreeNode[] {
+  const roots = new Map<string, TreeNode>();
+
+  for (const record of material.records) {
+    let parentMap = roots;
+    let currentLevel = 0;
+
+    for (const colIdx of structCols) {
+      const column = material.columns[colIdx];
+      const val = clean(record[column] || '');
+      if (!val || val === '—' || val === '-') break;
+
+      const key = `${currentLevel}_${val}`;
+      if (!parentMap.has(key)) {
+        parentMap.set(key, {
+          id: key,
+          label: val,
+          level: currentLevel,
+          colIdx,
+          column,
+          children: [],
+          records: [],
+        });
+      }
+      const node = parentMap.get(key)!;
+      if (currentLevel === structCols.length - 1) {
+        node.records.push(record);
+      }
+
+      // Move to next level using children map
+      const childMap = new Map(node.children.map(c => [c.id, c]));
+      parentMap = childMap;
+      // We need a reference that updates the actual children array
+      // Use a different approach: rebuild children as a map per node
+      currentLevel++;
+    }
   }
-  if (cur) lines.push(cur);
-  return lines.slice(0, 3);
+
+  // Rebuild properly
+  return buildTreeNodes(material, structCols);
+}
+
+function buildTreeNodes(material: MindMapJSON, structCols: number[]): TreeNode[] {
+  // Use a nested map approach
+  type NodeStore = Map<string, { node: TreeNode; children: Map<string, { node: TreeNode; children: Map<string, { node: TreeNode }> }> }>;
+  const level0: NodeStore = new Map();
+
+  for (const record of material.records) {
+    const vals = structCols.map(ci => clean(record[material.columns[ci]] || ''));
+
+    const v0 = vals[0];
+    const v1 = vals[1];
+    const v2 = vals[2];
+    if (!v0 || v0 === '—') continue;
+
+    if (!level0.has(v0)) {
+      level0.set(v0, {
+        node: { id: `0_${v0}`, label: v0, level: 0, colIdx: structCols[0], column: material.columns[structCols[0]], children: [], records: [] },
+        children: new Map(),
+      });
+    }
+    const l0 = level0.get(v0)!;
+
+    if (!v1 || v1 === '—') { l0.node.records.push(record); continue; }
+
+    if (!l0.children.has(v1)) {
+      l0.children.set(v1, {
+        node: { id: `1_${v0}_${v1}`, label: v1, level: 1, colIdx: structCols[1] ?? structCols[0], column: material.columns[structCols[1] ?? structCols[0]], children: [], records: [] },
+        children: new Map(),
+      });
+    }
+    const l1 = l0.children.get(v1)!;
+
+    if (!v2 || v2 === '—') { l1.node.records.push(record); continue; }
+
+    if (!l1.children.has(v2)) {
+      l1.children.set(v2, {
+        node: { id: `2_${v0}_${v1}_${v2}`, label: v2, level: 2, colIdx: structCols[2] ?? structCols[1], column: material.columns[structCols[2] ?? structCols[1]], children: [], records: [] },
+      });
+    }
+    l1.children.get(v2)!.node.records.push(record);
+  }
+
+  // Flatten into tree
+  const result: TreeNode[] = [];
+  for (const [, l0] of level0) {
+    l0.node.children = [];
+    for (const [, l1] of l0.children) {
+      l1.node.children = Array.from(l1.children.values()).map(l2 => l2.node);
+      l0.node.children.push(l1.node);
+    }
+    result.push(l0.node);
+  }
+  return result;
+}
+
+// Detail panel
+function DetailPanel({ node, columns, onClose }: { node: TreeNode; columns: string[]; onClose: () => void }) {
+  const records = node.records;
+  return (
+    <div style={{ width: 340, flexShrink: 0, background: '#FFF', borderLeft: '4px solid #000', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+      {/* Header */}
+      <div style={{ padding: '0.75rem 1rem', background: '#000', color: '#FFF', display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0, borderBottom: '3px solid #D81B60' }}>
+        <div style={{ flex: 1 }}>
+          <div style={{ fontFamily: 'var(--font-heading)', fontSize: '0.58rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.07em', color: '#D81B60', marginBottom: 2 }}>
+            {node.column}
+          </div>
+          <div style={{ fontFamily: 'var(--font-heading)', fontSize: '0.9rem', fontWeight: 900, lineHeight: 1.3, textTransform: 'uppercase' }}>
+            {node.label}
+          </div>
+        </div>
+        <button onClick={onClose} style={{ background: 'rgba(255,255,255,0.15)', color: '#FFF', border: '2px solid rgba(255,255,255,0.3)', cursor: 'pointer', fontWeight: 900, fontSize: '1rem', width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>×</button>
+      </div>
+
+      {/* Records */}
+      <div style={{ flex: 1, overflowY: 'auto', padding: '0.75rem 1rem' }}>
+        {records.length === 0 ? (
+          <p style={{ fontSize: '0.82rem', color: '#888', fontFamily: 'var(--font-body)', lineHeight: 1.6 }}>
+            {node.children.length > 0 ? `${node.children.length} sub-items. Click a leaf node for details.` : 'No detail records.'}
+          </p>
+        ) : (
+          records.map((rec, ri) => (
+            <div key={ri} style={{ marginBottom: ri < records.length - 1 ? '1.25rem' : 0 }}>
+              {records.length > 1 && (
+                <div style={{ fontFamily: 'var(--font-heading)', fontSize: '0.6rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.07em', color: '#999', marginBottom: '0.5rem' }}>
+                  Record {ri + 1} / {records.length}
+                </div>
+              )}
+              {columns.map((col, ci) => {
+                const v = clean(rec[col] || '');
+                if (!v || v === '—' || v === '-') return null;
+                const isActive = col === node.column;
+                return (
+                  <div key={col} style={{ marginBottom: '0.6rem' }}>
+                    <div style={{ fontFamily: 'var(--font-heading)', fontSize: '0.58rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.07em', color: isActive ? '#D81B60' : '#555', marginBottom: '0.15rem' }}>
+                      {col}
+                    </div>
+                    <div style={{
+                      fontFamily: 'var(--font-body)', fontSize: '0.82rem', lineHeight: 1.55, color: '#111',
+                      fontWeight: isActive ? 700 : 400,
+                      borderLeft: isActive ? '3px solid #D81B60' : '3px solid transparent',
+                      paddingLeft: '0.5rem',
+                      paddingTop: isActive ? 2 : 0, paddingBottom: isActive ? 2 : 0,
+                      background: isActive ? '#FDF4F6' : 'transparent',
+                    }}>
+                      {v}
+                    </div>
+                  </div>
+                );
+              })}
+              {ri < records.length - 1 && <div style={{ height: 1, background: '#EEE', margin: '0.75rem 0' }} />}
+            </div>
+          ))
+        )}
+      </div>
+    </div>
+  );
+}
+
+// A single flowchart node
+function FlowNode({ node, selected, onSelect }: { node: TreeNode; selected: TreeNode | null; onSelect: (n: TreeNode) => void }) {
+  const [open, setOpen] = useState(node.level < 1); // level 0 open by default
+  const style = LEVEL_STYLES[Math.min(node.level, LEVEL_STYLES.length - 1)];
+  const isSelected = selected?.id === node.id;
+  const hasChildren = node.children.length > 0;
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', width: '100%' }}>
+      {/* Node row */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', width: '100%' }}>
+        {/* Connector dot */}
+        <div style={{ width: style.dot.width, height: style.dot.height, background: style.dot.background, flexShrink: 0 }} />
+
+        {/* Node box */}
+        <div
+          onClick={() => { onSelect(node); if (hasChildren) setOpen(o => !o); }}
+          style={{
+            ...style.node,
+            cursor: 'pointer',
+            flex: node.level === 0 ? 1 : undefined,
+            minWidth: node.level === 0 ? undefined : 'auto',
+            maxWidth: node.level === 2 ? 280 : undefined,
+            outline: isSelected ? '3px solid #D81B60' : 'none',
+            outlineOffset: 2,
+            transition: 'all 100ms',
+            display: 'flex', alignItems: 'center', gap: '0.5rem',
+            userSelect: 'none',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.background = isSelected ? '#FDF4F6' : (node.level === 0 ? '#D81B60' : '#F5F5F5'); }}
+          onMouseLeave={e => { e.currentTarget.style.background = style.node.background as string; }}
+        >
+          <span style={{ flex: 1 }}>{node.label}</span>
+          {hasChildren && (
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', fontWeight: 700, opacity: 0.5 }}>
+              {open ? '▾' : `▸ ${node.children.length}`}
+            </span>
+          )}
+          {node.records.length > 0 && !hasChildren && (
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', opacity: 0.5, background: 'rgba(0,0,0,0.08)', padding: '1px 4px' }}>
+              {node.records.length}
+            </span>
+          )}
+        </div>
+      </div>
+
+      {/* Children */}
+      {hasChildren && open && (
+        <div style={{
+          marginLeft: node.level === 0 ? 24 : 20,
+          marginTop: 4,
+          paddingLeft: 12,
+          borderLeft: `2px solid ${style.line}`,
+          display: 'flex', flexDirection: 'column', gap: 4,
+          paddingTop: 4, paddingBottom: 4,
+          width: 'calc(100% - 36px)',
+        }}>
+          {node.children.map(child => (
+            <FlowNode key={child.id} node={child} selected={selected} onSelect={onSelect} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
 }
 
 export default function GraphViewerClient({ material }: Props) {
-  const [selected, setSelected] = useState<any>(null);
-  const [activeCol, setActiveCol] = useState<string | null>(null);
-  const fgRef = useRef<any>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [dims, setDims] = useState({ w: 800, h: 600 });
-
-  useEffect(() => {
-    function update() {
-      if (containerRef.current) {
-        setDims({ w: containerRef.current.offsetWidth, h: containerRef.current.offsetHeight });
-      }
-    }
-    update();
-    window.addEventListener('resize', update);
-    return () => window.removeEventListener('resize', update);
-  }, []);
+  const [selected, setSelected] = useState<TreeNode | null>(null);
+  const [search, setSearch] = useState('');
+  const [filterCol, setFilterCol] = useState<string | null>(null);
 
   const structCols = useMemo(() => pickStructuralCols(material.columns), [material.columns]);
 
-  const graphData = useMemo(() => {
-    const nodes = new Map<string, any>();
-    const links = new Map<string, any>();
+  const tree = useMemo(() => buildTreeNodes(material, structCols), [material, structCols]);
 
-    const rootId = '__root__';
-    nodes.set(rootId, { id: rootId, name: material.title, label: truncate(material.title, 32), level: 0, val: 32 });
+  // Filter tree by search
+  const filteredTree = useMemo(() => {
+    if (!search.trim() && !filterCol) return tree;
+    const q = search.toLowerCase();
 
-    material.records.forEach(record => {
-      let prevId = rootId;
-
-      structCols.forEach((colIdx, depth) => {
-        const col = material.columns[colIdx];
-        const raw = record[col] || '';
-        const val = raw.replace(/<[^>]+>/g, '').trim();
-        if (!val || val === '—' || val === '-') return;
-
-        const nodeId = `d${depth}_${val}`;
-        const nodeLevel = depth + 1;
-
-        if (!nodes.has(nodeId)) {
-          // Node size decreases with depth
-          const nodeVal = depth === 0 ? 16 : depth === 1 ? 9 : 5;
-          nodes.set(nodeId, {
-            id: nodeId,
-            name: val,
-            label: truncate(val, depth === 0 ? 24 : depth === 1 ? 20 : 16),
-            level: nodeLevel,
-            val: nodeVal,
-            column: col,
-            colIdx,
-            record,  // attach full record for side panel
-          });
-        } else {
-          // Merge record reference (keep last for simplicity; side panel shows all)
-        }
-
-        const linkId = `${prevId}->${nodeId}`;
-        if (!links.has(linkId)) {
-          links.set(linkId, { source: prevId, target: nodeId, depth });
-        }
-        prevId = nodeId;
-      });
-    });
-
-    return { nodes: Array.from(nodes.values()), links: Array.from(links.values()) };
-  }, [material, structCols]);
-
-  const paintNode = useCallback((node: any, ctx: CanvasRenderingContext2D, scale: number) => {
-    const x = node.x ?? 0, y = node.y ?? 0;
-    const r = Math.sqrt(node.val) * 2.8;
-    const p = col(node.level);
-    const isHighlighted = activeCol === null || (node.level === 0) ||
-      (node.column && node.column === activeCol) ||
-      (node.level === 0);
-
-    ctx.globalAlpha = isHighlighted ? 1 : 0.25;
-
-    // Outer ring
-    ctx.beginPath();
-    ctx.arc(x, y, r + 2.5 / scale, 0, Math.PI * 2);
-    ctx.fillStyle = p.ring;
-    ctx.fill();
-
-    // Inner dot
-    ctx.beginPath();
-    ctx.arc(x, y, r, 0, Math.PI * 2);
-    ctx.fillStyle = p.node;
-    ctx.fill();
-
-    // Label — only render at sufficient zoom
-    const minZoom = node.level === 0 ? 0.05 : node.level === 1 ? 0.25 : 0.55;
-    if (scale >= minZoom) {
-      const fs = node.level === 0
-        ? Math.min(14, 11 / scale)
-        : node.level === 1
-        ? Math.min(11, 9 / scale)
-        : Math.min(9, 8 / scale);
-
-      ctx.font = `${node.level <= 1 ? 'bold ' : ''}${fs}px Inter, sans-serif`;
-      const label = node.label;
-      const maxW = (node.level === 0 ? 110 : node.level === 1 ? 85 : 65) / scale;
-      const lines = wrapText(ctx, label, maxW);
-      const lh = fs * 1.35;
-      const bw = Math.max(...lines.map(l => ctx.measureText(l).width)) + 6 / scale;
-      const bh = lines.length * lh + 4 / scale;
-      const bx = x - bw / 2;
-      const by = y + r + 3 / scale;
-
-      // bg pill
-      ctx.fillStyle = p.bg + 'EE';
-      ctx.strokeStyle = p.node;
-      ctx.lineWidth = 0.8 / scale;
-      ctx.beginPath();
-      ctx.roundRect(bx, by, bw, bh, 2 / scale);
-      ctx.fill();
-      ctx.stroke();
-
-      ctx.fillStyle = node.level === 0 ? '#111' : p.node;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'top';
-      lines.forEach((line, i) => ctx.fillText(line, x, by + 2 / scale + i * lh));
+    function matchNode(node: TreeNode): boolean {
+      const labelMatch = node.label.toLowerCase().includes(q);
+      const colMatch = !filterCol || node.column === filterCol;
+      const recordMatch = node.records.some(r =>
+        Object.values(r).some(v => clean(v).toLowerCase().includes(q))
+      );
+      const childMatch = node.children.some(matchNode);
+      return (labelMatch || recordMatch || childMatch) && (filterCol ? (colMatch || childMatch) : true);
     }
 
-    ctx.globalAlpha = 1;
-  }, [activeCol]);
-
-  const handleClick = useCallback((node: any) => {
-    setSelected(node);
-    if (fgRef.current) {
-      fgRef.current.centerAt(node.x, node.y, 600);
-      fgRef.current.zoom(Math.max(fgRef.current.zoom(), 2.5), 600);
+    function filterNode(node: TreeNode): TreeNode | null {
+      const children = node.children.map(filterNode).filter(Boolean) as TreeNode[];
+      const self = !q || node.label.toLowerCase().includes(q) ||
+        node.records.some(r => Object.values(r).some(v => clean(v).toLowerCase().includes(q)));
+      if (!self && children.length === 0) return null;
+      return { ...node, children };
     }
-  }, []);
 
-  // All records matching selected node
-  const matchedRecords = useMemo(() => {
-    if (!selected || selected.level === 0) return [];
-    const col = material.columns[selected.colIdx];
-    return material.records.filter(r => {
-      const v = (r[col] || '').replace(/<[^>]+>/g, '').trim();
-      return v === selected.name;
-    });
-  }, [selected, material]);
-
-  const panelWidth = selected ? 340 : 0;
+    return tree.map(filterNode).filter(Boolean) as TreeNode[];
+  }, [tree, search, filterCol]);
 
   return (
-    <div style={{ width: '100vw', height: '100vh', display: 'flex', flexDirection: 'column', background: '#F4F4F0', overflow: 'hidden' }}>
+    <div style={{ width: '100vw', height: '100vh', display: 'flex', flexDirection: 'column', background: 'var(--bg)', overflow: 'hidden', fontFamily: 'var(--font-body)' }}>
 
-      {/* ── Top bar ── */}
+      {/* ── Top bar — app style ── */}
       <div style={{
-        flexShrink: 0, padding: '0.6rem 1.25rem',
-        background: '#111', color: '#FFF',
-        display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap',
-        borderBottom: '3px solid #FFDE00',
+        flexShrink: 0,
+        background: '#000', color: '#FFF',
+        borderBottom: '3px solid #D81B60',
+        padding: '0 1.25rem',
+        height: 56,
+        display: 'flex', alignItems: 'center', gap: '1rem',
       }}>
-        <div style={{ fontWeight: 900, fontSize: '0.9rem', letterSpacing: '-0.02em', textTransform: 'uppercase', fontFamily: 'Inter, sans-serif', flexShrink: 0, maxWidth: 280 }}>
+        {/* Title */}
+        <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '-0.02em', flexShrink: 0, maxWidth: 260 }}>
           {material.title}
         </div>
 
+        {/* Search */}
+        <div style={{ position: 'relative', flex: 1, maxWidth: 320 }}>
+          <input
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            placeholder="Search…"
+            style={{ width: '100%', background: 'rgba(255,255,255,0.1)', border: '2px solid rgba(255,255,255,0.3)', color: '#FFF', fontFamily: 'var(--font-mono)', fontSize: '0.8rem', padding: '0.35rem 0.75rem 0.35rem 2rem', outline: 'none' }}
+            onFocus={e => e.target.style.borderColor = '#D81B60'}
+            onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.3)'}
+          />
+          <span style={{ position: 'absolute', left: '0.6rem', top: '50%', transform: 'translateY(-50%)', fontSize: '0.7rem', opacity: 0.5 }}>🔍</span>
+        </div>
+
         {/* Column filter pills */}
-        <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', flex: 1 }}>
+        <div style={{ display: 'flex', gap: '0.3rem', flexWrap: 'wrap', flex: 1 }}>
           <button
-            onClick={() => setActiveCol(null)}
-            style={{
-              padding: '2px 10px', fontSize: '0.62rem', fontWeight: 900, fontFamily: 'Inter, sans-serif',
-              textTransform: 'uppercase', cursor: 'pointer', border: 'none',
-              background: activeCol === null ? '#FFDE00' : 'rgba(255,255,255,0.15)',
-              color: activeCol === null ? '#111' : '#FFF',
-              letterSpacing: '0.04em',
-            }}
+            onClick={() => setFilterCol(null)}
+            style={{ padding: '2px 10px', fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: '0.58rem', textTransform: 'uppercase', border: 'none', cursor: 'pointer', letterSpacing: '0.04em', background: filterCol === null ? '#D81B60' : 'rgba(255,255,255,0.15)', color: '#FFF' }}
           >ALL</button>
-          {material.columns.map((c, i) => (
-            <button
-              key={c}
-              onClick={() => setActiveCol(activeCol === c ? null : c)}
-              style={{
-                padding: '2px 10px', fontSize: '0.62rem', fontWeight: 900, fontFamily: 'Inter, sans-serif',
-                textTransform: 'uppercase', cursor: 'pointer', border: 'none', letterSpacing: '0.04em',
-                background: activeCol === c
-                  ? col(i + 1).node
-                  : 'rgba(255,255,255,0.12)',
-                color: '#FFF',
-              }}
+          {material.columns.map(c => (
+            <button key={c} onClick={() => setFilterCol(filterCol === c ? null : c)}
+              style={{ padding: '2px 10px', fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: '0.58rem', textTransform: 'uppercase', border: 'none', cursor: 'pointer', letterSpacing: '0.04em', background: filterCol === c ? '#FFF' : 'rgba(255,255,255,0.12)', color: filterCol === c ? '#000' : '#FFF' }}
             >{c}</button>
           ))}
         </div>
 
-        <div style={{ fontSize: '0.62rem', color: 'rgba(255,255,255,0.45)', fontFamily: 'Inter, sans-serif', flexShrink: 0 }}>
-          Click a node to see full text
+        <div style={{ fontSize: '0.6rem', color: 'rgba(255,255,255,0.4)', flexShrink: 0 }}>
+          {filteredTree.length} categories
         </div>
       </div>
 
-      {/* ── Main area ── */}
+      {/* ── Body ── */}
       <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
 
-        {/* Graph canvas */}
-        <div ref={containerRef} style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
-          <ForceGraph2D
-            ref={fgRef}
-            width={dims.w - panelWidth}
-            height={dims.h - 52}
-            graphData={graphData}
-            nodeLabel=""
-            nodeCanvasObject={paintNode}
-            nodeCanvasObjectMode={() => 'replace'}
-            linkColor={(l: any) => l.depth === 0 ? 'rgba(0,0,0,0.4)' : l.depth === 1 ? 'rgba(0,0,0,0.2)' : 'rgba(0,0,0,0.1)'}
-            linkWidth={(l: any) => l.depth === 0 ? 2 : l.depth === 1 ? 1.2 : 0.8}
-            onNodeClick={handleClick}
-            onBackgroundClick={() => setSelected(null)}
-            backgroundColor="#F4F4F0"
-            d3AlphaDecay={0.02}
-            d3VelocityDecay={0.3}
-            cooldownTicks={300}
-            linkDistance={80}
-          />
+        {/* Flowchart scroll area */}
+        <div style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', padding: '1.25rem 1.5rem' }}>
+          {filteredTree.length === 0 ? (
+            <div style={{ border: 'var(--border-thick)', padding: '3rem', textAlign: 'center', background: '#FFF', boxShadow: 'var(--shadow-btn)' }}>
+              <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: '0.85rem', textTransform: 'uppercase', opacity: 0.4 }}>
+                No results found.
+              </div>
+            </div>
+          ) : (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: 720 }}>
+              {filteredTree.map(node => (
+                <FlowNode key={node.id} node={node} selected={selected} onSelect={setSelected} />
+              ))}
+            </div>
+          )}
         </div>
 
-        {/* ── Side panel ── */}
+        {/* Side panel */}
         {selected && (
-          <div style={{
-            width: 340, flexShrink: 0, background: '#FFF',
-            borderLeft: `4px solid ${col(selected.level).node}`,
-            display: 'flex', flexDirection: 'column', overflow: 'hidden',
-          }}>
-            {/* Panel header */}
-            <div style={{
-              padding: '0.75rem 1rem', flexShrink: 0,
-              background: col(selected.level).node, color: '#FFF',
-              display: 'flex', alignItems: 'center', gap: '0.5rem',
-            }}>
-              <div style={{ flex: 1 }}>
-                <div style={{ fontSize: '0.58rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', opacity: 0.75, fontFamily: 'Inter, sans-serif' }}>
-                  {selected.level === 0 ? 'Root' : selected.column}
-                </div>
-                <div style={{ fontSize: '0.9rem', fontWeight: 900, fontFamily: 'Inter, sans-serif', marginTop: 2, lineHeight: 1.3 }}>
-                  {selected.name}
-                </div>
-              </div>
-              <button
-                onClick={() => setSelected(null)}
-                style={{ background: 'rgba(255,255,255,0.2)', color: '#FFF', border: 'none', cursor: 'pointer', fontWeight: 900, fontSize: '1.1rem', width: 28, height: 28, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-              >×</button>
-            </div>
-
-            {/* Records */}
-            <div style={{ flex: 1, overflowY: 'auto', padding: '0.75rem 1rem' }}>
-              {selected.level === 0 ? (
-                <p style={{ fontSize: '0.82rem', fontFamily: 'Inter, sans-serif', color: '#555', lineHeight: 1.6 }}>
-                  This is the root node. Click any branch node to explore its details.
-                </p>
-              ) : matchedRecords.length === 0 ? (
-                <p style={{ fontSize: '0.82rem', fontFamily: 'Inter, sans-serif', color: '#888' }}>No records found.</p>
-              ) : (
-                matchedRecords.map((rec, ri) => (
-                  <div key={ri} style={{ marginBottom: ri < matchedRecords.length - 1 ? '1.25rem' : 0 }}>
-                    {matchedRecords.length > 1 && (
-                      <div style={{ fontSize: '0.6rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', color: '#999', marginBottom: '0.5rem', fontFamily: 'Inter, sans-serif' }}>
-                        Record {ri + 1} / {matchedRecords.length}
-                      </div>
-                    )}
-                    {material.columns.map((column, ci) => {
-                      const v = (rec[column] || '').replace(/<[^>]+>/g, '').trim();
-                      if (!v || v === '—' || v === '-') return null;
-                      const isActive = column === selected.column;
-                      const p = col(ci + 1);
-                      return (
-                        <div key={column} style={{ marginBottom: '0.6rem' }}>
-                          <div style={{ fontSize: '0.58rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', color: p.node, fontFamily: 'Inter, sans-serif', marginBottom: '0.15rem' }}>
-                            {column}
-                          </div>
-                          <div style={{
-                            fontSize: '0.82rem', fontFamily: 'Inter, sans-serif', lineHeight: 1.55, color: '#111',
-                            fontWeight: isActive ? 700 : 400,
-                            background: isActive ? p.bg + '88' : 'transparent',
-                            borderLeft: isActive ? `3px solid ${p.node}` : '3px solid transparent',
-                            paddingLeft: '0.5rem', paddingTop: isActive ? 2 : 0, paddingBottom: isActive ? 2 : 0,
-                          }}>
-                            {v}
-                          </div>
-                        </div>
-                      );
-                    })}
-                    {ri < matchedRecords.length - 1 && <div style={{ height: 1, background: '#EEE', margin: '0.75rem 0' }} />}
-                  </div>
-                ))
-              )}
-            </div>
-          </div>
+          <DetailPanel
+            node={selected}
+            columns={material.columns}
+            onClose={() => setSelected(null)}
+          />
         )}
       </div>
     </div>
