@@ -1,10 +1,18 @@
 import { createClient } from '@/lib/supabase/server';
 import MentorResultsClient from '@/components/MentorResultsClient';
+import { createAdminClient } from '@/lib/supabase/admin';
 
 export default async function MentorResultsPage() {
   const supabase = await createClient();
 
-  const { data: attempts } = await supabase
+  // Auth check
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return null;
+
+  // Use admin client to get ALL attempts (including in-progress) for all students
+  const admin = createAdminClient();
+
+  const { data: attempts } = await admin
     .from('attempts')
     .select(`
       id, mode, score, max_score, percentage, started_at, submitted_at,

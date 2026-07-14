@@ -189,12 +189,90 @@ Use this schema:
 ]
 }`;
 
+const PROMPT_6 = `Create a comprehensive master data table for the topic: <TOPIC NAME>
+
+The table should be optimized for:
+- Mind map creation
+- Revision notes
+- Flashcards
+- Competitive exam preparation
+- Future JSON/database conversion
+
+Extract every important concept from all available sources and organize them into structured rows.
+
+Include one row for every important:
+- Event
+- Concept
+- Definition
+- Person
+- Act
+- Article
+- Amendment
+- Committee
+- Commission
+- Case/Judgment
+- Discovery
+- Formula
+- Process
+- Law
+- Timeline event
+- Agreement
+- Organization
+- Place
+- Scheme
+- Policy
+- Treaty
+- Battle
+- Movement
+- Scientific principle
+- Economic term
+- Geography feature
+- Historical milestone
+- Any other exam-relevant entity
+
+Create the following columns:
+1. Category
+2. Subcategory
+3. Topic
+4. Year / Date
+5. Event / Name
+6. Definition
+7. Background
+8. Key Person(s)
+9. Main Features / Provisions
+10. Causes
+11. Effects / Outcomes
+12. Importance / Significance
+13. Advantages
+14. Disadvantages / Criticism
+15. Related Acts / Articles / Laws
+16. Related Committees / Commissions
+17. Related Personalities
+18. Related Concepts
+19. Frequently Confused With
+20. PYQ Importance
+21. Frequently Asked Facts
+22. Mnemonic / Memory Trick
+23. Difficulty (Easy/Medium/Hard)
+24. Revision Notes (1–2 lines)
+25. Source(s)
+
+Rules:
+- One row = one concept.
+- Keep each cell concise but information-rich.
+- Arrange rows chronologically wherever applicable.
+- Group similar concepts together.
+- Do not omit any important concept.
+- Remove duplicate entries.
+- Ensure the table can later be directly converted into a mind map, revision notes, or a structured JSON database.`;
+
 const INITIAL_PROMPTS = [
   { num: 1, title: 'Resource Collection', subtitle: 'Build knowledge base', content: PROMPT_1, icon: <FlaskConical size={18} /> },
   { num: 2, title: 'Audit', subtitle: 'Analyze PYQs and estimate batches', content: PROMPT_2, icon: <BarChart3 size={18} /> },
   { num: 3, title: 'Question Generation', subtitle: 'Generate exactly 25 unique questions', content: PROMPT_3, icon: <PenTool size={18} /> },
   { num: 4, title: 'JSON Builder', subtitle: 'Merge batches and output valid JSON', content: PROMPT_4, icon: <RefreshCw size={18} /> },
   { num: 5, title: 'Mind Map Builder', subtitle: 'Generate chronological knowledge graph', content: PROMPT_5, icon: <Map size={18} /> },
+  { num: 6, title: 'Master Data Table', subtitle: 'Comprehensive concept table for revision & mind maps', content: PROMPT_6, icon: <ClipboardList size={18} /> },
 ];
 
 interface Props {
