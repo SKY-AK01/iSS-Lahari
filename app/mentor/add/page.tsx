@@ -11,59 +11,84 @@ type ContentType = 'test' | 'study';
 interface SubjectOption { id: string; name: string; chapters: { id: string; name: string }[] }
 
 function parseMarkdownTest(text: string): PastedTestJSON {
-  const blocks = text.split('---').map(b => b.trim()).filter(Boolean);
+  // Split on --- separators, filter out pure separator blocks
+  const blocks = text.split(/\n---\n/).map(b => b.trim()).filter(Boolean);
   const questions: PastedQuestion[] = [];
+  const seenIds = new Set<string>();
   
   for (const block of blocks) {
-    if (!block.includes('Master ID:')) continue;
+    // Support both ## Master ID: and **Master ID:** formats
+    const hasMasterId = block.includes('Master ID:');
+    if (!hasMasterId) continue;
+    // Skip summary blocks
+    if (block.includes('Questions Covered:') || block.includes('Study Management')) continue;
     
-    const idMatch = block.match(/## Master ID:\s*(.+)/);
+    // Match **Master ID:** UPSC-MH-PYQ-001  OR  ## Master ID: UPSC-MH-PYQ-001
+    const idMatch = block.match(/(?:##\s*Master ID:|(?:\*\*Master ID:\*\*))\s*(.+)/);
     const difficultyMatch = block.match(/\*\*Difficulty:\*\*\s*(.+)/);
     const yearMatch = block.match(/\*\*Year:\*\*\s*(.+)/);
+    const categoryMatch = block.match(/\*\*Question Category:\*\*\s*(.+)/);
     
-    const qMatch = block.match(/\*\*Question:\*\*\s*([\s\S]*?)(?=\*\*Correct Answer:\*\*)/);
-    const aMatch = block.match(/\*\*Correct Answer:\*\*\s*(.+)/);
-    const expMatch = block.match(/\*\*Detailed Explanation:\*\*\s*([\s\S]*?)(?=\*\*Important Keywords:\*\*|\*\*Relevant|\*\*Source:\*\*|##|$)/);
-    const kwMatch = block.match(/\*\*Important Keywords:\*\*\s*(.+)/);
+    // Question text — everything between **Question:** and **Options:**
+    const qMatch = block.match(/\*\*Question:\*\*\s*([\s\S]*?)(?=\*\*Options:\*\*|\*\*Answer:\*\*|\*\*Correct Answer:\*\*)/);
+    // Options block
+    const optionsMatch = block.match(/\*\*Options:\*\*\s*([\s\S]*?)(?=\*\*Answer:\*\*|\*\*Correct Answer:\*\*)/);
+    // Answer
+    const aMatch = block.match(/\*\*(?:Answer|Correct Answer):\*\*\s*(.+)/);
+    // Explanation
+    const expMatch = block.match(/\*\*(?:Detailed Explanation|Explanation):\*\*\s*([\s\S]*?)(?=\*\*Keywords:\*\*|\*\*Related|\*\*Memory|\*\*Common|\*\*Why|\*\*Sources|\*\*Master ID|$)/);
+    // Keywords
+    const kwMatch = block.match(/\*\*Keywords:\*\*\s*(.+)/);
+    const memMatch = block.match(/\*\*(?:Memory Trick|Mnemonic):\*\*\s*(.+)/);
+    const trapMatch = block.match(/\*\*Common Exam Trap:\*\*\s*(.+)/);
     
-    if (!idMatch || !qMatch || !aMatch) continue;
+    if (!idMatch || !aMatch) continue;
     
-    const rawQ = qMatch[1].trim();
+    const masterId = idMatch[1].trim();
+    // Deduplicate by Master ID
+    if (seenIds.has(masterId)) continue;
+    seenIds.add(masterId);
+    
+    // Parse options from the options block or from within the question text
     const options: string[] = [];
-    const qLines: string[] = [];
-    
-    for (const line of rawQ.split('\n')) {
+    const rawOptionsText = optionsMatch ? optionsMatch[1] : (qMatch ? qMatch[1] : '');
+    for (const line of rawOptionsText.split('\n')) {
       const trimmed = line.trim();
-      if (/^\([a-d]\)/i.test(trimmed)) {
-        options.push(trimmed);
-      } else {
-        qLines.push(line);
-      }
+      if (/^\([a-d]\)/i.test(trimmed)) options.push(trimmed);
     }
     
-    const type: 'mcq' | 'short' = options.length > 0 ? 'mcq' : 'short';
-    const difficulty = (difficultyMatch ? difficultyMatch[1].toLowerCase() : 'medium') as 'easy' | 'medium' | 'hard';
+    // Clean question text — remove option lines if they snuck in
+    const rawQ = qMatch ? qMatch[1].trim() : '';
+    const qLines = rawQ.split('\n').filter(l => !/^\([a-d]\)/i.test(l.trim()));
+    const questionText = qLines.join('\n').trim();
+    
+    if (!questionText) continue;
+    
+    const rawDifficulty = difficultyMatch ? difficultyMatch[1].toLowerCase().trim() : 'medium';
+    const difficulty = (['easy', 'medium', 'hard'].includes(rawDifficulty) ? rawDifficulty : 'medium') as 'easy' | 'medium' | 'hard';
     
     const relatedObj: PastedQuestionRelated = {};
     if (yearMatch) relatedObj.exam_year = yearMatch[1].trim();
     
     let keywords: string[] = [];
-    if (kwMatch) keywords = kwMatch[1].split(',').map(k => k.trim());
+    if (kwMatch) keywords = kwMatch[1].split(',').map(k => k.trim()).filter(Boolean);
     
     questions.push({
-      id: idMatch[1].trim(),
+      id: masterId,
       difficulty,
-      type,
-      question: qLines.join('\n').trim(),
-      options: options.length > 0 ? options : undefined,
+      type: options.length >= 2 ? 'mcq' : 'short',
+      question: questionText,
+      options: options.length >= 2 ? options : undefined,
       answer: aMatch[1].trim(),
       explanation: expMatch ? expMatch[1].trim() : undefined,
       keywords: keywords.length > 0 ? keywords : undefined,
       related: Object.keys(relatedObj).length > 0 ? relatedObj : undefined,
+      memory_trick: memMatch ? memMatch[1].trim() : undefined,
+      exam_trap: trapMatch ? trapMatch[1].trim() : undefined,
     });
   }
   
-  if (questions.length === 0) throw new Error("No questions found in Markdown.");
+  if (questions.length === 0) throw new Error("No questions found in Markdown. Make sure each question has **Master ID:**, **Question:**, **Answer:**, and **Options:** fields.");
   
   return { chapter: '', subject: '', batch: 1, questions };
 }
@@ -239,7 +264,7 @@ export default function AddContentPage() {
     resetUpload();
     try {
       let parsedArr: PastedTestJSON[];
-      if (text.trim().startsWith('## Master ID:')) {
+      if (text.trim().startsWith('## Master ID:') || text.includes('**Master ID:**')) {
         parsedArr = [parseMarkdownTest(text)];
       } else if (text.trim().startsWith('{') || text.trim().startsWith('[')) {
         const rawJson = JSON.parse(text);
