@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { FileText, Map, ChevronRight, Trash2 } from 'lucide-react';
+import { FileText, Map, ChevronRight, Trash2, Pencil, Check, X, ArrowRightLeft } from 'lucide-react';
 import { PastedTestJSON, MindMapJSON, PastedQuestion, PastedQuestionRelated } from '@/lib/types';
 
 type Step = 'subject' | 'chapter' | 'type' | 'upload';
@@ -418,6 +418,23 @@ export default function AddContentPage() {
   const [saveError, setSaveError] = useState('');
   const [saved, setSaved] = useState(false);
 
+  // Subject rename state (wizard)
+  const [renamingSubjectId, setRenamingSubjectId] = useState<string | null>(null);
+  const [subjectRenameDraft, setSubjectRenameDraft] = useState('');
+  const [savingSubjectRename, setSavingSubjectRename] = useState(false);
+
+  // Chapter rename state (wizard)
+  const [renamingChapterId, setRenamingChapterId] = useState<string | null>(null);
+  const [renameDraft, setRenameDraft] = useState('');
+  const [savingRename, setSavingRename] = useState(false);
+
+  // Chapter move state (wizard)
+  const [movingChapterId, setMovingChapterId] = useState<string | null>(null);
+  const [moveTargetSubjectId, setMoveTargetSubjectId] = useState('');
+  const [moveNewSubjectName, setMoveNewSubjectName] = useState('');
+  const [movingInProgress, setMovingInProgress] = useState(false);
+  const [moveError, setMoveError] = useState<string | null>(null);
+
   useEffect(() => {
     fetch('/api/subjects')
       .then(r => r.json())
@@ -571,6 +588,96 @@ export default function AddContentPage() {
     }
   }
 
+  // ── Rename Subject ───────────────────────────────────────────────
+  async function handleRenameSubject(id: string, oldName: string) {
+    if (!subjectRenameDraft.trim() || subjectRenameDraft.trim() === oldName) {
+      setRenamingSubjectId(null);
+      return;
+    }
+    setSavingSubjectRename(true);
+    try {
+      const res = await fetch('/api/rename', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'subject', id, name: subjectRenameDraft.trim() }),
+      });
+      if (!res.ok) throw new Error('Rename failed');
+      // If the current subject selection matches old name, update it
+      if (subject === oldName) setSubject(subjectRenameDraft.trim());
+      const fetchRes = await fetch('/api/subjects');
+      const data = await fetchRes.json();
+      setSubjectOptions(Array.isArray(data) ? data : []);
+    } catch (e) {
+      alert(e instanceof Error ? e.message : 'Rename failed');
+    } finally {
+      setSavingSubjectRename(false);
+      setRenamingSubjectId(null);
+    }
+  }
+
+  // ── Rename Chapter ───────────────────────────────────────────────
+  async function handleRenameChapter(id: string) {
+    if (!renameDraft.trim()) return;
+    setSavingRename(true);
+    try {
+      const res = await fetch('/api/rename', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'chapter', id, name: renameDraft.trim() }),
+      });
+      if (!res.ok) throw new Error('Rename failed');
+      const fetchRes = await fetch('/api/subjects');
+      const data = await fetchRes.json();
+      setSubjectOptions(Array.isArray(data) ? data : []);
+    } catch (e) {
+      alert(e instanceof Error ? e.message : 'Rename failed');
+    } finally {
+      setSavingRename(false);
+      setRenamingChapterId(null);
+    }
+  }
+
+  // ── Move Chapter ─────────────────────────────────────────────────
+  async function handleMoveChapter(id: string) {
+    if (!moveTargetSubjectId) return;
+    setMovingInProgress(true);
+    setMoveError(null);
+    try {
+      let targetSubjectId = moveTargetSubjectId;
+
+      // Create new subject first if needed
+      if (moveTargetSubjectId === '__new__') {
+        if (!moveNewSubjectName.trim()) { setMoveError('Enter a subject name'); setMovingInProgress(false); return; }
+        const createRes = await fetch('/api/subjects-create', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name: moveNewSubjectName.trim() }),
+        });
+        const createData = await createRes.json();
+        if (!createRes.ok) throw new Error(createData.error ?? 'Failed to create subject');
+        targetSubjectId = createData.id;
+      }
+
+      const res = await fetch('/api/move', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'chapter', id, targetSubjectId }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? 'Move failed');
+      const fetchRes = await fetch('/api/subjects');
+      const freshData = await fetchRes.json();
+      setSubjectOptions(Array.isArray(freshData) ? freshData : []);
+      setMovingChapterId(null);
+      setMoveTargetSubjectId('');
+      setMoveNewSubjectName('');
+    } catch (e) {
+      setMoveError(e instanceof Error ? e.message : 'Move failed');
+    } finally {
+      setMovingInProgress(false);
+    }
+  }
+
   // ── Render ───────────────────────────────────────────────────────
   return (
     <div className="container" style={{ paddingTop: '2rem', paddingBottom: '4rem', maxWidth: '720px' }}>
@@ -584,54 +691,106 @@ export default function AddContentPage() {
             Choose Subject
           </div>
 
-          {/* Existing subjects */}
-          {!loadingSubjects && subjectOptions.length > 0 && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', marginBottom: '1.25rem' }}>
-              {subjectOptions.map(s => (
-                <button
-                  key={s.id}
-                  className="btn btn-ghost w-full"
-                  style={{ justifyContent: 'space-between', textAlign: 'left', fontWeight: 700, fontSize: '0.95rem' }}
-                  onClick={() => { setSubject(s.name); setStep('chapter'); }}
-                >
-                  <span>{s.name}</span>
-                  <span style={{ fontSize: '0.72rem', opacity: 0.4, fontFamily: 'var(--font-mono)' }}>
-                    {s.chapters.length} chapter{s.chapters.length !== 1 ? 's' : ''}
-                  </span>
-                </button>
-              ))}
-            </div>
-          )}
-
           {loadingSubjects && (
             <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', opacity: 0.5, marginBottom: '1rem', fontFamily: 'var(--font-mono)', fontSize: '0.85rem' }}>
               <span className="spinner" style={{ width: 14, height: 14, borderWidth: 2 }} /> Loading…
             </div>
           )}
 
-          {/* New subject */}
-          <div style={{ borderTop: '2px solid #000', paddingTop: '1rem' }}>
-            <div style={{ fontSize: '0.72rem', fontFamily: 'var(--font-heading)', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.6rem', opacity: 0.5 }}>
-              Or add a new subject
+          {/* Existing subjects */}
+          {!loadingSubjects && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', marginBottom: '0.5rem' }}>
+              {subjectOptions.map(s => (
+                <div key={s.id}>
+                  {renamingSubjectId === s.id ? (
+                    <div style={{ display: 'flex', gap: '0.4rem', alignItems: 'center', flexWrap: 'wrap' }}>
+                      <input
+                        className="input"
+                        value={subjectRenameDraft}
+                        onChange={e => setSubjectRenameDraft(e.target.value)}
+                        onKeyDown={e => {
+                          if (e.key === 'Enter') handleRenameSubject(s.id, s.name);
+                          if (e.key === 'Escape') setRenamingSubjectId(null);
+                        }}
+                        style={{ flex: 1, fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: '0.95rem', textTransform: 'uppercase', minWidth: '180px' }}
+                        autoFocus
+                      />
+                      <button
+                        className="btn btn-primary btn-sm"
+                        disabled={savingSubjectRename || !subjectRenameDraft.trim()}
+                        onClick={() => handleRenameSubject(s.id, s.name)}
+                        style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}
+                      >
+                        {savingSubjectRename ? <span className="spinner" style={{ width: 12, height: 12, borderWidth: 2 }} /> : <Check size={13} />}
+                        Save
+                      </button>
+                      <button className="btn btn-ghost btn-sm" onClick={() => setRenamingSubjectId(null)}>
+                        <X size={13} /> Cancel
+                      </button>
+                    </div>
+                  ) : (
+                    <div style={{ display: 'flex', gap: '0.4rem', alignItems: 'stretch' }}>
+                      <button
+                        className="btn btn-ghost"
+                        style={{ flex: 1, justifyContent: 'space-between', textAlign: 'left', fontWeight: 700, fontSize: '0.95rem' }}
+                        onClick={() => { setSubject(s.name); setStep('chapter'); }}
+                      >
+                        <span>{s.name}</span>
+                        <span style={{ fontSize: '0.72rem', opacity: 0.4, fontFamily: 'var(--font-mono)' }}>
+                          {s.chapters.length} chapter{s.chapters.length !== 1 ? 's' : ''}
+                        </span>
+                      </button>
+                      <button
+                        className="btn btn-ghost"
+                        style={{ padding: '0 0.65rem', color: 'var(--ink)', opacity: 0.55 }}
+                        title="Rename subject"
+                        onClick={() => { setRenamingSubjectId(s.id); setSubjectRenameDraft(s.name); }}
+                      >
+                        <Pencil size={15} />
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ))}
+
+              {/* Add new subject inline */}
+              {renamingSubjectId === '__new__' ? (
+                <div style={{ display: 'flex', gap: '0.4rem', alignItems: 'center', marginTop: '0.4rem', flexWrap: 'wrap' }}>
+                  <input
+                    className="input"
+                    placeholder="New subject name"
+                    value={subjectRenameDraft}
+                    onChange={e => setSubjectRenameDraft(e.target.value)}
+                    onKeyDown={e => {
+                      if (e.key === 'Enter' && subjectRenameDraft.trim()) { setSubject(subjectRenameDraft.trim()); setRenamingSubjectId(null); setStep('chapter'); }
+                      if (e.key === 'Escape') setRenamingSubjectId(null);
+                    }}
+                    style={{ flex: 1, fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: '0.95rem', textTransform: 'uppercase', minWidth: '180px' }}
+                    autoFocus
+                  />
+                  <button
+                    className="btn btn-primary btn-sm"
+                    disabled={!subjectRenameDraft.trim()}
+                    onClick={() => { if (subjectRenameDraft.trim()) { setSubject(subjectRenameDraft.trim()); setRenamingSubjectId(null); setStep('chapter'); } }}
+                    style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', whiteSpace: 'nowrap' }}
+                  >
+                    <Check size={13} /> Add &amp; Continue
+                  </button>
+                  <button className="btn btn-ghost btn-sm" onClick={() => { setRenamingSubjectId(null); setSubjectRenameDraft(''); }}>
+                    <X size={13} /> Cancel
+                  </button>
+                </div>
+              ) : (
+                <button
+                  className="btn btn-ghost btn-sm"
+                  style={{ alignSelf: 'flex-start', marginTop: '0.4rem', display: 'flex', alignItems: 'center', gap: '0.3rem', opacity: 0.65 }}
+                  onClick={() => { setRenamingSubjectId('__new__'); setSubjectRenameDraft(''); }}
+                >
+                  + New Subject
+                </button>
+              )}
             </div>
-            <div style={{ display: 'flex', gap: '0.5rem' }}>
-              <input
-                className="input"
-                placeholder="e.g. Indian Polity"
-                value={subject}
-                onChange={e => setSubject(e.target.value)}
-                onKeyDown={e => e.key === 'Enter' && subject.trim() && setStep('chapter')}
-                style={{ flex: 1 }}
-              />
-              <button
-                className="btn btn-primary"
-                disabled={!subject.trim()}
-                onClick={() => setStep('chapter')}
-              >
-                Next →
-              </button>
-            </div>
-          </div>
+          )}
         </div>
       )}
 
@@ -648,25 +807,138 @@ export default function AddContentPage() {
           {chaptersForSubject.length > 0 && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', marginBottom: '1.25rem' }}>
               {chaptersForSubject.map(c => (
-                <div key={c.id} style={{ display: 'flex', gap: '0.4rem' }}>
-                  <button
-                    className="btn btn-ghost"
-                    style={{ flex: 1, justifyContent: 'flex-start', textAlign: 'left', fontWeight: 700 }}
-                    onClick={() => { setChapter(c.name); setStep('type'); }}
-                  >
-                    {c.name}
-                  </button>
-                  <button
-                    className="btn btn-ghost"
-                    style={{ padding: '0 0.75rem', color: 'var(--ruby)' }}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleDeleteChapter(c.id, c.name);
-                    }}
-                    title="Delete Chapter"
-                  >
-                    <Trash2 size={16} />
-                  </button>
+                <div key={c.id}>
+                  {/* ── Rename mode ── */}
+                  {renamingChapterId === c.id ? (
+                    <div style={{ display: 'flex', gap: '0.4rem', alignItems: 'center', flexWrap: 'wrap' }}>
+                      <input
+                        className="input"
+                        value={renameDraft}
+                        onChange={e => setRenameDraft(e.target.value)}
+                        onKeyDown={e => {
+                          if (e.key === 'Enter') handleRenameChapter(c.id);
+                          if (e.key === 'Escape') setRenamingChapterId(null);
+                        }}
+                        style={{ flex: 1, fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: '0.9rem', textTransform: 'uppercase', minWidth: '180px' }}
+                        autoFocus
+                      />
+                      <button
+                        className="btn btn-primary btn-sm"
+                        disabled={savingRename || !renameDraft.trim()}
+                        onClick={() => handleRenameChapter(c.id)}
+                        style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}
+                      >
+                        {savingRename ? <span className="spinner" style={{ width: 12, height: 12, borderWidth: 2 }} /> : <Check size={13} />}
+                        Save
+                      </button>
+                      <button className="btn btn-ghost btn-sm" onClick={() => setRenamingChapterId(null)}>
+                        <X size={13} /> Cancel
+                      </button>
+                    </div>
+                  ) : movingChapterId === c.id ? (
+                    /* ── Move mode ── */
+                    <div style={{ border: 'var(--border-thick)', background: 'var(--bg-3)', padding: '0.75rem 1rem' }}>
+                      <div style={{ fontSize: '0.7rem', fontFamily: 'var(--font-heading)', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.5rem', opacity: 0.6 }}>
+                        Move <span style={{ color: 'var(--ruby)' }}>{c.name}</span> to:
+                      </div>
+                      <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap', alignItems: 'center' }}>
+                        <select
+                          className="input"
+                          value={moveTargetSubjectId}
+                          onChange={e => { setMoveTargetSubjectId(e.target.value); setMoveError(null); setMoveNewSubjectName(''); }}
+                          style={{ flex: 1, minWidth: '160px', fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '0.85rem', textTransform: 'uppercase' }}
+                        >
+                          <option value="">Select subject…</option>
+                          {subjectOptions
+                            .filter(s => s.name !== subject)
+                            .map(s => (
+                              <option key={s.id} value={s.id}>{s.name}</option>
+                            ))}
+                          <option value="__new__">+ New Subject</option>
+                        </select>
+                        {moveTargetSubjectId !== '__new__' && (
+                          <button
+                            className="btn btn-primary btn-sm"
+                            disabled={!moveTargetSubjectId || movingInProgress}
+                            onClick={() => handleMoveChapter(c.id)}
+                            style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', whiteSpace: 'nowrap' }}
+                          >
+                            {movingInProgress ? <span className="spinner" style={{ width: 12, height: 12, borderWidth: 2 }} /> : <ArrowRightLeft size={13} />}
+                            Move
+                          </button>
+                        )}
+                        <button className="btn btn-ghost btn-sm" onClick={() => { setMovingChapterId(null); setMoveError(null); setMoveTargetSubjectId(''); setMoveNewSubjectName(''); }}>
+                          <X size={13} /> Cancel
+                        </button>
+                      </div>
+                      {/* New subject name input */}
+                      {moveTargetSubjectId === '__new__' && (
+                        <div style={{ display: 'flex', gap: '0.4rem', marginTop: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
+                          <input
+                            className="input"
+                            placeholder="New subject name"
+                            value={moveNewSubjectName}
+                            onChange={e => { setMoveNewSubjectName(e.target.value); setMoveError(null); }}
+                            onKeyDown={e => e.key === 'Enter' && moveNewSubjectName.trim() && handleMoveChapter(c.id)}
+                            style={{ flex: 1, fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: '0.85rem', textTransform: 'uppercase', minWidth: '160px' }}
+                            autoFocus
+                          />
+                          <button
+                            className="btn btn-primary btn-sm"
+                            disabled={!moveNewSubjectName.trim() || movingInProgress}
+                            onClick={() => handleMoveChapter(c.id)}
+                            style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', whiteSpace: 'nowrap' }}
+                          >
+                            {movingInProgress ? <span className="spinner" style={{ width: 12, height: 12, borderWidth: 2 }} /> : <ArrowRightLeft size={13} />}
+                            Create &amp; Move
+                          </button>
+                        </div>
+                      )}
+                      {moveError && (
+                        <div style={{ marginTop: '0.4rem', fontSize: '0.76rem', color: 'var(--ruby)', fontFamily: 'var(--font-mono)' }}>
+                          ⚠ {moveError}
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    /* ── Normal row ── */
+                    <div style={{ display: 'flex', gap: '0.4rem' }}>
+                      <button
+                        className="btn btn-ghost"
+                        style={{ flex: 1, justifyContent: 'flex-start', textAlign: 'left', fontWeight: 700 }}
+                        onClick={() => { setChapter(c.name); setStep('type'); }}
+                      >
+                        {c.name}
+                      </button>
+                      {/* Rename */}
+                      <button
+                        className="btn btn-ghost"
+                        style={{ padding: '0 0.65rem', color: 'var(--ink)', opacity: 0.55 }}
+                        title="Rename chapter"
+                        onClick={() => { setRenamingChapterId(c.id); setRenameDraft(c.name); }}
+                      >
+                        <Pencil size={15} />
+                      </button>
+                      {/* Move */}
+                      <button
+                        className="btn btn-ghost"
+                        style={{ padding: '0 0.65rem', color: 'var(--ink)', opacity: 0.55 }}
+                        title="Move to another subject"
+                        onClick={() => { setMovingChapterId(c.id); setMoveTargetSubjectId(''); setMoveError(null); }}
+                      >
+                        <ArrowRightLeft size={15} />
+                      </button>
+                      {/* Delete */}
+                      <button
+                        className="btn btn-ghost"
+                        style={{ padding: '0 0.65rem', color: 'var(--ruby)' }}
+                        title="Delete chapter"
+                        onClick={() => handleDeleteChapter(c.id, c.name)}
+                      >
+                        <Trash2 size={15} />
+                      </button>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

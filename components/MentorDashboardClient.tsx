@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, useTransition } from 'react';
+import { useState, useTransition, useEffect, useCallback } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
-import { FlaskConical, PenTool, RefreshCw, BookOpen, BookText, FileText, BarChart3, ClipboardList, Library, Search, ChevronRight, Map, Download, Edit2, Check, X } from 'lucide-react';
+import { FlaskConical, PenTool, RefreshCw, BookOpen, BookText, FileText, BarChart3, ClipboardList, Library, Search, ChevronRight, Map, Download, Edit2, Check, X, ArrowRightLeft, Zap, CheckCircle2, Loader2, AlertCircle } from 'lucide-react';
+import { AIProcessingStatus } from '@/lib/types';
 
 const PROMPT_1 = `You are an expert researcher, subject matter expert, competitive exam analyst, and curriculum designer.
 
@@ -297,6 +298,61 @@ export default function MentorDashboardClient({ subjects, recentAttempts, studyM
   const [editingChapter, setEditingChapter] = useState<{ id: string, name: string } | null>(null);
   const [topicName, setTopicName] = useState('');
 
+  // Move chapter state
+  const [movingChapter, setMovingChapter] = useState<{ id: string; name: string; currentSubjectId: string } | null>(null);
+  const [moveTargetSubjectId, setMoveTargetSubjectId] = useState('');
+  const [movingInProgress, setMovingInProgress] = useState(false);
+  const [moveError, setMoveError] = useState<string | null>(null);
+
+  // ── AI processing status per material (live, polled) ──────────────────────
+  // materialId → AIProcessingStatus | null
+  const [aiStatus, setAiStatus] = useState<Record<string, AIProcessingStatus | null>>(() => {
+    const init: Record<string, AIProcessingStatus | null> = {};
+    for (const m of studyMaterials) {
+      if (m.material_type === 'mind_map') {
+        init[m.id] = (m.content as any)?.ai_processing?.status ?? null;
+      }
+    }
+    return init;
+  });
+
+  // ── Sweep: find and kick off all unprocessed mind maps ────────────────────
+  const runSweep = useCallback(async () => {
+    try {
+      await fetch('/api/mind-map/sweep');
+    } catch { /* silent — background job */ }
+  }, []);
+
+  // ── Poll latest status from DB ────────────────────────────────────────────
+  const pollStatus = useCallback(async () => {
+    const mindMapIds = studyMaterials
+      .filter((m: any) => m.material_type === 'mind_map')
+      .map((m: any) => m.id);
+    if (mindMapIds.length === 0) return;
+
+    const { data } = await supabase
+      .from('study_materials')
+      .select('id, content')
+      .in('id', mindMapIds);
+
+    if (!data) return;
+    setAiStatus(prev => {
+      const next = { ...prev };
+      for (const row of data) {
+        next[row.id] = (row.content as any)?.ai_processing?.status ?? null;
+      }
+      return next;
+    });
+  }, [studyMaterials, supabase]);
+
+  // ── On mount: sweep + start polling ──────────────────────────────────────
+  useEffect(() => {
+    runSweep();
+    pollStatus();
+    const interval = setInterval(pollStatus, 30_000);
+    return () => clearInterval(interval);
+  }, [runSweep, pollStatus]);
+
   async function handleSaveSubject(id: string, oldName: string) {
     if (!editingSubject || editingSubject.name.trim() === '' || editingSubject.name === oldName) {
       setEditingSubject(null);
@@ -314,6 +370,27 @@ export default function MentorDashboardClient({ subjects, recentAttempts, studyM
     }
     await supabase.from('chapters').update({ name: editingChapter.name }).eq('id', id);
     setEditingChapter(null);
+    startTransition(() => router.refresh());
+  }
+
+  async function handleMoveChapter() {
+    if (!movingChapter || !moveTargetSubjectId) return;
+    setMovingInProgress(true);
+    setMoveError(null);
+    const res = await fetch('/api/move', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type: 'chapter', id: movingChapter.id, targetSubjectId: moveTargetSubjectId }),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      setMoveError(data.error ?? 'Move failed');
+      setMovingInProgress(false);
+      return;
+    }
+    setMovingChapter(null);
+    setMoveTargetSubjectId('');
+    setMovingInProgress(false);
     startTransition(() => router.refresh());
   }
 
@@ -459,27 +536,59 @@ export default function MentorDashboardClient({ subjects, recentAttempts, studyM
               material_type: string;
               created_at: string;
               chapter: { name: string; subject: { name: string } };
-            }) => (
-              <div key={m.id} className="admit-card" style={{ flexBasis: '240px', flexGrow: 1, cursor: 'default' }}>
-                <div className="admit-card-header" style={{ background: 'var(--partial-bg)' }}>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', fontWeight: 700 }}>
-                    {m.chapter?.subject?.name}
-                  </span>
-                  <span className="batch-badge" style={{ background: 'var(--ink)' }}>
-                    {m.material_type === 'mind_map' ? 'MAP' : 'NOTE'}
-                  </span>
-                </div>
-                <div style={{ padding: '0.75rem 1rem' }}>
-                  <div style={{ fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.25rem', lineHeight: 1.3 }}>{m.title}</div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--cream-dim)', opacity: 0.6 }}>
-                    {m.chapter?.name}
+            }) => {
+              const status: AIProcessingStatus | null = m.material_type === 'mind_map'
+                ? (aiStatus[m.id] ?? null)
+                : null;
+
+              return (
+                <div key={m.id} className="admit-card" style={{ flexBasis: '240px', flexGrow: 1, cursor: 'default' }}>
+                  <div className="admit-card-header" style={{ background: 'var(--partial-bg)' }}>
+                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', fontWeight: 700 }}>
+                      {m.chapter?.subject?.name}
+                    </span>
+                    <span className="batch-badge" style={{ background: 'var(--ink)' }}>
+                      {m.material_type === 'mind_map' ? 'MAP' : 'NOTE'}
+                    </span>
                   </div>
-                  <div style={{ fontSize: '0.72rem', fontFamily: 'var(--font-mono)', color: 'var(--cream-dim)', opacity: 0.5, marginTop: '0.4rem' }}>
-                    {new Date(m.created_at).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: '2-digit' })}
+                  <div style={{ padding: '0.75rem 1rem' }}>
+                    <div style={{ fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.25rem', lineHeight: 1.3 }}>{m.title}</div>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--cream-dim)', opacity: 0.6 }}>
+                      {m.chapter?.name}
+                    </div>
+                    <div style={{ fontSize: '0.72rem', fontFamily: 'var(--font-mono)', color: 'var(--cream-dim)', opacity: 0.5, marginTop: '0.4rem' }}>
+                      {new Date(m.created_at).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: '2-digit' })}
+                    </div>
+
+                    {/* AI Processing Status Badge */}
+                    {m.material_type === 'mind_map' && (
+                      <div style={{ marginTop: '0.55rem' }}>
+                        {status === 'done' && (
+                          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.68rem', fontWeight: 700, color: '#276749', background: '#C6F6D5', padding: '2px 8px', borderRadius: '3px' }}>
+                            <CheckCircle2 size={11} /> Relations Ready
+                          </span>
+                        )}
+                        {(status === 'processing') && (
+                          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.68rem', fontWeight: 700, color: '#2B6CB0', background: '#BEE3F8', padding: '2px 8px', borderRadius: '3px' }}>
+                            <Loader2 size={11} style={{ animation: 'spin 1s linear infinite' }} /> Processing…
+                          </span>
+                        )}
+                        {status === 'partial' && (
+                          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.68rem', fontWeight: 700, color: '#C05621', background: '#FEEBC8', padding: '2px 8px', borderRadius: '3px' }}>
+                            <AlertCircle size={11} /> Resuming…
+                          </span>
+                        )}
+                        {(status === 'pending' || status === null) && (
+                          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.68rem', fontWeight: 700, color: '#6B46C1', background: '#E9D8FD', padding: '2px 8px', borderRadius: '3px' }}>
+                            <Zap size={11} /> Queued for AI
+                          </span>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>
@@ -582,6 +691,14 @@ export default function MentorDashboardClient({ subjects, recentAttempts, studyM
                               <button className="btn btn-ghost btn-sm" style={{ padding: '2px', opacity: 0.5, color: '#000' }} onClick={() => setEditingChapter({ id: chapter.id, name: chapter.name })}>
                                 <Edit2 size={13}/>
                               </button>
+                              <button
+                                className="btn btn-ghost btn-sm"
+                                style={{ padding: '2px', opacity: 0.5, color: '#000' }}
+                                title="Move to another subject"
+                                onClick={() => { setMovingChapter({ id: chapter.id, name: chapter.name, currentSubjectId: subject.id }); setMoveTargetSubjectId(''); setMoveError(null); }}
+                              >
+                                <ArrowRightLeft size={13} />
+                              </button>
                             </div>
                           )}
                           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
@@ -681,6 +798,69 @@ export default function MentorDashboardClient({ subjects, recentAttempts, studyM
                 )}
               </div>
             ))}
+          </div>
+        </div>
+      )}
+
+      {/* Move chapter modal */}
+      {movingChapter && (
+        <div
+          style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.55)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem' }}
+          onClick={() => { setMovingChapter(null); setMoveError(null); }}
+        >
+          <div
+            style={{ background: 'var(--bg-3)', border: 'var(--border-thick)', boxShadow: '6px 6px 0 #000', padding: '1.75rem', maxWidth: '460px', width: '100%' }}
+            onClick={e => e.stopPropagation()}
+          >
+            <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: '1.1rem', textTransform: 'uppercase', letterSpacing: '-0.02em', marginBottom: '0.25rem' }}>
+              Move Chapter
+            </div>
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.82rem', marginBottom: '1.25rem', color: 'var(--cream-dim)', opacity: 0.7 }}>
+              {movingChapter.name}
+            </div>
+
+            <div style={{ fontSize: '0.72rem', fontFamily: 'var(--font-heading)', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.5rem', opacity: 0.55 }}>
+              Move to subject
+            </div>
+            <select
+              className="input"
+              value={moveTargetSubjectId}
+              onChange={e => { setMoveTargetSubjectId(e.target.value); setMoveError(null); }}
+              style={{ width: '100%', marginBottom: '1rem', fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '0.9rem', textTransform: 'uppercase' }}
+            >
+              <option value="">Select subject…</option>
+              {subjects
+                .filter((s: { id: string }) => s.id !== movingChapter.currentSubjectId)
+                .map((s: { id: string; name: string }) => (
+                  <option key={s.id} value={s.id}>{s.name}</option>
+                ))}
+            </select>
+
+            {moveError && (
+              <div style={{ marginBottom: '0.75rem', padding: '0.6rem 0.85rem', border: '2px solid var(--ruby)', background: 'var(--ruby-subtle)', fontSize: '0.82rem', fontFamily: 'var(--font-mono)', color: 'var(--ruby)' }}>
+                ⚠ {moveError}
+              </div>
+            )}
+
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
+              <button
+                className="btn btn-primary"
+                disabled={!moveTargetSubjectId || movingInProgress}
+                onClick={handleMoveChapter}
+                style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flex: 1, justifyContent: 'center' }}
+              >
+                {movingInProgress
+                  ? <><span className="spinner" style={{ width: 14, height: 14, borderWidth: 2 }} /> Moving…</>
+                  : <><ArrowRightLeft size={15} /> Move Chapter</>}
+              </button>
+              <button
+                className="btn btn-ghost"
+                onClick={() => { setMovingChapter(null); setMoveError(null); }}
+                style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}
+              >
+                <X size={14} /> Cancel
+              </button>
+            </div>
           </div>
         </div>
       )}

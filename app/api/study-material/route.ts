@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
 
   let query = supabase
     .from('study_materials')
-    .select('*, chapter:chapters(id, name, subject:subjects(id, name))')
+    .select('id, title, material_type, created_at, content, chapter:chapters(id, name, subject:subjects(id, name))')
     .order('created_at', { ascending: false });
 
   if (chapterId) {
@@ -89,6 +89,16 @@ export async function POST(req: NextRequest) {
         .single();
       if (error) throw error;
       result = data;
+    }
+
+    // Fire-and-forget: kick off AI relation processing for new mind maps
+    if (body.material) {
+      const base = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000';
+      fetch(`${base}/api/mind-map/process`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ materialId: result.id }),
+      }).catch(e => console.error('[study-material] Auto-process failed:', e));
     }
 
     return NextResponse.json({ ok: true, id: result.id });

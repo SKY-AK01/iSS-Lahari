@@ -87,6 +87,7 @@ export default function MentorNav({ name }: { name: string }) {
     { href: '/mentor', label: 'Dashboard' },
     { href: '/mentor/add', label: 'Add Content' },
     { href: '/mentor/results', label: 'Results' },
+    { href: '/mentor/ai-processing', label: 'AI Processing' },
   ];
 
   return (

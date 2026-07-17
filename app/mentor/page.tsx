@@ -29,11 +29,12 @@ export default async function MentorPage() {
     .order('submitted_at', { ascending: false })
     .limit(5);
 
-  // Fetch study materials summary
+  // Fetch study materials summary (include content for AI processing status)
   const { data: studyMaterials } = await supabase
     .from('study_materials')
     .select(`
       id, title, material_type, created_at,
+      content,
       chapter:chapters(id, name, subject:subjects(id, name))
     `)
     .order('created_at', { ascending: false });

@@ -132,11 +132,40 @@ export interface MindMapRecord {
   [key: string]: string;
 }
 
+export interface AIRelation {
+  from: number;        // index into records[]
+  to: number;          // index into records[]
+  type: string;        // e.g. "builds_on", "contrasts", "caused_by", "same_person", etc.
+  reason: string;      // short human-readable explanation
+}
+
+export type AIProcessingStatus = 'pending' | 'processing' | 'partial' | 'done';
+
+export interface AIChunkStatus {
+  id: number;          // chunk index
+  status: 'pending' | 'processing' | 'done' | 'failed';
+  fromIdx: number;     // first record index in this chunk
+  toIdx: number;       // last record index (exclusive)
+  keyLabel?: string;   // which API key handled this chunk e.g. "gemini#3"
+  provider?: string;   // "mistral" | "gemini"
+  attempts?: string[]; // all keys tried for this chunk (in order)
+}
+
+export interface AIProcessing {
+  status: AIProcessingStatus;
+  totalChunks: number;
+  chunks: AIChunkStatus[];
+  lastUpdated: string; // ISO timestamp
+}
+
 export interface MindMapJSON {
   title: string;
   columns: string[];
   records: MindMapRecord[];
   references?: Record<string, string>;
+  // AI-enriched fields — added after processing
+  relations?: AIRelation[];
+  ai_processing?: AIProcessing;
 }
 
 export interface StudyMaterial {

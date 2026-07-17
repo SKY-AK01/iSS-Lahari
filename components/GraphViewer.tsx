@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 const GraphViewerClient = dynamic(() => import('./GraphViewerClient'), {
   ssr: false,
   loading: () => (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', background: 'var(--bg)' }}>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', background: '#F4F4F0' }}>
       <div className="spinner" style={{ width: 40, height: 40, borderWidth: 4 }}></div>
     </div>
   )
